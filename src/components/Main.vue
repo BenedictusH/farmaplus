@@ -129,9 +129,12 @@
 </template>
 
 <script>
+  import api from '../api/api.js'
+
+
   export default {
     name: "HelloWorld",
-
+    
     data: () => ({
       obat: [
         "Azitromisin",
@@ -244,6 +247,7 @@
         },
       ],
     }),
+    
     computed: {
       filteredList() {
         return this.dummyData.filter((apotek) => {
@@ -267,7 +271,14 @@
         const index = this.selectedObat.indexOf(item);
         if (index >= 0) this.selectedObat.splice(index, 1);
       },
+      async refreshPage() {
+        console.log(await api.filter())
+        console.log(await api.getField())
+      }
     },
+    created() {
+      this.refreshPage()
+    }
   };
 </script>
 
