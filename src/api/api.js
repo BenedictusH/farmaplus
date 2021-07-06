@@ -6,12 +6,12 @@ export default {
   getField() {
     var data = JSON.stringify({
       query: `query {
-			outlets {
-				obat
-				provinsi
-				kabkota
-			}
-		}`,
+            outlets {
+                obat
+                provinsi
+                kabkota
+            }
+        }`,
       variables: {},
     });
 
@@ -54,8 +54,8 @@ export default {
         console.log(error);
       });
   },
-  async filter(name, obat, provinsi, kabkota, tanggal) {
-    console.log(name, obat, provinsi, kabkota, tanggal);
+  async filter(name, obat, provinsi, kabkota, tanggal, start, limit) {
+    console.log(name, obat, provinsi, kabkota, tanggal, start, limit);
     const query = qs.stringify({
       _where: {
         _or: [
@@ -64,14 +64,41 @@ export default {
             { provinsi: provinsi },
             { kabkota: kabkota },
             { tanggal: tanggal },
-						{ nama_contains: name }
+                        { nama_contains: name }
           ],
         ],
       },
     });
     console.log(query);
     var path = "outlets";
-    var response = axios.get(`${STRAPI_URL}/${path}?${query}&_sort=jumlah:DESC`);
+    var response = axios.get(`${STRAPI_URL}/${path}?${query}&_sort=jumlah:DESC&_start=${start}&_limit=${limit}`);
     return response;
   },
+  async count(name, obat, provinsi, kabkota, tanggal,) {
+    console.log(name, obat, provinsi, kabkota, tanggal,);
+    const query = qs.stringify({
+      _where: {
+        _or: [
+          [
+            { obat: obat },
+            { provinsi: provinsi },
+            { kabkota: kabkota },
+            { tanggal: tanggal },
+                        { nama_contains: name }
+          ],
+        ],
+      },
+    });
+    console.log(query);
+    var path = "outlets";
+    var response = axios.get(`${STRAPI_URL}/${path}/count?${query}&_sort=jumlah:DESC`);
+    console.log(response)
+    return response;
+  },
+  async getLastShipment () {
+    var path = "outlets";
+    var response = axios.get(`${STRAPI_URL}/${path}?&_sort=tanggal:desc&_start=0&_limit=1`);
+    console.log(response)
+    return response;
+  }
 };
