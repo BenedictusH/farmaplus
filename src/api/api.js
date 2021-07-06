@@ -71,7 +71,7 @@ export default {
     });
     console.log(query);
     var path = "outlets";
-    var response = axios.get(`${STRAPI_URL}/${path}?${query}`);
+    var response = axios.get(`${STRAPI_URL}/${path}?${query}&_sort=jumlah:DESC`);
     return response;
   },
 };

@@ -104,19 +104,20 @@
       </v-row>
       <v-row class="px-16 py-0">
         <v-col cols="12" class="pr-8" style="display: flex; justify-content: flex-end;">
-        <v-btn
-          color="error"
-          elevation="2"
-          rounded
-          @click="reset"
-        >Reset</v-btn>
-        <v-btn
+          <!-- <v-btn
           color="primary"
           elevation="2"
           rounded
-          class="ml-5"
           @click="update"
-        >Update</v-btn>
+        >Update</v-btn> -->
+        <v-btn
+          color="error"
+          elevation="2"
+          class="ml-5"
+          rounded
+          @click="reset"
+        >Reset</v-btn>
+        
         </v-col>
       </v-row>
     </div>
@@ -131,32 +132,35 @@
               <v-card-subtitle class="px-0"
                 >{{ apotek.kabkota }}, {{ apotek.provinsi }}</v-card-subtitle
               >
+<div class="text font-weight-bold">{{ apotek.obat }}</div>
 
+              <div class="text">Didistribusikan pada: {{ apotek.tanggal }}</div>
+              
+              
+            </v-col>
+            <v-col cols="6" class="card-right">
+              <v-card-subtitle class="pa-0 grey--text text-h6 text--darken-3"
+                >Jumlah</v-card-subtitle
+              >
               <v-card-title
                 class="
-                  text-h5
+                  text-h2
                   font-weight-medium
                   pt-0
                   pl-0
+                  pr-0
                   green--text
                   text--darken-4
                 "
               >
                 {{ apotek.jumlah }}
               </v-card-title>
-              <v-card-subtitle class="pa-0 grey--text text--darken-3"
-                >Jumlah</v-card-subtitle
-              >
-            </v-col>
-            <v-col cols="6" class="card-right">
-              <div class="text font-weight-bold">{{ apotek.obat }}</div>
-
-              <div class="text">Didistribusikan pada: {{ apotek.tanggal }}</div>
-              <v-card-actions class="px-0 pt-7">
+              
+              <!-- <v-card-actions class="px-0 pt-7">
                 <v-btn outlined rounded text>
                   <v-icon class="mr-2">mdi-map-marker</v-icon> Lokasi
                 </v-btn>
-              </v-card-actions>
+              </v-card-actions> -->
             </v-col>
           </v-row>
         </v-card>
