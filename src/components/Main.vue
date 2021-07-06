@@ -1,8 +1,6 @@
 <template>
   <div class="wrapper">
     <div class="header"></div>
-    {{ selected }}
-    <button @click="filter()">Update</button>
     <div
       class="toolbar"
       style="position: sticky; top: 0; z-index: 20; background-color: white"
@@ -61,7 +59,9 @@
             v-model="selected.obat"
             :items="options.obat"
             chips
+            background-color="grey lighten-2"
             filled
+            hide-details
             multiple
             clearable
             deletable-chips
@@ -75,7 +75,9 @@
             v-model="selected.provinsi"
             :items="options.provinsi"
             chips
+            background-color="grey lighten-2"
             filled
+            hide-details
             multiple
             clearable
             deletable-chips
@@ -89,13 +91,32 @@
             v-model="selected.kabkota"
             :items="options.kabkota"
             chips
+            background-color="grey lighten-2"
             filled
+            hide-details
             multiple
             clearable
             deletable-chips
             rounded
           >
           </v-autocomplete>
+        </v-col>
+      </v-row>
+      <v-row class="px-16 py-0">
+        <v-col cols="12" class="pr-8" style="display: flex; justify-content: flex-end;">
+        <v-btn
+          color="error"
+          elevation="2"
+          rounded
+          @click="reset"
+        >Reset</v-btn>
+        <v-btn
+          color="primary"
+          elevation="2"
+          rounded
+          class="ml-5"
+          @click="update"
+        >Update</v-btn>
         </v-col>
       </v-row>
     </div>
@@ -221,6 +242,14 @@ export default {
   async created() {
     await this.refreshPage();
   },
+  watch: {
+    selected: {
+      handler(){
+        this.update()
+      },
+      deep: true
+    }
+  }
 };
 </script>
 
@@ -245,9 +274,9 @@ export default {
 }
 
 .toolbar {
-  box-shadow: 0px 5px 5px 0px rgba(255, 255, 255, 0.85);
-  -webkit-box-shadow: 0px 5px 5px 0px rgba(255, 255, 255, 0.85);
-  -moz-box-shadow: 0px 5px 5px 0px rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.123);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .main {
