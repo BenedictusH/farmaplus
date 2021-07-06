@@ -25,7 +25,7 @@ export default {
     };
     return axios(config)
       .then(function(response) {
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
         var data = {};
         data["obat"] = Array.from(
           new Set(
@@ -60,16 +60,16 @@ export default {
       _where: {
         _or: [
           [
-            { obat: obat },
-            { provinsi: provinsi },
-            { kabkota: kabkota },
-            { tanggal: tanggal },
-                        { nama_contains: name }
+            { obat_contains: obat },
+            { provinsi_contains: provinsi },
+            { kabkota_contains: kabkota },
+            { tanggal_contains: tanggal },
+            { nama_contains: name }
           ],
         ],
       },
     });
-    console.log(query);
+    // console.log(query);
     var path = "outlets";
     var response = axios.get(`${STRAPI_URL}/${path}?${query}&_sort=jumlah:DESC&_start=${start}&_limit=${limit}`);
     return response;
@@ -80,11 +80,11 @@ export default {
       _where: {
         _or: [
           [
-            { obat: obat },
-            { provinsi: provinsi },
-            { kabkota: kabkota },
-            { tanggal: tanggal },
-                        { nama_contains: name }
+            { obat_contains: obat },
+            { provinsi_contains: provinsi },
+            { kabkota_contains: kabkota },
+            { tanggal_contains: tanggal },
+            { nama_contains: name }
           ],
         ],
       },
@@ -97,8 +97,16 @@ export default {
   },
   async getLastShipment () {
     var path = "outlets";
-    var response = axios.get(`${STRAPI_URL}/${path}?&_sort=tanggal:desc&_start=0&_limit=1`);
+    var response = await axios.get(`${STRAPI_URL}/${path}?&_sort=tanggal:desc&_start=0&_limit=1`);
     console.log(response)
     return response;
-  }
+  },
+  async find(name) {
+    console.log(name);
+    var path = name;
+    console.log(`${STRAPI_URL}/${path}?&_sort=nama:ASC`)
+    var response = await axios.get(`${STRAPI_URL}/${path}?&_sort=nama:ASC`);
+    console.log(response.data)
+    return response.data;
+  },
 };

@@ -4,7 +4,7 @@
       <div class="text-lg-h1 text-h3 font-weight-bold pl-5 white--text d-flex">
         Farma Plus
         <img
-          src="https://www.freepnglogos.com/uploads/logo-puskesmas-png/april-uptd-puskesmas-telagasari-24.png"
+          src="https://keamananvaksin.kemkes.go.id/assets/img/kemenkes.png"
           class="logo"
         />
       </div>
@@ -353,12 +353,25 @@
         if (index >= 0) this.selectedObat.splice(index, 1);
       },
       async refreshPage() {
-        this.options = await api.getField();
+        // this.options = await api.getField();
+        var obat = await api.find('obats')
+        this.options['obat'] = obat.map((ob) => {return ob.nama})
+
+        var kota = await api.find('kotas')
+        this.options['kota'] = kota.map((ob) => {return ob.nama})
+        var provinse = await api.find('provinses')
+        this.options['provinsi'] = provinse.map((ob) => {return ob.nama})
+      
         this.loadingToolbar = false;
 
         var res = await this.update();
         this.body = res.data;
         this.loadingBody = false;
+      },
+      async getOptions(){
+        var obat = await api.find('outlets')
+        console.log(obat)
+        this.options['obat'] = obat
       },
       async update() {
         this.loadingBody = true;
@@ -373,7 +386,7 @@
           this.limit
         );
         this.body = res.data;
-        console.log(res.data);
+        // console.log(res.data);
 
         this.loadingBody = true;
 
@@ -385,7 +398,7 @@
           this.selected.tanggal
         );
         this.amount = res2.data;
-        console.log(res2.data);
+        // console.log(res2.data);
         this.loadingBody = false;
       },
       reset() {
@@ -404,6 +417,7 @@
       var res2 = await api.getLastShipment();
       this.selected.tanggal = res2.data[0]["tanggal"];
       await this.refreshPage();
+      await this.getOptions()
     },
     watch: {
       selected: {
@@ -429,7 +443,7 @@
   }
 
   .logo {
-    height: 75px;
+    height: 50px;
     object-fit: cover;
   }
 
