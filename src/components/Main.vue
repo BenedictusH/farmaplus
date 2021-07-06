@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="header"></div>
+    {{selected}}
     <div class="toolbar" style="position: sticky; top: 0; z-index: 20; background-color: white;">
       <v-row class="px-16 pt-5" no-gutters>
         <v-col cols="8" class="px-5">
@@ -18,33 +19,28 @@
             ref="menu"
             v-model="menu"
             :close-on-content-click="false"
-            :return-value.sync="dates"
+            :return-value.sync="selected.tanggal"
             transition="scale-transition"
             offset-y
             min-width="auto"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-combobox
-                v-model="dates"
-                multiple
-                chips
-                small-chips
+                v-model="selected.tanggal"
                 filled
                 rounded
                 label="Pilih Tanggal"
                 prepend-inner-icon="mdi-calendar"
-                clearable
-                deletable-chips
                 v-bind="attrs"
                 v-on="on"
               ></v-combobox>
             </template>
-            <v-date-picker v-model="dates" multiple no-title scrollable>
+            <v-date-picker v-model="selected.tanggal" multiple no-title scrollable>
               <v-spacer></v-spacer>
               <v-btn text color="primary" @click="menu = false">
                 Cancel
               </v-btn>
-              <v-btn text color="primary" @click="$refs.menu.save(dates)">
+              <v-btn text color="primary" @click="$refs.menu.save(selected.tanggal)">
                 OK
               </v-btn>
             </v-date-picker>
@@ -55,8 +51,8 @@
         <v-col cols="4" class="px-5">
           <span class="pl-5">Obat</span>
           <v-autocomplete
-            v-model="selectedObat"
-            :items="obat"
+            v-model="selected.obat"
+            :items="options.obat"
             chips
             filled
             multiple
@@ -69,8 +65,8 @@
         <v-col cols="4" class="px-5">
           <span class="pl-5">Provinsi</span>
           <v-autocomplete
-            v-model="selectedProvinsi"
-            :items="provinsi"
+            v-model="selected.provinsi"
+            :items="options.provinsi"
             chips
             filled
             multiple
@@ -83,8 +79,8 @@
         <v-col cols="4" class="px-5">
           <span class="pl-5">Kabupaten/Kota</span>
           <v-autocomplete
-            v-model="selectedKabkot"
-            :items="kabkot"
+            v-model="selected.kabkota"
+            :items="options.kabkota"
             chips
             filled
             multiple
@@ -136,42 +132,15 @@
     name: "HelloWorld",
     
     data: () => ({
-      obat: [
-        "Azitromisin",
-        "Favipiravir",
-        "Intravenous",
-        "Immunoglobulin",
-        "Ivermectin",
-        "Oseltamivir",
-        "Remsdesivir",
-        "Tociluzumab",
-      ],
-      selectedObat: [],
-      dates: [],
+      date: [],
       menu: false,
       search: "",
-      provinsi: [
-        "DKI Jakarta",
-        "Jawa Barat",
-        "Jawa Timur",
-        "Jawa Tengah",
-        "Bali",
-        "Kalimantan Utara",
-        "Kalimantan Selatan",
-        "Kalimantan Barat",
-      ],
-      selectedProvinsi: [],
-      kabkot: [
-        "Jakarta Barat",
-        "Bekasi",
-        "Tangerang",
-        "Bandar Lampung",
-        "Denpasar",
-        "Jambi",
-        "Singkawang",
-        "Banjarmasin",
-      ],
-      selectedKabkot: [],
+      selected: {
+        obat: [],
+        provinsi: [],
+        kabkota: [], 
+        tanggal: ""
+      },
       dummyData: [
         {
           apotek: "Apotek Benedictus",
@@ -180,7 +149,6 @@
           lokasi: "Senen",
           jumlah: 250,
           updatedDate: "05072021",
-          updatedTime: "04:00",
         },
         {
           apotek: "Apotek Harris",
@@ -189,7 +157,6 @@
           lokasi: "Lampung",
           jumlah: 1760,
           updatedDate: "05072021",
-          updatedTime: "04:00",
         },
         {
           apotek: "Apotek Hutama",
@@ -198,7 +165,6 @@
           lokasi: "Cengkareng",
           jumlah: 2230,
           updatedDate: "05072021",
-          updatedTime: "04:00",
         },
         {
           apotek: "Apotek Stefan",
@@ -207,7 +173,6 @@
           lokasi: "Yogyakarta",
           jumlah: 10,
           updatedDate: "05072021",
-          updatedTime: "05:00",
         },
         {
           apotek: "Apotek Benedictus",
@@ -216,7 +181,6 @@
           lokasi: "Senen",
           jumlah: 250,
           updatedDate: "05072021",
-          updatedTime: "04:00",
         },
         {
           apotek: "Apotek Harris",
@@ -225,7 +189,6 @@
           lokasi: "Lampung",
           jumlah: 1760,
           updatedDate: "05072021",
-          updatedTime: "04:00",
         },
         {
           apotek: "Apotek Hutama",
@@ -234,7 +197,6 @@
           lokasi: "Cengkareng",
           jumlah: 2230,
           updatedDate: "05072021",
-          updatedTime: "04:00",
         },
         {
           apotek: "Apotek Stefan",
@@ -243,9 +205,40 @@
           lokasi: "Yogyakarta",
           jumlah: 10,
           updatedDate: "05072021",
-          updatedTime: "05:00",
         },
       ],
+      options: {
+        obat: [
+          "Azitromisin",
+          "Favipiravir",
+          "Intravenous",
+          "Immunoglobulin",
+          "Ivermectin",
+          "Oseltamivir",
+          "Remsdesivir",
+          "Tociluzumab",
+        ],
+          provinsi: [
+          "DKI Jakarta",
+          "Jawa Barat",
+          "Jawa Timur",
+          "Jawa Tengah",
+          "Bali",
+          "Kalimantan Utara",
+          "Kalimantan Selatan",
+          "Kalimantan Barat",
+        ],
+          kabkota: [
+          "Jakarta Barat",
+          "Bekasi",
+          "Tangerang",
+          "Bandar Lampung",
+          "Denpasar",
+          "Jambi",
+          "Singkawang",
+          "Banjarmasin",
+        ],
+      }
     }),
     
     computed: {
