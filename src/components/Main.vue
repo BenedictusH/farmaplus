@@ -358,7 +358,7 @@
         this.options['obat'] = obat.map((ob) => {return ob.nama})
 
         var kota = await api.find('kotas')
-        this.options['kota'] = kota.map((ob) => {return ob.nama})
+        this.options['kabkota'] = kota.map((ob) => {return ob.nama})
         var provinse = await api.find('provinses')
         this.options['provinsi'] = provinse.map((ob) => {return ob.nama})
       
