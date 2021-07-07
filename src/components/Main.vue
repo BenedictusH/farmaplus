@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <!-- {{provinsis}} -->
     <div class="header d-flex flex-column align-lg-center justify-center pa-lg-15 pa-3 ">
       <div class="text-lg-h1 text-h3 font-weight-bold pl-5 white--text d-flex">
         Farma Plus
@@ -92,7 +93,7 @@
               >
               </v-autocomplete>
             </v-col>
-            <v-col cols="12" lg="4" class="px-5 mt-lg-0 mt-5 mb-lg-0 mb-5">
+            <!-- <v-col cols="12" lg="4" class="px-5 mt-lg-0 mt-5 mb-lg-0 mb-5">
               <span class="pl-5">Kabupaten/Kota</span>
               <v-autocomplete
                 v-model="selected.kabkota"
@@ -106,7 +107,7 @@
                 rounded
               >
               </v-autocomplete>
-            </v-col>
+            </v-col> -->
             <v-col cols="12 mt-5">
               <div class="text-center">
                 <v-pagination
@@ -255,7 +256,7 @@
       </v-row>
     </div>
     <v-row class="px-lg-16 px-3 pb-10 mt-5 cards-body" align="stretch" v-if="!loadingBody">
-      <v-col v-for="apotek in body" :key="apotek" lg="6" cols="12" class="px-7">
+      <v-col v-for="(apotek, index) in body" :key="index" lg="6" cols="12" class="px-7">
         <v-card elevation="5" class="card" height="100%">
           <v-row class="pa-5">
             <v-col cols="12" lg="7" class="d-flex flex-column justify-space-between">
@@ -317,7 +318,7 @@
       shipment: [],
       date: [],
       menu: false,
-      loadingToolbar: true,
+      loadingToolbar: false,
       loadingBody: true,
       start: 1,
       limit: 10,
@@ -330,6 +331,7 @@
         kabkota: [],
         tanggal: [],
       },
+      provinsis : [],
       body: [],
       options: [],
     }),
@@ -361,20 +363,7 @@
         if (index >= 0) this.selectedObat.splice(index, 1);
       },
       async refreshPage() {
-        // this.options = await api.getField();
-        var obat = await api.find("obats");
-        this.options["obat"] = obat.map((ob) => {
-          return ob.nama;
-        });
-
-        var kota = await api.find("kotas");
-        this.options["kabkota"] = kota.map((ob) => {
-          return ob.nama;
-        });
-        var provinse = await api.find("provinses");
-        this.options["provinsi"] = provinse.map((ob) => {
-          return ob.nama;
-        });
+        await this.getOptions();
 
         this.loadingToolbar = false;
 
@@ -383,9 +372,20 @@
         this.loadingBody = false;
       },
       async getOptions() {
-        var obat = await api.find("outlets");
-        console.log(obat);
-        this.options["obat"] = obat;
+        var obat = await api.find("obats");
+        this.options["obat"] = obat.map((ob) => {
+          return ob.nama;
+        });
+
+        var provinsi = await api.find("provinses");
+        this.options["provinsi"] = provinsi.map((ob) => {
+          return ob.nama;
+        });
+        this.provinsis = provinsi
+
+        // var provinsi = await api.find("provinses");
+        // console.log(provinsi);
+        // this.options["provinsi"] = provinsi;
       },
       async update() {
         this.loadingBody = true;
@@ -414,6 +414,16 @@
         this.amount = res2.data;
         // console.log(res2.data);
         this.loadingBody = false;
+
+        // await this.getKabkot()
+      },
+      async getKabkot () {
+        console.log("get kabkota")
+        this.selected["kabkota"] = this.provinsis.map((prov) => {
+          if (prov in this.selected["provinsi"]) {
+            return prov.kabkota.map((obj) => {return obj})
+          }
+        })
       },
       reset() {
         this.selected = {
@@ -431,16 +441,21 @@
       var res2 = await api.getLastShipment();
       this.selected.tanggal = res2.data[0]["tanggal"];
       await this.refreshPage();
-      await this.getOptions();
+      // await this.getOptions();
     },
     watch: {
       selected: {
         handler() {
           this.update();
+          // this.getKabkot()
         },
         deep: true,
       },
       start() {
+        // console.log(newV)
+        // if (newV > parseInt(this.amount/this.limit)+1) {
+        //   this.start = 1
+        // }
         this.update();
       },
       limit() {
