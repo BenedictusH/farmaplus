@@ -3,10 +3,7 @@
     <div class="header d-flex flex-column align-lg-center justify-center pa-lg-15 pa-3 ">
       <div class="text-lg-h1 text-h3 font-weight-bold pl-5 white--text d-flex">
         Farma Plus
-        <img
-          src="https://keamananvaksin.kemkes.go.id/assets/img/kemenkes.png"
-          class="logo"
-        />
+        <img src="https://keamananvaksin.kemkes.go.id/assets/img/kemenkes.png" class="logo" />
       </div>
       <div class="pl-5 pt-3 text-h5 white--text">Tempat Cari Obat</div>
     </div>
@@ -246,7 +243,7 @@
           <div class="text-center">
             <v-pagination
               v-model="start"
-              :length="parseInt(amount / limit)"
+              :length="parseInt(amount / limit) + 1"
               total-visible="10"
               circle
             ></v-pagination>
@@ -273,7 +270,7 @@
               <div>
                 <v-card-title class="text font-weight-bold px-0">{{ apotek.obat }}</v-card-title>
                 <v-card-subtitle class="text px-0"
-                  >Didistribusikan pada: {{ apotek.tanggal }}</v-card-subtitle
+                  >Didistribusikan pada: {{ formatTanggal(apotek.tanggal) }}</v-card-subtitle
                 >
               </div>
             </v-col>
@@ -337,16 +334,27 @@
       options: [],
     }),
     methods: {
-      formatDate(input) {
-        var date = new Date(input.substr(4, 4), input.substr(2, 2) - 1, input.substr(0, 2));
-        var formated = date
-          .toISOString()
-          .replace("-", "/")
-          .split("T")[0]
-          .replace("-", "/")
-          .split("/");
-        var result = parseInt(formated[2]) + 1 + "/" + formated[1] + "/" + formated[0];
-        return result;
+      formatAngka(num) {
+        var a = 0;
+        if (Math.abs(num) > 999999) {
+          a = Math.sign(num) * (Math.abs(num) / 1000000).toFixed(1) + "m";
+        } else {
+          a =
+            Math.abs(num) > 9999
+              ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k"
+              : Math.sign(num) * Math.abs(num);
+        }
+        return a.toString().replace(".", ",");
+      },
+      formatTanggal(tanggal) {
+        var today = new Date();
+        var target = new Date(tanggal);
+        var Difference_In_Date = (today.getTime() - target.getTime()) / (1000 * 3600 * 24);
+        if (Difference_In_Date > -1) {
+          return "hari ini";
+        } else {
+          return -1 * Difference_In_Date + " hari yang lalu";
+        }
       },
       remove(item) {
         const index = this.selectedObat.indexOf(item);
@@ -354,24 +362,30 @@
       },
       async refreshPage() {
         // this.options = await api.getField();
-        var obat = await api.find('obats')
-        this.options['obat'] = obat.map((ob) => {return ob.nama})
+        var obat = await api.find("obats");
+        this.options["obat"] = obat.map((ob) => {
+          return ob.nama;
+        });
 
-        var kota = await api.find('kotas')
-        this.options['kabkota'] = kota.map((ob) => {return ob.nama})
-        var provinse = await api.find('provinses')
-        this.options['provinsi'] = provinse.map((ob) => {return ob.nama})
-      
+        var kota = await api.find("kotas");
+        this.options["kabkota"] = kota.map((ob) => {
+          return ob.nama;
+        });
+        var provinse = await api.find("provinses");
+        this.options["provinsi"] = provinse.map((ob) => {
+          return ob.nama;
+        });
+
         this.loadingToolbar = false;
 
         var res = await this.update();
         this.body = res.data;
         this.loadingBody = false;
       },
-      async getOptions(){
-        var obat = await api.find('outlets')
-        console.log(obat)
-        this.options['obat'] = obat
+      async getOptions() {
+        var obat = await api.find("outlets");
+        console.log(obat);
+        this.options["obat"] = obat;
       },
       async update() {
         this.loadingBody = true;
@@ -417,7 +431,7 @@
       var res2 = await api.getLastShipment();
       this.selected.tanggal = res2.data[0]["tanggal"];
       await this.refreshPage();
-      await this.getOptions()
+      await this.getOptions();
     },
     watch: {
       selected: {
@@ -490,20 +504,20 @@
     width: 100%;
     height: 300px;
     background-color: #16b3ac;
-    background-image: linear-gradient(315deg, #d2dc02 0%, #16b3ac 50%);
-    background-size: 400% 400%;
-    animation: gradient 10s ease infinite;
+    background-image: linear-gradient(120deg, #16b3ac 0%, #d1dc03 80%);
+    background-size: 1000% 1000%;
+    animation: gradient 20s ease infinite;
   }
 
   @keyframes gradient {
     0% {
-      background-position: 0% 50%;
+      background-position: 0% 0%;
     }
     50% {
-      background-position: 100% 50%;
+      background-position: 100% 100%;
     }
     100% {
-      background-position: 0% 50%;
+      background-position: 0% 0%;
     }
   }
 
