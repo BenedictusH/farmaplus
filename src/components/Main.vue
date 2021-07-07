@@ -291,7 +291,7 @@
                   text--darken-4
                 "
               >
-                {{ apotek.jumlah }}
+                {{  formatAngka(apotek.jumlah) }}
               </v-card-title>
 
               <!-- <v-card-actions class="px-0 pt-7">
