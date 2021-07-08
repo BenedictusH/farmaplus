@@ -214,7 +214,7 @@
           </v-autocomplete>
         </v-col>
         <v-col cols="6" lg="4" class="px-5 mt-lg-0 mt-5 mb-lg-0 mb-5">
-          <span class="pl-5">Kabupaten/Kota</span>
+          <!-- <span class="pl-5">Kabupaten/Kota</span>
           <v-autocomplete
             v-model="selected.kabkota"
             :items="options.kabkota"
@@ -226,7 +226,7 @@
             deletable-chips
             rounded
           >
-          </v-autocomplete>
+          </v-autocomplete> -->
         </v-col>
 
         <v-col cols="2 px-5 mt-5">
