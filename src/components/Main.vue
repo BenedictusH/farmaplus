@@ -22,7 +22,12 @@
     <v-dialog v-model="dialog">
       <v-card rounded>
         <div class="" v-if="!loadingToolbar">
-          <v-row class="px-lg-16 px-0 py-5" no-gutters>
+          <v-row class="px-5 py-5" no-gutters>
+            <v-col cols="12" class="d-flex justify-end">
+              <v-icon @click.stop="dialog = false">mdi-close</v-icon>
+            </v-col>
+          </v-row>
+          <v-row class="px-lg-16 px-0" no-gutters>
             <v-col cols="12" lg="8" class="px-5">
               <v-text-field
                 filled
@@ -30,22 +35,22 @@
                 dense
                 label="Search"
                 append-icon="mdi-magnify"
-                v-model="selected.name"
+                v-model="input.name"
               ></v-text-field>
             </v-col>
             <v-col cols="12" lg="4" class="px-5">
               <v-menu
-                ref="menu"
-                v-model="menu"
+                ref="menuInput"
+                v-model="menuInput"
                 :close-on-content-click="false"
-                :return-value.sync="selected.tanggal"
+                :return-value.sync="input.tanggal"
                 transition="scale-transition"
                 offset-y
                 min-width="auto"
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    v-model="selected.tanggal"
+                    v-model="input.tanggal"
                     filled
                     rounded
                     label="Pilih Tanggal"
@@ -54,10 +59,10 @@
                     v-on="on"
                   ></v-text-field>
                 </template>
-                <v-date-picker v-model="selected.tanggal" no-title scrollable>
+                <v-date-picker v-model="input.tanggal" no-title scrollable>
                   <v-spacer></v-spacer>
-                  <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
-                  <v-btn text color="primary" @click="$refs.menu.save(selected.tanggal)">
+                  <v-btn text color="primary" @click="menuInput = false"> Cancel </v-btn>
+                  <v-btn text color="primary" @click="$refs.menuInput.save(input.tanggal)">
                     OK
                   </v-btn>
                 </v-date-picker>
@@ -66,7 +71,7 @@
             <v-col cols="12" lg="4" class="px-5">
               <span class="pl-5">Obat</span>
               <v-autocomplete
-                v-model="selected.obat"
+                v-model="input.obat"
                 :items="options.obat"
                 chips
                 filled
@@ -81,7 +86,7 @@
             <v-col cols="12" lg="4" class="px-5 mt-lg-0 mt-5">
               <span class="pl-5">Provinsi</span>
               <v-autocomplete
-                v-model="selected.provinsi"
+                v-model="input.provinsi"
                 :items="options.provinsi"
                 chips
                 filled
@@ -118,7 +123,7 @@
                 ></v-pagination>
               </div>
             </v-col>
-            <v-col cols="6 px-5 mt-5">
+            <v-col cols="6 px-5 mt-5 mb-5">
               <v-autocomplete
                 v-model="limit"
                 :items="limitOptions"
@@ -130,8 +135,9 @@
               </v-autocomplete>
             </v-col>
 
-            <v-col cols="6 mt-5" class="pr-5" style="display: flex; justify-content: flex-end">
-              <v-btn color="error" elevation="2" class="ml-5" rounded @click="reset">Reset</v-btn>
+            <v-col cols="6 mt-5 mb-5" class="pr-5" style="display: flex; justify-content: flex-end; align-items: center">
+              <v-btn color="error" small elevation="2" class="text-body2" rounded @click="resetInput">Reset</v-btn>
+              <v-btn color="primary" small elevation="2" class="ml-1 text-body2" rounded @click="searchInput">Search</v-btn>
             </v-col>
           </v-row>
         </div>
@@ -318,6 +324,7 @@
       shipment: [],
       date: [],
       menu: false,
+      menuInput: false,
       loadingToolbar: false,
       loadingBody: true,
       start: 1,
@@ -325,6 +332,13 @@
       dialog: false,
       limitOptions: [10, 20, 50, 100],
       selected: {
+        name: [],
+        obat: [],
+        provinsi: [],
+        kabkota: [],
+        tanggal: [],
+      },
+      input: {
         name: [],
         obat: [],
         provinsi: [],
@@ -436,6 +450,21 @@
           limit: 10,
         };
       },
+      resetInput() {
+        this.input = {
+          name: [],
+          obat: [],
+          provinsi: [],
+          kabkota: [],
+          tanggal: [],
+          start: 0,
+          limit: 10,
+        };
+      },
+      searchInput() {
+        this.selected = JSON.parse(JSON.stringify(this.input))
+        this.dialog = false
+      }
     },
     async mounted() {
       var res2 = await api.getLastShipment();
