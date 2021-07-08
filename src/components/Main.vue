@@ -53,6 +53,7 @@
                     v-model="input.tanggal"
                     filled
                     rounded
+                    hide-details
                     label="Pilih Tanggal"
                     append-icon="mdi-calendar"
                     v-bind="attrs"
@@ -68,7 +69,7 @@
                 </v-date-picker>
               </v-menu>
             </v-col>
-            <v-col cols="12" lg="4" class="px-5">
+            <v-col cols="12" lg="4" class="px-5 mt-5">
               <span class="pl-5">Obat</span>
               <v-autocomplete
                 v-model="input.obat"
@@ -135,9 +136,29 @@
               </v-autocomplete>
             </v-col>
 
-            <v-col cols="6 mt-5 mb-5" class="pr-5" style="display: flex; justify-content: flex-end; align-items: center">
-              <v-btn color="error" small elevation="2" class="text-body2" rounded @click="resetInput">Reset</v-btn>
-              <v-btn color="primary" small elevation="2" class="ml-1 text-body2" rounded @click="searchInput">Search</v-btn>
+            <v-col
+              cols="6 mt-5 mb-5"
+              class="pr-5"
+              style="display: flex; justify-content: flex-end; align-items: center"
+            >
+              <v-btn
+                color="error"
+                small
+                elevation="2"
+                class="text-body2"
+                rounded
+                @click="resetInput"
+                >Reset</v-btn
+              >
+              <v-btn
+                color="primary"
+                small
+                elevation="2"
+                class="ml-1 text-body2"
+                rounded
+                @click="searchInput"
+                >Search</v-btn
+              >
             </v-col>
           </v-row>
         </div>
@@ -270,18 +291,18 @@
                 <v-card-title class="text-lg-h5 text-md-h4 font-weight-bold pt-0 pl-0">
                   {{ apotek.nama }}
                 </v-card-title>
-                <v-card-subtitle class="px-0"
+                <v-card-subtitle class="px-0 pb-0 pb-lg-5"
                   >{{ apotek.kabkota }}, {{ apotek.provinsi }}</v-card-subtitle
                 >
               </div>
               <div>
                 <v-card-title class="text font-weight-bold px-0">{{ apotek.obat }}</v-card-title>
-                <v-card-subtitle class="text px-0"
+                <v-card-subtitle class="text px-0 pb-0 pb-lg-5"
                   >Didistribusikan pada: {{ formatTanggal(apotek.tanggal) }}</v-card-subtitle
                 >
               </div>
             </v-col>
-            <v-col lg="5" cols="12" class="card-right">
+            <v-col lg="5" cols="12" class="card-right py-0 py-lg-5">
               <v-card-subtitle class="pa-0 grey--text text-h6 text--darken-3"
                 >Jumlah</v-card-subtitle
               >
@@ -298,7 +319,7 @@
                   text--darken-4
                 "
               >
-                {{  formatAngka(apotek.jumlah) }}
+                {{ formatAngka(apotek.jumlah) }}
               </v-card-title>
 
               <!-- <v-card-actions class="px-0 pt-7">
@@ -345,7 +366,7 @@
         kabkota: [],
         tanggal: [],
       },
-      provinsis : [],
+      provinsis: [],
       body: [],
       options: [],
     }),
@@ -395,7 +416,7 @@
         this.options["provinsi"] = provinsi.map((ob) => {
           return ob.nama;
         });
-        this.provinsis = provinsi
+        this.provinsis = provinsi;
 
         // var provinsi = await api.find("provinses");
         // console.log(provinsi);
@@ -431,13 +452,15 @@
 
         // await this.getKabkot()
       },
-      async getKabkot () {
-        console.log("get kabkota")
+      async getKabkot() {
+        console.log("get kabkota");
         this.selected["kabkota"] = this.provinsis.map((prov) => {
           if (prov in this.selected["provinsi"]) {
-            return prov.kabkota.map((obj) => {return obj})
+            return prov.kabkota.map((obj) => {
+              return obj;
+            });
           }
-        })
+        });
       },
       reset() {
         this.selected = {
@@ -462,9 +485,9 @@
         };
       },
       searchInput() {
-        this.selected = JSON.parse(JSON.stringify(this.input))
-        this.dialog = false
-      }
+        this.selected = JSON.parse(JSON.stringify(this.input));
+        this.dialog = false;
+      },
     },
     async mounted() {
       var res2 = await api.getLastShipment();
@@ -554,13 +577,10 @@
   }
 
   @keyframes gradient {
-    0% {
-      background-position: 0% 0%;
-    }
-    50% {
+    32.5% {
       background-position: 100% 100%;
     }
-    100% {
+    75% {
       background-position: 0% 0%;
     }
   }
