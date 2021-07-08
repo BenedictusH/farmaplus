@@ -99,6 +99,21 @@
               >
               </v-autocomplete>
             </v-col>
+            <v-col cols="12" lg="4" class="px-5 mt-lg-0 mt-5 mb-lg-0 mb-5">
+              <span class="pl-5">Distributor</span>
+              <v-autocomplete
+                v-model="selected.provinsi"
+                :items="options.provinsi"
+                chips
+                filled
+                hide-details
+                multiple
+                clearable
+                deletable-chips
+                rounded
+              >
+              </v-autocomplete>
+            </v-col>
             <!-- <v-col cols="12" lg="4" class="px-5 mt-lg-0 mt-5 mb-lg-0 mb-5">
               <span class="pl-5">Kabupaten/Kota</span>
               <v-autocomplete
@@ -240,8 +255,23 @@
           >
           </v-autocomplete>
         </v-col>
-        <v-col cols="6" lg="4" class="px-5 mt-lg-0 mt-5 mb-lg-0 mb-5">
-          <!-- <span class="pl-5">Kabupaten/Kota</span>
+        <v-col cols="12" lg="4" class="px-5 mt-lg-0 mt-5 mb-lg-0 mb-5">
+              <span class="pl-5">Distributor</span>
+              <v-autocomplete
+                v-model="selected.provinsi"
+                :items="options.provinsi"
+                chips
+                filled
+                hide-details
+                multiple
+                clearable
+                deletable-chips
+                rounded
+              >
+              </v-autocomplete>
+            </v-col>
+        <!-- <v-col cols="6" lg="4" class="px-5 mt-lg-0 mt-5 mb-lg-0 mb-5">
+          <span class="pl-5">Kabupaten/Kota</span>
           <v-autocomplete
             v-model="selected.kabkota"
             :items="options.kabkota"
@@ -253,8 +283,8 @@
             deletable-chips
             rounded
           >
-          </v-autocomplete> -->
-        </v-col>
+          </v-autocomplete>
+        </v-col> -->
 
         <v-col cols="2 px-5 mt-5">
           <v-autocomplete
@@ -282,7 +312,22 @@
         </v-col>
       </v-row>
     </div>
-    <v-row class="px-lg-16 px-3 pb-10 mt-5 cards-body" align="stretch" v-if="!loadingBody">
+    <v-row class="px-lg-16 px-3 pb-10 mt-5 cards-body" align="stretch" v-if="!loadingBody && amount == 0">
+      <v-col cols="12" class="d-flex align-center justify-center" style="height: 50vh;">
+        <v-alert
+        outlined
+        type="warning"
+        prominent
+        border="left"
+      >
+        {{amountWriter()}}
+      </v-alert>
+      </v-col>
+    </v-row>
+    <v-row class="px-lg-16 px-3 pb-10 mt-5 cards-body" align="stretch" v-if="!loadingBody && amount !== 0">
+      <v-col cols="12" class="text-center">
+        {{amountWriter()}}
+      </v-col>
       <v-col v-for="(apotek, index) in body" :key="index" lg="6" cols="12" class="px-7">
         <v-card elevation="5" class="card" height="100%">
           <v-row class="pa-5">
@@ -303,7 +348,8 @@
               </div>
             </v-col>
             <v-col lg="5" cols="12" class="card-right py-0 py-lg-5">
-              <v-card-subtitle class="pa-0 grey--text text-h6 text--darken-3"
+              <div>
+                <v-card-subtitle class="pa-0 grey--text text-h6 text--darken-3"
                 >Jumlah</v-card-subtitle
               >
               <v-card-title
@@ -321,6 +367,9 @@
               >
                 {{ formatAngka(apotek.jumlah) }}
               </v-card-title>
+              </div>
+
+              <span class="badgeDistributor badge--small mb-3">Distributor</span>
 
               <!-- <v-card-actions class="px-0 pt-7">
                 <v-btn outlined rounded text>
@@ -462,6 +511,15 @@
           }
         });
       },
+      amountWriter() {
+        if (this.amount == 0) {
+          return 'There are none available'
+        } else if (this.amount == 1) {
+          return 'There is 1 result'
+        } else {
+          return 'There are ' + this.amount + ' results'
+        }
+      },
       reset() {
         this.selected = {
           name: [],
@@ -543,6 +601,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    justify-content: space-between;
   }
 
   .card-left {
@@ -575,6 +634,24 @@
     background-size: 1000% 1000%;
     animation: gradient 20s ease infinite;
   }
+  .badgeDistributor {
+    box-sizing: border-box;
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    
+    border-radius: 3rem;
+    text-align: center;
+
+    font-size: 0.9rem;
+    font-weight: 400;
+    padding: .05rem .8rem .1rem;
+    line-height: inherit;
+  }
+  .badge--small {
+    padding: .1rem .65rem .2rem;
+}
+
 
   @keyframes gradient {
     32.5% {
