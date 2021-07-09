@@ -75,8 +75,8 @@ export default {
     var response = axios.get(`${STRAPI_URL}/${path}?${query}&_sort=jumlah:DESC&_start=${newStart}&_limit=${limit}`);
     return response;
   },
-  async count(name, obat, provinsi, kabkota, tanggal,) {
-    console.log(name, obat, provinsi, kabkota, tanggal,);
+  async count(name, obat, provinsi, kabkota, tanggal) {
+    // console.log(name, obat, provinsi, kabkota, tanggal);
     const query = qs.stringify({
       _where: {
         _or: [
@@ -90,10 +90,10 @@ export default {
         ],
       },
     });
-    console.log(query);
+    // console.log(query);
     var path = "outlets";
     var response = axios.get(`${STRAPI_URL}/${path}/count?${query}&_sort=jumlah:DESC`);
-    console.log(response)
+    // console.log(response)
     return response;
   },
   async getLastShipment () {
