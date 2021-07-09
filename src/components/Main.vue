@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper">
-    <!-- {{provinsis}} -->
     <div
       class="
         header
@@ -20,262 +19,14 @@
       </div>
       <div class="pl-5 pt-3 text-h5 white--text">Find your medicine here</div>
     </div>
-    <v-btn
-      @click.stop="dialog = true"
-      fab
-      class="d-block d-lg-none"
-      style="
-        margin-left: 20px;
-        margin-top: 20px;
-        z-index: 20;
-        background-color: white;
-      "
-      v-if="!loadingToolbar"
-    >
-      <v-icon dark> mdi-menu </v-icon>
-    </v-btn>
-    <!-- 
-      Toolbar Phone
-    -->
-    <v-dialog v-model="dialog">
-      <v-card rounded>
-        <div class="" v-if="!loadingToolbar">
-          <v-row class="px-5 py-5" no-gutters>
-            <v-col cols="12" class="d-flex justify-end">
-              <v-icon @click.stop="dialog = false">mdi-close</v-icon>
-            </v-col>
-          </v-row>
-          <v-row class="px-lg-16 px-0" no-gutters>
-            <v-col cols="12" lg="8" class="px-5">
-              <v-text-field
-                filled
-                rounded
-                dense
-                label="Search"
-                append-icon="mdi-magnify"
-                v-model="selected.name"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" lg="4" class="px-5">
-              <v-menu
-                ref="menuInput"
-                v-model="menuInput"
-                :close-on-content-click="false"
-                :return-value.sync="selected.tanggal"
-                transition="scale-transition"
-                offset-y
-                min-width="auto"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
-                    v-model="selected.tanggal"
-                    filled
-                    rounded
-                    hide-details
-                    label="Pilih Tanggal"
-                    append-icon="mdi-calendar"
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker v-model="selected.tanggal" no-title scrollable>
-                  <v-spacer></v-spacer>
-                  <v-btn text color="primary" @click="menuInput = false">
-                    Cancel
-                  </v-btn>
-                  <v-btn
-                    text
-                    color="primary"
-                    @click="$refs.menuInput.save(selected.tanggal)"
-                  >
-                    OK
-                  </v-btn>
-                </v-date-picker>
-              </v-menu>
-            </v-col>
-            <v-col cols="12" lg="4" class="px-5 mt-5">
-              <span class="pl-5">Obat</span>
-              <v-autocomplete
-                v-model="selected.obat"
-                :items="options.obat"
-                chips
-                filled
-                hide-details
-                multiple
-                clearable
-                deletable-chips
-                rounded
-              >
-              </v-autocomplete>
-            </v-col>
-            <v-col cols="12" lg="4" class="px-5 mt-lg-0 mt-5">
-              <span class="pl-5">Provinsi</span>
-              <v-autocomplete
-                v-model="selected.provinsi"
-                :items="options.provinsi"
-                chips
-                filled
-                hide-details
-                multiple
-                clearable
-                deletable-chips
-                rounded
-              >
-              </v-autocomplete>
-            </v-col>
-            <!-- <v-col cols="12" lg="4" class="px-5 mt-lg-0 mt-5 mb-lg-0 mb-5">
-              <span class="pl-5">Distributor</span>
-              <v-autocomplete
-                v-model="selected.provinsi"
-                :items="options.provinsi"
-                chips
-                filled
-                hide-details
-                multiple
-                clearable
-                deletable-chips
-                rounded
-              >
-              </v-autocomplete>
-            </v-col> -->
-            <!-- <v-col cols="12" lg="4" class="px-5 mt-lg-0 mt-5 mb-lg-0 mb-5">
-              <span class="pl-5">Kabupaten/Kota</span>
-              <v-autocomplete
-                v-model="selected.kabkota"
-                :items="options.kabkota"
-                chips
-                filled
-                hide-details
-                multiple
-                clearable
-                deletable-chips
-                rounded
-              >
-              </v-autocomplete>
-            </v-col> -->
-            <v-col cols="12 mt-5">
-              <div class="text-center">
-                <v-pagination
-                  v-model="start"
-                  :length="parseInt(amount / limit) + 1"
-                  total-visible="4"
-                  circle
-                ></v-pagination>
-              </div>
-            </v-col>
-            <v-col cols="6 px-5 mt-5 mb-5">
-              <v-autocomplete
-                v-model="limit"
-                :items="limitOptions"
-                filled
-                hide-details
-                dense
-                rounded
-              >
-              </v-autocomplete>
-            </v-col>
-
-            <v-col
-              cols="6 mt-5 mb-5"
-              class="pr-5"
-              style="
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
-              "
-            >
-              <v-btn
-                color="error"
-                small
-                elevation="2"
-                class="text-body2"
-                rounded
-                @click="reset"
-                >Reset</v-btn
-              >
-              <v-btn
-                color="primary"
-                small
-                elevation="2"
-                class="ml-1 text-body2"
-                rounded
-                @click="searchInput"
-                >Search</v-btn
-              >
-            </v-col>
-          </v-row>
-        </div>
-      </v-card>
-    </v-dialog>
     <!-- Toolbar Desktop -->
     <div
-      class="toolbar d-none d-lg-block"
-      style="position: sticky; top: 0; z-index: 20; background-color: white"
+      class="toolbar"
+      style="background-color: white"
       v-if="!loadingToolbar"
     >
       <v-row class="px-lg-16 px-0 pt-5" no-gutters>
-        <v-col cols="12" lg="8" class="px-5">
-          <span class="pl-5">Nama</span>
-          <v-text-field
-            filled
-            rounded
-            dense
-            label="Search"
-            append-icon="mdi-magnify"
-            v-model="selected.name"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" lg="4" class="px-5">
-          <span class="pl-5">Tanggal</span>
-          <v-menu
-            ref="menu"
-            v-model="menu"
-            :close-on-content-click="false"
-            :return-value.sync="selected.tanggal"
-            transition="scale-transition"
-            offset-y
-            min-width="auto"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field
-                v-model="selected.tanggal"
-                filled
-                rounded
-                label="Pilih Tanggal"
-                append-icon="mdi-calendar"
-                v-bind="attrs"
-                v-on="on"
-              ></v-text-field>
-            </template>
-            <v-date-picker v-model="selected.tanggal" no-title scrollable>
-              <v-spacer></v-spacer>
-              <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
-              <v-btn
-                text
-                color="primary"
-                @click="$refs.menu.save(selected.tanggal)"
-              >
-                OK
-              </v-btn>
-            </v-date-picker>
-          </v-menu>
-        </v-col>
-        <v-col cols="6" lg="4" class="px-5">
-          <span class="pl-5">Obat</span>
-          <v-autocomplete
-            v-model="selected.obat"
-            :items="options.obat"
-            chips
-            filled
-            hide-details
-            multiple
-            clearable
-            deletable-chips
-            rounded
-          >
-          </v-autocomplete>
-        </v-col>
-        <v-col cols="6" lg="4" class="px-5">
+        <v-col cols="6" class="px-5">
           <span class="pl-5">Provinsi</span>
           <v-autocomplete
             v-model="selected.provinsi"
@@ -287,25 +38,11 @@
             clearable
             deletable-chips
             rounded
+            dense
           >
           </v-autocomplete>
         </v-col>
-        <!-- <v-col cols="12" lg="4" class="px-5 mt-lg-0 mt-5 mb-lg-0 mb-5"> -->
-          <!-- <span class="pl-5">Distributor</span>
-              <v-autocomplete
-                v-model="selected.provinsi"
-                :items="options.provinsi"
-                chips
-                filled
-                hide-details
-                multiple
-                clearable
-                deletable-chips
-                rounded
-              >
-              </v-autocomplete> -->
-        <!-- </v-col> -->
-        <v-col cols="6" lg="4" class="px-5 mt-lg-0 mt-5 mb-lg-0 mb-5">
+        <v-col cols="6" class="px-5">
           <span class="pl-5">Kabupaten/Kota</span>
           <v-autocomplete
             v-model="selected.kabkota"
@@ -317,11 +54,12 @@
             clearable
             deletable-chips
             rounded
+            dense
           >
           </v-autocomplete>
         </v-col>
 
-        <v-col cols="2 px-5 mt-5">
+        <!-- <v-col cols="2 px-5 mt-5">
           <v-autocomplete
             v-model="limit"
             :items="limitOptions"
@@ -341,11 +79,29 @@
               circle
             ></v-pagination>
           </div>
+        </v-col> -->
+
+        <v-col cols="12" class="pt-5">
+          <v-data-table
+            mobile-breakpoint="0"
+            :headers="headers"
+            :items="tableItems"
+            v-model="selectingObat"
+            item-key="obat"
+            dense
+            show-select
+            :single-select="false"
+            hide-default-footer
+          >
+          </v-data-table>
+        </v-col>
+        <v-col class="d-flex justify-center align-center mt-5 flex-column" cols="8" offset="2" v-show="!loadingBody">
+          <div>Total: {{getTotal(tableItems)}}</div>
+          <div>{{ amountWriter() }}</div>
         </v-col>
         <v-col
-          cols="2 mt-5"
-          class="pr-5"
-          style="display: flex; justify-content: flex-end"
+          cols="2"
+          class="d-flex justify-end align-center pr-5 mt-5"
         >
           <v-btn color="error" elevation="2" class="ml-5" rounded @click="reset"
             >Reset</v-btn
@@ -374,9 +130,6 @@
       align="stretch"
       v-if="!loadingBody && amount !== 0"
     >
-      <v-col cols="12" class="text-center">
-        {{ amountWriter() }}
-      </v-col>
       <v-col
         v-for="(apotek, index) in body"
         :key="index"
@@ -447,6 +200,35 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row class="justify-center pb-10">
+      <v-col cols="1 mt-4">
+        <v-autocomplete
+          v-model="limit"
+          :items="limitOptions"
+          filled
+          hide-details
+          deletable-chips
+          rounded
+        >
+        </v-autocomplete>
+      </v-col>
+      <div class="text-center mt-10 px-5">
+        <p class="">
+          {{ (start - 1) * limit + 1 }} - {{ (start - 1) * limit + limit }} of
+          {{ amount }}
+        </p>
+      </div>
+      <v-col cols="1 mt-5">
+        <div class="text-center">
+          <v-pagination
+            v-model="start"
+            :length="parseInt(amount / limit) + 1"
+            total-visible="0"
+            circle
+          ></v-pagination>
+        </div>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -484,11 +266,42 @@ export default {
     provinsis: [],
     body: [],
     options: [],
+    headers: [
+      {
+        text: 'Jenis Obat',
+        value: 'obat',
+      },
+      { text: 'Jumlah', value: 'jumlah' },
+    ],
+    tableItems: [
+    ],
+    selectingObat: [],
+    province: ''
   }),
   methods: {
+    async optionsToTable() {
+      await Promise.all(this.options.obat.map((r) => {
+        var item = {
+          obat: '',
+          jumlah: 0
+        }
+        item.obat = r
+        item.jumlah = 1000
+
+        this.tableItems.push(item)
+      }))
+
+      console.log(this.tableItems)
+    },
+    getTotal(items) {
+      var x = items.map((r) => {
+        return r.jumlah
+      })
+      return x.reduce((a, b) => a + b, 0)
+    },
     capitalizeFirstLetter(str) {
       const lower = str.toLowerCase();
-  return str.charAt(0).toUpperCase() + lower.slice(1);
+      return str.charAt(0).toUpperCase() + lower.slice(1);
     },
     formatNama(nama) {
       if (nama.toLowerCase().includes("apotek") ) {
@@ -524,12 +337,9 @@ export default {
         return -1 * Difference_In_Date + " hari yang lalu";
       }
     },
-    remove(item) {
-      const index = this.selectedObat.indexOf(item);
-      if (index >= 0) this.selectedObat.splice(index, 1);
-    },
     async refreshPage() {
       await this.getOptions();
+      this.optionsToTable()
 
       this.loadingToolbar = false;
 
@@ -554,6 +364,7 @@ export default {
       // this.options["provinsi"] = provinsi;
     },
     async update() {
+      this.province = this.selected.provinsi
       this.loadingBody = true;
 
       var res = await api.filter(
@@ -584,12 +395,21 @@ export default {
       // await this.getKabkot()
     },
     async getKabkot() {
-      console.log("get kabkota");
-      this.selected["kabkota"] = this.provinsis.map((prov) => {
-        if (prov in this.selected["provinsi"]) {
-          return prov
-        }
-      });
+      // console.log("get kabkota");
+      // console.log(this.provinsis)
+      var select_kabkota = []
+      await Promise.all((this.selected["provinsi"].map( async (selected_provinsi) => {
+        // console.log(selected_provinsi)
+        await Promise.all(this.provinsis.map( async (provinsi) => {
+          if (provinsi.nama == selected_provinsi) {
+            await Promise.all(provinsi.Kabkota.map((r) => {
+              select_kabkota.push(r.nama)
+            }))
+            this.options["kabkota"] = select_kabkota
+          }
+        }))
+      })))
+
     },
     amountWriter() {
       if (this.amount == 0) {
@@ -601,6 +421,7 @@ export default {
       }
     },
     async reset() {
+      this.selectingObat = []
       this.selected = {
         name: [],
         obat: [],
@@ -653,6 +474,19 @@ export default {
     limit() {
       this.update();
     },
+    selectingObat: function (newvar) {
+      var x = newvar.map((r) => {
+        return r.obat
+      })
+      this.selected.obat = x
+    },
+    province: function (newvar) {
+      if (newvar.length == 0) {
+        this.options["kabkota"] = []
+      } else {
+        this.getKabkot()
+      }
+    }
   },
 };
 </script>
@@ -688,6 +522,10 @@ export default {
 
 .card-left {
   width: 50%;
+}
+
+a {
+  text-decoration: none;
 }
 
 .toolbar {
