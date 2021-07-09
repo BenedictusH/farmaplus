@@ -6,7 +6,7 @@
         Farma Plus
         <img src="https://keamananvaksin.kemkes.go.id/assets/img/kemenkes.png" class="logo" />
       </div>
-      <div class="pl-5 pt-3 text-h5 white--text">Tempat Cari Obat</div>
+      <div class="pl-5 pt-3 text-h5 white--text">Find your medicine here</div>
     </div>
     <v-btn
       @click.stop="dialog = true"
@@ -35,7 +35,7 @@
                 dense
                 label="Search"
                 append-icon="mdi-magnify"
-                v-model="input.name"
+                v-model="selected.name"
               ></v-text-field>
             </v-col>
             <v-col cols="12" lg="4" class="px-5">
@@ -43,14 +43,14 @@
                 ref="menuInput"
                 v-model="menuInput"
                 :close-on-content-click="false"
-                :return-value.sync="input.tanggal"
+                :return-value.sync="selected.tanggal"
                 transition="scale-transition"
                 offset-y
                 min-width="auto"
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    v-model="input.tanggal"
+                    v-model="selected.tanggal"
                     filled
                     rounded
                     hide-details
@@ -60,10 +60,10 @@
                     v-on="on"
                   ></v-text-field>
                 </template>
-                <v-date-picker v-model="input.tanggal" no-title scrollable>
+                <v-date-picker v-model="selected.tanggal" no-title scrollable>
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menuInput = false"> Cancel </v-btn>
-                  <v-btn text color="primary" @click="$refs.menuInput.save(input.tanggal)">
+                  <v-btn text color="primary" @click="$refs.menuInput.save(selected.tanggal)">
                     OK
                   </v-btn>
                 </v-date-picker>
@@ -72,7 +72,7 @@
             <v-col cols="12" lg="4" class="px-5 mt-5">
               <span class="pl-5">Obat</span>
               <v-autocomplete
-                v-model="input.obat"
+                v-model="selected.obat"
                 :items="options.obat"
                 chips
                 filled
@@ -87,7 +87,7 @@
             <v-col cols="12" lg="4" class="px-5 mt-lg-0 mt-5">
               <span class="pl-5">Provinsi</span>
               <v-autocomplete
-                v-model="input.provinsi"
+                v-model="selected.provinsi"
                 :items="options.provinsi"
                 chips
                 filled
@@ -99,7 +99,7 @@
               >
               </v-autocomplete>
             </v-col>
-            <v-col cols="12" lg="4" class="px-5 mt-lg-0 mt-5 mb-lg-0 mb-5">
+            <!-- <v-col cols="12" lg="4" class="px-5 mt-lg-0 mt-5 mb-lg-0 mb-5">
               <span class="pl-5">Distributor</span>
               <v-autocomplete
                 v-model="selected.provinsi"
@@ -113,7 +113,7 @@
                 rounded
               >
               </v-autocomplete>
-            </v-col>
+            </v-col> -->
             <!-- <v-col cols="12" lg="4" class="px-5 mt-lg-0 mt-5 mb-lg-0 mb-5">
               <span class="pl-5">Kabupaten/Kota</span>
               <v-autocomplete
@@ -162,7 +162,7 @@
                 elevation="2"
                 class="text-body2"
                 rounded
-                @click="resetInput"
+                @click="reset"
                 >Reset</v-btn
               >
               <v-btn
@@ -256,7 +256,7 @@
           </v-autocomplete>
         </v-col>
         <v-col cols="12" lg="4" class="px-5 mt-lg-0 mt-5 mb-lg-0 mb-5">
-              <span class="pl-5">Distributor</span>
+              <!-- <span class="pl-5">Distributor</span>
               <v-autocomplete
                 v-model="selected.provinsi"
                 :items="options.provinsi"
@@ -268,7 +268,7 @@
                 deletable-chips
                 rounded
               >
-              </v-autocomplete>
+              </v-autocomplete> -->
             </v-col>
         <!-- <v-col cols="6" lg="4" class="px-5 mt-lg-0 mt-5 mb-lg-0 mb-5">
           <span class="pl-5">Kabupaten/Kota</span>
@@ -369,7 +369,7 @@
               </v-card-title>
               </div>
 
-              <span class="badgeDistributor badge--small mb-3">Distributor</span>
+              <!-- <span class="badgeDistributor badge--small mb-3">Distributor</span> -->
 
               <!-- <v-card-actions class="px-0 pt-7">
                 <v-btn outlined rounded text>
@@ -515,12 +515,13 @@
         if (this.amount == 0) {
           return 'There are none available'
         } else if (this.amount == 1) {
-          return 'There is 1 result'
+          return 'Showing 1 result'
         } else {
-          return 'There are ' + this.amount + ' results'
+          return 'Showing ' + this.amount + ' results'
         }
       },
-      reset() {
+      async reset() {
+
         this.selected = {
           name: [],
           obat: [],
@@ -530,6 +531,8 @@
           start: 0,
           limit: 10,
         };
+        var res2 = await api.getLastShipment();
+        this.selected.tanggal = res2.data[0]["tanggal"];
       },
       resetInput() {
         this.input = {
@@ -543,7 +546,7 @@
         };
       },
       searchInput() {
-        this.selected = JSON.parse(JSON.stringify(this.input));
+        // this.selected = JSON.parse(JSON.stringify(this.input));
         this.dialog = false;
       },
     },
