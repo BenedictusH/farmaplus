@@ -110,18 +110,16 @@
           </v-data-table> -->
         </v-col>
         <v-col
-          class="d-flex justify-center align-center mt-5 flex-column"
+          class="d-flex justify-center align-md-center align-start mt-5 flex-column"
           cols="8"
           offset="2"
           v-show="!loadingBody"
         >
           <!-- <div>Total: {{ getTotal(tableItems) }}</div> -->
-          <div>{{ amountWriter() }}</div>
+          <div v-show="amount !== 0">{{ amountWriter() }}</div>
         </v-col>
-        <v-col cols="2" class="d-flex justify-end align-center pr-5 mt-5">
-          <v-btn color="error" elevation="2" class="ml-5" rounded @click="reset"
-            >Reset</v-btn
-          >
+        <v-col cols="2" class="d-flex justify-end align-center pr-md-5 pr-7 mt-5">
+          <v-btn color="error" elevation="2" class="ml-5" rounded @click="reset">Reset</v-btn>
         </v-col>
       </v-row>
     </div>
@@ -144,14 +142,21 @@
     <v-row
       class="px-lg-16 px-3 pb-10 mt-5 cards-body"
       align="stretch"
-      v-if="!loadingBody && amount !== 0"
+      v-if="amount !== 0"
     >
+      <v-col lg="6"
+        cols="12"
+        class="px-7" v-for="index in 10" :key="index" v-show="loadingBody">
+        <v-skeleton-loader type="article" class="mb-6" elevation="2">
+        </v-skeleton-loader>
+      </v-col>
       <v-col
         v-for="(apotek, index) in body"
         :key="index"
         lg="6"
         cols="12"
         class="px-7"
+        v-show="!loadingBody"
       >
         <v-card elevation="5" class="card" height="100%">
           <v-row class="pa-5">
@@ -222,7 +227,7 @@
       </v-col>
     </v-row>
      <v-row class="pb-10 px-7 px-lg-0" justify="center">
-      <v-col cols="3 mt-4" md="2" lg="1">
+      <v-col cols="5 mt-4" md="2" lg="1">
         <v-autocomplete
           v-model="limit"
           :items="limitOptions"
@@ -241,12 +246,26 @@
         </p>
       </div>
       </v-col> -->
-      <v-col cols="8 mt-5" md="5">
+
+      <!-- lg pagination -->
+      <v-col cols="8 mt-5 d-md-block d-none" md="5">
         <div class="text-center">
           <v-pagination
             v-model="start"
             :length="parseInt(amount / limit) + 1"
             total-visible="10"
+            circle
+          ></v-pagination>
+        </div>
+      </v-col>
+
+      <!-- phone pagination -->
+      <v-col cols="12 d-md-none d-block pagination-hp">
+        <div class="text-center">
+          <v-pagination
+            v-model="start"
+            :length="parseInt(amount / limit) + 1"
+            total-visible="5"
             circle
           ></v-pagination>
         </div>
@@ -421,7 +440,7 @@ export default {
       this.body = res.data;
       // console.log(res.data);
 
-      this.loadingBody = true;
+      // this.loadingBody = true;
 
       var res2 = await api.count(
         this.selected.name,
