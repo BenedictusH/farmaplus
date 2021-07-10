@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    {{ jumlah }}
     <div
       class="
         header
@@ -20,9 +21,9 @@
       <div class="pl-5 pt-3 text-h5 white--text">Find your medicine here</div>
     </div>
     <!-- Toolbar Desktop -->
-    <div class="toolbar" style="background-color: white;" v-if="!loadingToolbar">
+    <div class="toolbar" style="background-color: white" v-if="!loadingToolbar">
       <v-row class="px-lg-16 px-0 pt-5" no-gutters>
-        <v-col cols="4" class="px-5">
+        <!-- <v-col cols="4" class="px-5">
           <span class="pl-5">Obat</span>
           <v-autocomplete
             v-model="selected.obat"
@@ -37,39 +38,8 @@
             dense
           >
           </v-autocomplete>
-        </v-col>
-        <v-col cols="4" class="px-5">
-          <span class="pl-5">Provinsi</span>
-          <v-autocomplete
-            v-model="selected.provinsi"
-            :items="options.provinsi"
-            chips
-            filled
-            hide-details
-            multiple
-            clearable
-            deletable-chips
-            rounded
-            dense
-          >
-          </v-autocomplete>
-        </v-col>
-        <v-col cols="4" class="px-5">
-          <span class="pl-5">Kabupaten/Kota</span>
-          <v-autocomplete
-            v-model="selected.kabkota"
-            :items="options.kabkota"
-            chips
-            filled
-            hide-details
-            multiple
-            clearable
-            deletable-chips
-            rounded
-            dense
-          >
-          </v-autocomplete>
-        </v-col>
+        </v-col> -->
+        
 
         <!-- <v-col cols="2 px-5 mt-5">
           <v-autocomplete
@@ -94,9 +64,11 @@
         </v-col> -->
 
         <v-col cols="12" class="pt-5 pl-5 text-h5">
-          Stok {{ formatTanggal(selected.tanggal) }} ({{formatDate(selected.tanggal)}})
+          Stok {{ formatTanggal(selected.tanggal) }} ({{
+            formatDate(selected.tanggal)
+          }})
           <!-- {{ formatTanggal(apotek.tanggal) }} -->
-          <!-- <v-data-table
+          <v-data-table
             mobile-breakpoint="0"
             :headers="headers"
             :items="tableItems"
@@ -107,10 +79,48 @@
             :single-select="false"
             hide-default-footer
           >
-          </v-data-table> -->
+          </v-data-table>
+        </v-col>
+        <v-col cols="6" class="px-5">
+          <span class="pl-5">Provinsi</span>
+          <v-autocomplete
+            v-model="selected.provinsi"
+            :items="options.provinsi"
+            chips
+            filled
+            hide-details
+            multiple
+            clearable
+            deletable-chips
+            rounded
+            dense
+          >
+          </v-autocomplete>
+        </v-col>
+        <v-col cols="6" class="px-5">
+          <span class="pl-5">Kabupaten/Kota</span>
+          <v-autocomplete
+            v-model="selected.kabkota"
+            :items="options.kabkota"
+            chips
+            filled
+            hide-details
+            multiple
+            clearable
+            deletable-chips
+            rounded
+            dense
+          >
+          </v-autocomplete>
         </v-col>
         <v-col
-          class="d-flex justify-center align-md-center align-start mt-5 flex-column"
+          class="
+            d-flex
+            justify-center
+            align-md-center align-start
+            mt-5
+            flex-column
+          "
           cols="8"
           offset="2"
           v-show="!loadingBody"
@@ -118,8 +128,13 @@
           <!-- <div>Total: {{ getTotal(tableItems) }}</div> -->
           <div v-show="amount !== 0">{{ amountWriter() }}</div>
         </v-col>
-        <v-col cols="2" class="d-flex justify-end align-center pr-md-5 pr-7 mt-5">
-          <v-btn color="error" elevation="2" class="ml-5" rounded @click="reset">Reset</v-btn>
+        <v-col
+          cols="2"
+          class="d-flex justify-end align-center pr-md-5 pr-7 mt-5"
+        >
+          <v-btn color="error" elevation="2" class="ml-5" rounded @click="reset"
+            >Reset</v-btn
+          >
         </v-col>
       </v-row>
     </div>
@@ -144,12 +159,12 @@
       align="stretch"
       v-if="amount !== 0"
     >
-      <v-col lg="6"
+      <!-- <v-col lg="6"
         cols="12"
-        class="px-7" v-for="index in 10" :key="index" v-show="loadingBody">
+        class="px-7" v-for="index in 10" :key="index*10" v-show="loadingBody">
         <v-skeleton-loader type="article" class="mb-6" elevation="2">
         </v-skeleton-loader>
-      </v-col>
+      </v-col> -->
       <v-col
         v-for="(apotek, index) in body"
         :key="index"
@@ -226,7 +241,7 @@
         </v-card>
       </v-col>
     </v-row>
-     <v-row class="pb-10 px-7 px-lg-0" justify="center">
+    <v-row class="pb-10 px-7 px-lg-0" justify="center">
       <v-col cols="5 mt-4" md="2" lg="1">
         <v-autocomplete
           v-model="limit"
@@ -307,6 +322,7 @@ export default {
     },
     provinsis: [],
     body: [],
+    jumlah: "",
     options: [],
     headers: [
       {
@@ -321,20 +337,89 @@ export default {
   }),
   methods: {
     async optionsToTable() {
+      // await Promise.all(
+      //   this.options.obat.map((r) => {
+      //     var item = {
+      //       obat: "",
+      //       jumlah: 0,
+      //     };
+      //     item.obat = r;
+      //     item.jumlah = 1000;
+      //     this.tableItems.push(item);
+      //   })
+      // );
+      // console.log(this.tableItems);
+    },
+    async getJumlahObatProv() {
+      // var list_provinsis = await Promise.all(
+      //   this.selected.provinsi.map(async (provinsi) => {
+      //     return await Promise.all(
+      //       this.provinsis.map((prov) => {
+      //         console.log(provinsi);
+      //         if (provinsi == prov.nama) {
+      //           console.log(prov);
+      //           return prov;  
+      //         } else {
+      //           console.log('a')
+      //         }
+      //       })
+      //     );
+      //   })
+      // );
+      // console.log("list_prov",list_provinsis);
+      var listJumlahObats = await Promise.all(
+        this.provinsis.map((provinsi) => {
+          return provinsi.jumlah.map((tgl) => {
+            if (this.selected.tanggal == tgl.tanggal) {
+              return tgl;
+            }
+          });
+        })
+      );
+
+      // var azth = listJumlahObats.map((jumlah) => {
+      //   try {
+      //     return jumlah[0].azithromycin;
+      //   } catch (e) {
+      //     return 0;
+      //   }
+      // });
+
       await Promise.all(
         this.options.obat.map((r) => {
+          var obat = r.toLowerCase();
+          var jumlah = listJumlahObats
+            .map((jumlah) => {
+              try {
+                return jumlah[0][obat];
+              } catch (e) {
+                return 0;
+              }
+            })
+            .reduce((a, b) => a + b, 0);
+          console.log(obat);
+          console.log(jumlah);
           var item = {
             obat: "",
             jumlah: 0,
           };
           item.obat = r;
-          item.jumlah = 1000;
+          item.jumlah = this.formatAngka(jumlah);
 
           this.tableItems.push(item);
         })
       );
-
-      console.log(this.tableItems);
+      // var jumlahObatPBF = [2066186, 3235100, 52895297, 205900, 11856, 83]
+      // var jumlahObatRS = [1649724, 1441082, 5525667, 1108732, 63346, 139]
+      // this.tableItems.map((item, index) => {
+      //   console.log(item)
+      //   this.tableItems[index]['PBF'] = this.formatAngka( jumlahObatPBF[index])
+      //   this.tableItems[index]['RS'] = this.formatAngka(jumlahObatRS[index])
+      // })
+      // console.log(azth);
+      // this.jumlah = azth;
+      // console.log(`Jumlah Azithromycin ${azth.reduce((a, b) => a + b, 0)}`);
+      // return x.reduce((a, b) => a + b, 0);
     },
     getTotal(items) {
       var x = items.map((r) => {
@@ -355,37 +440,37 @@ export default {
     },
     formatDate(input) {
       var bulans = [
-        'Januari',
-        'Februari',
-        'Maret',
-        'April',
-        'Mei',
-        'Juni',
-        'Juli',
-        'Agustus',
-        'September',
-        'Oktober',
-        'November',
-        'Desember'
-      ]
-      var tanggal = input.toString().slice(input.length - 2)
-      var bulan = input.toString().slice(0, 7).slice(5)
-      var tahun = input.toString().slice(0, 4)
-      return tanggal + ' ' + bulans[parseInt(bulan)-1] + ' ' + tahun
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember",
+      ];
+      var tanggal = input.toString().slice(input.length - 2);
+      var bulan = input.toString().slice(0, 7).slice(5);
+      var tahun = input.toString().slice(0, 4);
+      return tanggal + " " + bulans[parseInt(bulan) - 1] + " " + tahun;
     },
     getLoc(lat, long) {
       return `http://maps.google.co.uk/maps?q=${lat},${long}`;
     },
     formatAngka(num) {
-        var a = 0;
-        if (num > 999999) {
-          a = (num / 1000000).toFixed(1) + "m";
-        } else if (num < 0) {
-          a = 0;
-        } else {
-          a = num > 9999 ? (num / 1000).toFixed(1) + "k" : num;
-        }
-        return a.toString().replace(".", ",");
+      var a = 0;
+      if (num > 999999) {
+        a = (num / 1000000).toFixed(1) + "m";
+      } else if (num < 0) {
+        a = 0;
+      } else {
+        a = num > 9999 ? (num / 1000).toFixed(1) + "k" : num;
+      }
+      return a.toString().replace(".", ",");
     },
     formatTanggal(tanggal) {
       var today = new Date();
@@ -405,6 +490,7 @@ export default {
       this.loadingToolbar = false;
 
       var res = await this.update();
+      await this.getJumlahObatProv();
       this.body = res.data;
       this.loadingBody = false;
     },
@@ -413,6 +499,7 @@ export default {
       this.options["obat"] = obat.map((ob) => {
         return this.capitalizeFirstLetter(ob.nama);
       });
+      console.log(this.options["obat"])
 
       var provinsi = await api.find("provinses");
       this.options["provinsi"] = provinsi.map((ob) => {
@@ -451,6 +538,7 @@ export default {
       );
       this.amount = res2.data;
       // console.log(res2.data);
+      // this.getJumlahObatProv();
       this.loadingBody = false;
 
       // await this.getKabkot()
@@ -479,11 +567,11 @@ export default {
     },
     amountWriter() {
       if (this.amount == 0) {
-        return "There are none available";
+        return "Tidak tersedia";
       } else if (this.amount == 1) {
-        return "Showing 1 result";
+        return "Menampilkan 1 apotek";
       } else {
-        return "Showing " + this.amount + " results";
+        return "Menampilkan " + this.amount + " apotek";
       }
     },
     async reset() {
@@ -525,6 +613,8 @@ export default {
     var res2 = await api.getLastShipment();
     this.selected.tanggal = res2.data[0]["tanggal"];
     await this.refreshPage();
+    // this.options["obat"]= this.selected.obat
+    // await this.getJumlahObatProv();
     // await this.getOptions();
   },
   watch: {
@@ -532,7 +622,7 @@ export default {
       handler() {
         this.update();
         if (this.start * this.amount > parseInt(this.amount / this.limit) + 1) {
-          this.start = 1
+          this.start = 1;
         }
         // this.getKabkot()
       },
@@ -557,6 +647,7 @@ export default {
     province: function (newvar) {
       if (newvar.length == 0) {
         this.options["kabkota"] = [];
+        this.selected["kabkota"] = [];
       } else {
         this.getKabkot();
       }
