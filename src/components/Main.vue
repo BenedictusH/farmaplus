@@ -7,10 +7,10 @@
         flex-column
         align-lg-center
         justify-center
-        pa-lg-15 pa-3
+        py-lg-15 py-3
       "
     >
-      <div class="text-lg-h1 text-h3 font-weight-bold pl-5 white--text d-flex">
+      <div class="text-lg-h2 text-h3 font-weight-bold pl-5 white--text d-flex">
         Farma Plus
         <img
           src="https://keamananvaksin.kemkes.go.id/assets/img/kemenkes.png"
@@ -94,7 +94,7 @@
         </v-col> -->
 
         <v-col cols="12" class="pt-5 pl-5 text-h5">
-          Stok {{ formatTanggal(selected.tanggal) }}
+          Stok {{ formatTanggal(selected.tanggal) }} ({{formatDate(selected.tanggal)}})
           <!-- {{ formatTanggal(apotek.tanggal) }} -->
           <!-- <v-data-table
             mobile-breakpoint="0"
@@ -221,8 +221,8 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row class="justify-center pb-10">
-      <v-col cols="1 mt-4">
+     <v-row class="pb-10 px-7 px-lg-0" justify="center">
+      <v-col cols="3 mt-4" md="2" lg="1">
         <v-autocomplete
           v-model="limit"
           :items="limitOptions"
@@ -241,7 +241,7 @@
         </p>
       </div>
       </v-col> -->
-      <v-col cols="5 mt-5">
+      <v-col cols="8 mt-5" md="5">
         <div class="text-center">
           <v-pagination
             v-model="start"
@@ -334,20 +334,39 @@ export default {
         return `Apotek ${nama}`;
       }
     },
+    formatDate(input) {
+      var bulans = [
+        'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember'
+      ]
+      var tanggal = input.toString().slice(input.length - 2)
+      var bulan = input.toString().slice(0, 7).slice(5)
+      var tahun = input.toString().slice(0, 4)
+      return tanggal + ' ' + bulans[parseInt(bulan)] + ' ' + tahun
+    },
     getLoc(lat, long) {
       return `http://maps.google.co.uk/maps?q=${lat},${long}`;
     },
     formatAngka(num) {
-      var a = 0;
-      if (Math.abs(num) > 999999) {
-        a = Math.sign(num) * (Math.abs(num) / 1000000).toFixed(1) + "m";
-      } else {
-        a =
-          Math.abs(num) > 9999
-            ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + "k"
-            : Math.sign(num) * Math.abs(num);
-      }
-      return a.toString().replace(".", ",");
+        var a = 0;
+        if (num > 999999) {
+          a = (num / 1000000).toFixed(1) + "m";
+        } else if (num < 0) {
+          a = 0;
+        } else {
+          a = num > 9999 ? (num / 1000).toFixed(1) + "k" : num;
+        }
+        return a.toString().replace(".", ",");
     },
     formatTanggal(tanggal) {
       var today = new Date();
