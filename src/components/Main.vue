@@ -20,7 +20,7 @@
       <div class="pl-5 pt-3 text-h5 white--text">Find your medicine here</div>
     </div>
     <!-- Toolbar Desktop -->
-    <div class="toolbar" style="background-color: white" v-if="!loadingToolbar">
+    <div class="toolbar" style="background-color: white;" v-if="!loadingToolbar">
       <v-row class="px-lg-16 px-0 pt-5" no-gutters>
         <v-col cols="4" class="px-5">
           <span class="pl-5">Obat</span>
@@ -352,7 +352,7 @@ export default {
       var tanggal = input.toString().slice(input.length - 2)
       var bulan = input.toString().slice(0, 7).slice(5)
       var tahun = input.toString().slice(0, 4)
-      return tanggal + ' ' + bulans[parseInt(bulan)] + ' ' + tahun
+      return tanggal + ' ' + bulans[parseInt(bulan)-1] + ' ' + tahun
     },
     getLoc(lat, long) {
       return `http://maps.google.co.uk/maps?q=${lat},${long}`;
