@@ -10,9 +10,9 @@
         py-lg-15 py-3
       "
     >
-      <div class="text-lg-h2 text-h3 font-weight-bold pl-5 white--text">
+      <div class="text-lg-h2 text-h3 font-weight-bold pl-5 white--text text-center">
         Farma Plus
-        <div class="pt-3 text-h5 white--text">Find your medicine here</div>
+        <div class="pt-3 text-h5 white--text text-center">Find your medicine here</div>
       </div>
     </div>
     <!-- Toolbar Desktop -->
