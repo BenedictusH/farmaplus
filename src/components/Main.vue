@@ -20,13 +20,25 @@
       <div class="pl-5 pt-3 text-h5 white--text">Find your medicine here</div>
     </div>
     <!-- Toolbar Desktop -->
-    <div
-      class="toolbar"
-      style="background-color: white"
-      v-if="!loadingToolbar"
-    >
+    <div class="toolbar" style="background-color: white" v-if="!loadingToolbar">
       <v-row class="px-lg-16 px-0 pt-5" no-gutters>
-        <v-col cols="6" class="px-5">
+        <v-col cols="4" class="px-5">
+          <span class="pl-5">Obat</span>
+          <v-autocomplete
+            v-model="selected.obat"
+            :items="options.obat"
+            chips
+            filled
+            hide-details
+            multiple
+            clearable
+            deletable-chips
+            rounded
+            dense
+          >
+          </v-autocomplete>
+        </v-col>
+        <v-col cols="4" class="px-5">
           <span class="pl-5">Provinsi</span>
           <v-autocomplete
             v-model="selected.provinsi"
@@ -42,7 +54,7 @@
           >
           </v-autocomplete>
         </v-col>
-        <v-col cols="6" class="px-5">
+        <v-col cols="4" class="px-5">
           <span class="pl-5">Kabupaten/Kota</span>
           <v-autocomplete
             v-model="selected.kabkota"
@@ -81,8 +93,10 @@
           </div>
         </v-col> -->
 
-        <v-col cols="12" class="pt-5">
-          <v-data-table
+        <v-col cols="12" class="pt-5 pl-5 text-h5">
+          Stok {{ formatTanggal(selected.tanggal) }}
+          <!-- {{ formatTanggal(apotek.tanggal) }} -->
+          <!-- <v-data-table
             mobile-breakpoint="0"
             :headers="headers"
             :items="tableItems"
@@ -93,16 +107,18 @@
             :single-select="false"
             hide-default-footer
           >
-          </v-data-table>
-        </v-col>
-        <v-col class="d-flex justify-center align-center mt-5 flex-column" cols="8" offset="2" v-show="!loadingBody">
-          <div>Total: {{getTotal(tableItems)}}</div>
-          <div>{{ amountWriter() }}</div>
+          </v-data-table> -->
         </v-col>
         <v-col
-          cols="2"
-          class="d-flex justify-end align-center pr-5 mt-5"
+          class="d-flex justify-center align-center mt-5 flex-column"
+          cols="8"
+          offset="2"
+          v-show="!loadingBody"
         >
+          <!-- <div>Total: {{ getTotal(tableItems) }}</div> -->
+          <div>{{ amountWriter() }}</div>
+        </v-col>
+        <v-col cols="2" class="d-flex justify-end align-center pr-5 mt-5">
           <v-btn color="error" elevation="2" class="ml-5" rounded @click="reset"
             >Reset</v-btn
           >
@@ -150,8 +166,9 @@
                 >
                   {{ formatNama(apotek.nama) }}
                 </v-card-title>
-                <v-card-subtitle class="px-0 pb-0"
-                  >{{ apotek.alamat}}</v-card-subtitle
+                <v-card-subtitle class="px-0 pb-0">{{
+                  apotek.alamat
+                }}</v-card-subtitle
                 ><v-card-subtitle class="px-0 pb-0 pa-0 pb-lg-5"
                   >{{ apotek.kabkota }}, {{ apotek.provinsi }}</v-card-subtitle
                 >
@@ -160,15 +177,16 @@
                 <v-card-title class="text font-weight-bold px-0">{{
                   apotek.obat
                 }}</v-card-title>
-                <v-card-subtitle class="text px-0 pb-0 pb-lg-5"
+                <!-- <v-card-subtitle class="text px-0 pb-0 pb-lg-5"
                   >Didistribusikan pada:
                   {{ formatTanggal(apotek.tanggal) }}</v-card-subtitle
-                >
+                > -->
               </div>
             </v-col>
             <v-col lg="5" cols="12" class="card-right py-0 py-lg-5">
               <div>
-                <v-card-subtitle class="pa-0 grey--text text-h6 text--darken-3 text-right"
+                <v-card-subtitle
+                  class="pa-0 grey--text text-h6 text--darken-3 text-right"
                   >Jumlah</v-card-subtitle
                 >
                 <v-card-title
@@ -189,10 +207,13 @@
               <!-- <span class="badgeDistributor badge--small mb-3"><v-icon class="mr-2">mdi-map-marker</v-icon> Maps</span> -->
 
               <v-card-actions class="px-0 pt-7">
-                <a v-bind:href="getLoc(apotek.latitude, apotek.longitude)" target="_blank">
-                <v-btn rounded color="success">
-                  <v-icon class="mr-2">mdi-map-marker</v-icon> Maps
-                </v-btn>
+                <a
+                  v-bind:href="getLoc(apotek.latitude, apotek.longitude)"
+                  target="_blank"
+                >
+                  <v-btn rounded color="success">
+                    <v-icon class="mr-2">mdi-map-marker</v-icon> Maps
+                  </v-btn>
                 </a>
               </v-card-actions>
             </v-col>
@@ -212,18 +233,20 @@
         >
         </v-autocomplete>
       </v-col>
+      <!-- <v-col>
       <div class="text-center mt-10 px-5">
         <p class="">
           {{ (start - 1) * limit + 1 }} - {{ (start - 1) * limit + limit }} of
           {{ amount }}
         </p>
       </div>
-      <v-col cols="1 mt-5">
+      </v-col> -->
+      <v-col cols="5 mt-5">
         <div class="text-center">
           <v-pagination
             v-model="start"
             :length="parseInt(amount / limit) + 1"
-            total-visible="0"
+            total-visible="10"
             circle
           ></v-pagination>
         </div>
@@ -268,51 +291,51 @@ export default {
     options: [],
     headers: [
       {
-        text: 'Jenis Obat',
-        value: 'obat',
+        text: "Jenis Obat",
+        value: "obat",
       },
-      { text: 'Jumlah', value: 'jumlah' },
+      { text: "Jumlah", value: "jumlah" },
     ],
-    tableItems: [
-    ],
+    tableItems: [],
     selectingObat: [],
-    province: ''
+    province: "",
   }),
   methods: {
     async optionsToTable() {
-      await Promise.all(this.options.obat.map((r) => {
-        var item = {
-          obat: '',
-          jumlah: 0
-        }
-        item.obat = r
-        item.jumlah = 1000
+      await Promise.all(
+        this.options.obat.map((r) => {
+          var item = {
+            obat: "",
+            jumlah: 0,
+          };
+          item.obat = r;
+          item.jumlah = 1000;
 
-        this.tableItems.push(item)
-      }))
+          this.tableItems.push(item);
+        })
+      );
 
-      console.log(this.tableItems)
+      console.log(this.tableItems);
     },
     getTotal(items) {
       var x = items.map((r) => {
-        return r.jumlah
-      })
-      return x.reduce((a, b) => a + b, 0)
+        return r.jumlah;
+      });
+      return x.reduce((a, b) => a + b, 0);
     },
     capitalizeFirstLetter(str) {
       const lower = str.toLowerCase();
       return str.charAt(0).toUpperCase() + lower.slice(1);
     },
     formatNama(nama) {
-      if (nama.toLowerCase().includes("apotek") ) {
-        return (nama) 
+      if (nama.toLowerCase().includes("apotek")) {
+        return nama;
       } else {
-        return (`Apotek ${nama}`)
+        return `Apotek ${nama}`;
       }
-      
     },
     getLoc(lat, long) {
-      return `http://maps.google.co.uk/maps?q=${lat},${long}`
+      return `http://maps.google.co.uk/maps?q=${lat},${long}`;
     },
     formatAngka(num) {
       var a = 0;
@@ -339,7 +362,7 @@ export default {
     },
     async refreshPage() {
       await this.getOptions();
-      this.optionsToTable()
+      this.optionsToTable();
 
       this.loadingToolbar = false;
 
@@ -364,7 +387,7 @@ export default {
       // this.options["provinsi"] = provinsi;
     },
     async update() {
-      this.province = this.selected.provinsi
+      this.province = this.selected.provinsi;
       this.loadingBody = true;
 
       var res = await api.filter(
@@ -397,19 +420,24 @@ export default {
     async getKabkot() {
       // console.log("get kabkota");
       // console.log(this.provinsis)
-      var select_kabkota = []
-      await Promise.all((this.selected["provinsi"].map( async (selected_provinsi) => {
-        // console.log(selected_provinsi)
-        await Promise.all(this.provinsis.map( async (provinsi) => {
-          if (provinsi.nama == selected_provinsi) {
-            await Promise.all(provinsi.Kabkota.map((r) => {
-              select_kabkota.push(r.nama)
-            }))
-            this.options["kabkota"] = select_kabkota
-          }
-        }))
-      })))
-
+      var select_kabkota = [];
+      await Promise.all(
+        this.selected["provinsi"].map(async (selected_provinsi) => {
+          // console.log(selected_provinsi)
+          await Promise.all(
+            this.provinsis.map(async (provinsi) => {
+              if (provinsi.nama == selected_provinsi) {
+                await Promise.all(
+                  provinsi.Kabkota.map((r) => {
+                    select_kabkota.push(r.nama);
+                  })
+                );
+                this.options["kabkota"] = select_kabkota;
+              }
+            })
+          );
+        })
+      );
     },
     amountWriter() {
       if (this.amount == 0) {
@@ -421,7 +449,7 @@ export default {
       }
     },
     async reset() {
-      this.selectingObat = []
+      this.selectingObat = [];
       this.selected = {
         name: [],
         obat: [],
@@ -434,6 +462,11 @@ export default {
       var res2 = await api.getLastShipment();
       this.selected.tanggal = res2.data[0]["tanggal"];
     },
+    // async getLastShipment() {
+    //   var res2 = await api.getLastShipment();
+    //   console.log(res2.data[0]["tanggal"])
+    //   return (res2.data[0]["tanggal"]).toString()
+    // },
     resetInput() {
       this.input = {
         name: [],
@@ -460,6 +493,9 @@ export default {
     selected: {
       handler() {
         this.update();
+        if (this.start * this.amount > parseInt(this.amount / this.limit) + 1) {
+          this.start = 1
+        }
         // this.getKabkot()
       },
       deep: true,
@@ -476,17 +512,17 @@ export default {
     },
     selectingObat: function (newvar) {
       var x = newvar.map((r) => {
-        return r.obat
-      })
-      this.selected.obat = x
+        return r.obat;
+      });
+      this.selected.obat = x;
     },
     province: function (newvar) {
       if (newvar.length == 0) {
-        this.options["kabkota"] = []
+        this.options["kabkota"] = [];
       } else {
-        this.getKabkot()
+        this.getKabkot();
       }
-    }
+    },
   },
 };
 </script>
