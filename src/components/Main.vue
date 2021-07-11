@@ -330,7 +330,7 @@
         <v-card flat tile class="grey lighten-4 grey--text text--darken-1 text-center">
           <v-card-text class="grey--text text--darken-3">
             Copyright &copy; 2021, Kementerian Kesehatan Republik Indonesia. All Rights Reserved.
-            Developed by CANIGOPAL
+            Developed by TECHKYRA
           </v-card-text>
 
           <v-divider></v-divider>
