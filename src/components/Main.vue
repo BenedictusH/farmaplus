@@ -16,7 +16,7 @@
       </div>
     </div>
     <!-- Toolbar Desktop -->
-    <div class="toolbar" style="background-color: white" v-if="!loadingToolbar">
+    <div class="toolbar" style="background-color: white">
       <v-row class="px-lg-16 px-0 pt-5" no-gutters>
         <!-- <v-col cols="4" class="px-5">
           <span class="pl-5">Obat</span>
@@ -59,7 +59,10 @@
 
         <v-col cols="12" class="py-5 px-5 text-lg-h5 text-h6">
           <v-row>
-            <v-col cols="12" md="6" order-md="1" order="2">
+            <v-col cols="12" md="6" v-if="loadingToolbar" order-md="2" order="2">
+              <v-progress-linear indeterminate color="grey"></v-progress-linear>
+            </v-col>
+            <v-col cols="12" md="6" order-md="1" order="3" v-if="!loadingToolbar">
               Stok {{ formatTanggal(selected.tanggal) }}
               <br class="d-block d-md-none" />
               ({{ formatDate(selected.tanggal) }} 07.00 WIB )</v-col
@@ -67,7 +70,7 @@
             <v-col
               cols="12"
               md="6"
-              order-md="2"
+              order-md="3"
               order="1"
               class="d-flex justify-md-end justify-center"
               style="column-gap: 2rem"
@@ -348,7 +351,7 @@
       date: [],
       menu: false,
       menuInput: false,
-      loadingToolbar: false,
+      loadingToolbar: true,
       loadingBody: true,
       start: 1,
       limit: 10,
@@ -420,19 +423,19 @@
           })
         );
         if (total_provinsi.length == 0) {
-        await Promise.all(
+          await Promise.all(
             this.provinsis.map(async (provinsi) => {
-                await Promise.all(
-                  provinsi.jumlah.map((r) => {
-                    if (this.selected.tanggal == r.tanggal) {
-                      // console.log(r)
-                      total_provinsi.push(r);
-                    }
-                  })
-                );
+              await Promise.all(
+                provinsi.jumlah.map((r) => {
+                  if (this.selected.tanggal == r.tanggal) {
+                    // console.log(r)
+                    total_provinsi.push(r);
+                  }
+                })
+              );
             })
           );
-      }
+        }
         this.tableItems = [];
         this.tableItemsInt = [];
         await Promise.all(
