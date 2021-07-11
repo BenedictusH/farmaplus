@@ -419,6 +419,20 @@
             );
           })
         );
+        if (total_provinsi.length == 0) {
+        await Promise.all(
+            this.provinsis.map(async (provinsi) => {
+                await Promise.all(
+                  provinsi.jumlah.map((r) => {
+                    if (this.selected.tanggal == r.tanggal) {
+                      // console.log(r)
+                      total_provinsi.push(r);
+                    }
+                  })
+                );
+            })
+          );
+      }
         this.tableItems = [];
         this.tableItemsInt = [];
         await Promise.all(
@@ -453,83 +467,83 @@
 
         //
       },
-      async getJumlahObatProv() {
-        // var list_provinsis = await Promise.all(
-        //   this.selected.provinsi.map(async (provinsi) => {
-        //     return await Promise.all(
-        //       this.provinsis.map((prov) => {
-        //
-        //         if (provinsi == prov.nama) {
-        //
-        //           return prov;
-        //         } else {
-        //
-        //         }
-        //       })
-        //     );
-        //   })
-        // );
-        //
-        var listJumlahObats = await Promise.all(
-          this.provinsis.map((provinsi) => {
-            return provinsi.jumlah.map((tgl) => {
-              if (this.selected.tanggal == tgl.tanggal) {
-                return tgl;
-              }
-            });
-          })
-        );
+      // async getJumlahObatProv() {
+      //   // var list_provinsis = await Promise.all(
+      //   //   this.selected.provinsi.map(async (provinsi) => {
+      //   //     return await Promise.all(
+      //   //       this.provinsis.map((prov) => {
+      //   //
+      //   //         if (provinsi == prov.nama) {
+      //   //
+      //   //           return prov;
+      //   //         } else {
+      //   //
+      //   //         }
+      //   //       })
+      //   //     );
+      //   //   })
+      //   // );
+      //   //
+      //   var listJumlahObats = await Promise.all(
+      //     this.provinsis.map((provinsi) => {
+      //       return provinsi.jumlah.map((tgl) => {
+      //         if (this.selected.tanggal == tgl.tanggal) {
+      //           return tgl;
+      //         }
+      //       });
+      //     })
+      //   );
 
-        // var azth = listJumlahObats.map((jumlah) => {
-        //   try {
-        //     return jumlah[0].azithromycin;
-        //   } catch (e) {
-        //     return 0;
-        //   }
-        // });
+      //   // var azth = listJumlahObats.map((jumlah) => {
+      //   //   try {
+      //   //     return jumlah[0].azithromycin;
+      //   //   } catch (e) {
+      //   //     return 0;
+      //   //   }
+      //   // });
 
-        await Promise.all(
-          this.options.obat.map((r) => {
-            var obat = r.toLowerCase();
-            var jumlah = listJumlahObats
-              .map((jumlah) => {
-                try {
-                  return jumlah[0][obat];
-                } catch (e) {
-                  return 0;
-                }
-              })
-              .reduce((a, b) => a + b, 0);
+      //   await Promise.all(
+      //     this.options.obat.map((r) => {
+      //       var obat = r.toLowerCase();
+      //       var jumlah = listJumlahObats
+      //         .map((jumlah) => {
+      //           try {
+      //             return jumlah[0][obat];
+      //           } catch (e) {
+      //             return 0;
+      //           }
+      //         })
+      //         .reduce((a, b) => a + b, 0);
 
-            var item = {
-              obat: "",
-              jumlah: 0,
-            };
-            item.obat = r;
-            item.jumlah = this.formatAngka(jumlah);
+      //       var item = {
+      //         obat: "",
+      //         jumlah: 0,
+      //       };
+      //       item.obat = r;
+      //       item.jumlah = this.formatAngka(jumlah);
 
-            this.tableItems.push(item);
-            console.log("haha");
-            var itemInt = {
-              jumlah: 0,
-            };
-            itemInt.jumlah = jumlah;
-            console.log(jumlah);
-            this.tableItemsInt.push(itemInt);
-          })
-        );
-        // var jumlahObatPBF = [2066186, 3235100, 52895297, 205900, 11856, 83]
-        // var jumlahObatRS = [1649724, 1441082, 5525667, 1108732, 63346, 139]
-        // this.tableItems.map((item, index) => {
-        //
-        //   this.tableItems[index]['PBF'] = this.formatAngka( jumlahObatPBF[index])
-        //   this.tableItems[index]['RS'] = this.formatAngka(jumlahObatRS[index])
-        // })
-        //
-        // this.jumlah = azth;
-        //
-        // return x.reduce((a, b) => a + b, 0);
-      },
+      //       this.tableItems.push(item);
+      //       console.log("haha");
+      //       var itemInt = {
+      //         jumlah: 0,
+      //       };
+      //       itemInt.jumlah = jumlah;
+      //       console.log(jumlah);
+      //       this.tableItemsInt.push(itemInt);
+      //     })
+      //   );
+      //   // var jumlahObatPBF = [2066186, 3235100, 52895297, 205900, 11856, 83]
+      //   // var jumlahObatRS = [1649724, 1441082, 5525667, 1108732, 63346, 139]
+      //   // this.tableItems.map((item, index) => {
+      //   //
+      //   //   this.tableItems[index]['PBF'] = this.formatAngka( jumlahObatPBF[index])
+      //   //   this.tableItems[index]['RS'] = this.formatAngka(jumlahObatRS[index])
+      //   // })
+      //   //
+      //   // this.jumlah = azth;
+      //   //
+      //   // return x.reduce((a, b) => a + b, 0);
+      // },
       getTotal(items) {
         var x = items.map((r) => {
           return r.jumlah;
@@ -618,7 +632,7 @@
         this.loadingToolbar = false;
 
         var res = await this.update();
-        await this.getJumlahObatProv();
+        await this.getJumlah();
         this.body = res.data;
         this.loadingBody = false;
       },
@@ -739,6 +753,7 @@
     async mounted() {
       var res2 = await api.getLastShipment();
       this.selected.tanggal = res2.data[0]["tanggal"];
+      // this.selected.tanggal = '2021-07-11';
       await this.refreshPage();
       // this.options["obat"]= this.selected.obat
       // await this.getJumlahObatProv();
@@ -777,7 +792,7 @@
           this.selected["kabkota"] = [];
           this.tableItems = [];
           this.tableItemsInt = [];
-          this.getJumlahObatProv();
+          this.getJumlah();
         } else {
           this.getKabkot();
           this.getJumlah();
