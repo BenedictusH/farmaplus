@@ -72,7 +72,7 @@
               md="6"
               order-md="3"
               order="1"
-              class="d-flex justify-md-end justify-center"
+              class="d-flex justify-md-end justify-center my-auto"
               style="column-gap: 2rem"
             >
               <img
@@ -89,6 +89,11 @@
               />
             </v-col>
           </v-row>
+            <div class="text-lg-subtitle-2 text-caption py-5" cols="12" md="6" order-md="1" order="3" v-if="!loadingToolbar" >
+              <strong> 
+                *Saat ini, data diupdate secara berkala tiap hari pkl 09.00 WIB, sehingga bukan data realtime. Sehubungan dengan tingginya kebutuhan, harap konfirmasikan ketersediaan di masing-masing lokasi apotek.
+              </strong>
+            </div>
 
           <!-- {{ formatTanggal(apotek.tanggal) }} -->
           <v-data-table
