@@ -236,7 +236,6 @@
                 justify-space-between justify-lg-space-between
                 py-0
                 pt-lg-1
-                pb-lg-3
               "
             >
               <div>
@@ -250,6 +249,7 @@
                     pt-0
                     pl-0
                     pr-0
+                    pb-2
                     green--text
                     text--darken-4
                   "
@@ -272,13 +272,13 @@
 
               <!-- <span class="badgeDistributor badge--small mb-3"><v-icon class="mr-2">mdi-map-marker</v-icon> Maps</span> -->
 
-              <v-card-actions class="px-0 pt-md-5 pt-0">
-                <a :href="'tel:'+apotek.msisdn" v-if="checkNull(apotek.msisdn)">
+              <v-card-actions class="px-0 pt-md-5 pt-0 pb-3 pb-s-0 pb-md-0 pb-lg-0 pb-xl-0 d-flex flex-column flex-md-row justify-end">
+                <a :href="'tel:'+apotek.msisdn" v-if="checkNull(apotek.msisdn)" class="d-none d-md-block">
                 <v-btn rounded color="info" class="mr-2">
                   <v-icon class="mr-2">mdi-phone</v-icon> {{apotek.msisdn}}
                 </v-btn>
                 </a>
-                <a v-else>
+                <a v-else class="d-none d-md-block">
                 <v-btn rounded outlined disabled color="info" class="mr-2">
                   <v-icon class="mr-2">mdi-phone</v-icon> Tidak Tersedia
                 </v-btn>
@@ -289,6 +289,18 @@
                   </v-btn>
                 </a>
               </v-card-actions>
+            </v-col>
+            <v-col class="d-flex d-md-none py-0 my-0 pb-lg-3 justify-end px-0 mx-0">
+              <a :href="'tel:'+apotek.msisdn" v-if="checkNull(apotek.msisdn)">
+                <v-btn rounded color="info" class="mr-2">
+                  <v-icon class="mr-2">mdi-phone</v-icon> {{apotek.msisdn}}
+                </v-btn>
+                </a>
+                <a v-else>
+                <v-btn rounded outlined disabled color="info" class="mr-2">
+                  <v-icon class="mr-2">mdi-phone</v-icon> Tidak Tersedia
+                </v-btn>
+                </a>
             </v-col>
           </v-row>
         </v-card>
