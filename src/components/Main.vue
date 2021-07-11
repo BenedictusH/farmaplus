@@ -210,9 +210,12 @@
                   {{ formatNama(apotek.nama) }}
                 </v-card-title>
                 <v-card-subtitle class="px-0 pb-0">{{ apotek.alamat }}</v-card-subtitle
-                ><v-card-subtitle class="px-0 pb-0 pa-0 pb-lg-5"
+                ><v-card-subtitle class="px-0 pb-0 pa-0"
                   >{{ apotek.kabkota }}, {{ apotek.provinsi }}</v-card-subtitle
                 >
+                <!-- <v-card-subtitle class="px-0 pb-0 pa-0 pb-lg-5 text-h6"
+                  > <strong>{{ apotek.msisdn }}</strong> </v-card-subtitle
+                > -->
               </div>
               <div>
                 <v-card-title class="text font-weight-bold px-0">{{ apotek.obat }}</v-card-title>
@@ -270,6 +273,16 @@
               <!-- <span class="badgeDistributor badge--small mb-3"><v-icon class="mr-2">mdi-map-marker</v-icon> Maps</span> -->
 
               <v-card-actions class="px-0 pt-md-5 pt-0">
+                <a :href="'tel:'+apotek.msisdn" v-if="checkNull(apotek.msisdn)">
+                <v-btn rounded color="info" class="mr-2">
+                  <v-icon class="mr-2">mdi-phone</v-icon> {{apotek.msisdn}}
+                </v-btn>
+                </a>
+                <a v-else>
+                <v-btn rounded outlined disabled color="info" class="mr-2">
+                  <v-icon class="mr-2">mdi-phone</v-icon> Tidak Tersedia
+                </v-btn>
+                </a>
                 <a v-bind:href="getLoc(apotek.latitude, apotek.longitude)" target="_blank">
                   <v-btn rounded color="success">
                     <v-icon class="mr-2">mdi-map-marker</v-icon> Maps
@@ -333,7 +346,7 @@
         <v-card flat tile class="grey lighten-4 grey--text text--darken-1 text-center">
           <v-card-text class="grey--text text--darken-3">
             Copyright &copy; 2021, Kementerian Kesehatan Republik Indonesia. All Rights Reserved.
-            Developed by tekira
+            Developed by Tekira
           </v-card-text>
 
           <v-divider></v-divider>
@@ -404,6 +417,14 @@
         //   })
         // );
         //
+      },
+      copyToClipboard(text) {
+        var dummy = document.createElement("textarea");
+        document.body.appendChild(dummy);
+        dummy.value = text;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
       },
       async getJumlah() {
         var total_provinsi = [];
@@ -609,6 +630,13 @@
       },
       getLoc(lat, long) {
         return `http://maps.google.co.uk/maps?q=${lat},${long}`;
+      },
+      checkNull(value) {
+        if (typeof value == "undefined") {
+          return false
+        } else{
+          return value
+        }
       },
       formatAngka(num) {
         var a = 0;
