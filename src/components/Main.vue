@@ -62,10 +62,10 @@
             <v-col cols="12" md="6" v-if="loadingToolbar" order-md="2" order="2">
               <v-progress-linear indeterminate color="grey"></v-progress-linear>
             </v-col>
-            <v-col class="my-auto" cols="12" md="6" order-md="1" order="3" v-if="!loadingToolbar">
+            <v-col class="my-auto" cols="12" md="6" order-md="1" order="3" v-else>
               Stok {{ formatTanggal(selected.tanggal) }}
               <br class="d-block d-md-none" />
-              ({{ formatDate(selected.tanggal) }} 07.00 WIB )</v-col
+              ({{ formatDate(selected.tanggal) }} 09.00 WIB )</v-col
             >
             <v-col
               cols="12"
@@ -89,10 +89,8 @@
               />
             </v-col>
           </v-row>
-          <div class="text-lg-subtitle-2 text-caption py-5 font-italic" cols="12" md="6" order-md="1" order="3" v-if="!loadingToolbar" >
-            <strong> 
-              *Saat ini, data diupdate secara berkala tiap hari pkl 09.00 WIB, sehingga bukan data realtime. Sehubungan dengan tingginya kebutuhan, harap konfirmasikan ketersediaan di masing-masing lokasi apotek.
-            </strong>
+          <div class="text-lg-subtitle-2 text-caption py-5 font-italic red--text" cols="12" md="6" order-md="1" order="3" v-if="!loadingToolbar" >
+              *Saat ini, data diupdate secara berkala tiap hari pkl 09.00 WIB, sehingga bukan data realtime. Sehubungan dengan tingginya kebutuhan, harap konfirmasikan ketersediaan di masing-masing lokasi apotek.*
           </div>
 
           <!-- {{ formatTanggal(apotek.tanggal) }} -->
@@ -335,7 +333,7 @@
         <v-card flat tile class="grey lighten-4 grey--text text--darken-1 text-center">
           <v-card-text class="grey--text text--darken-3">
             Copyright &copy; 2021, Kementerian Kesehatan Republik Indonesia. All Rights Reserved.
-            Developed by TECHKYRA
+            Developed by tekira
           </v-card-text>
 
           <v-divider></v-divider>
