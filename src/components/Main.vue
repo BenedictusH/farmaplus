@@ -62,7 +62,7 @@
             <v-col cols="12" md="6" v-if="loadingToolbar" order-md="2" order="2">
               <v-progress-linear indeterminate color="grey"></v-progress-linear>
             </v-col>
-            <v-col cols="12" md="6" order-md="1" order="3" v-if="!loadingToolbar">
+            <v-col class="my-auto" cols="12" md="6" order-md="1" order="3" v-if="!loadingToolbar">
               Stok {{ formatTanggal(selected.tanggal) }}
               <br class="d-block d-md-none" />
               ({{ formatDate(selected.tanggal) }} 07.00 WIB )</v-col
@@ -89,7 +89,7 @@
               />
             </v-col>
           </v-row>
-          <div class="text-lg-subtitle-2 text-caption py-5" cols="12" md="6" order-md="1" order="3" v-if="!loadingToolbar" >
+          <div class="text-lg-subtitle-2 text-caption py-5 font-italic" cols="12" md="6" order-md="1" order="3" v-if="!loadingToolbar" >
             <strong> 
               *Saat ini, data diupdate secara berkala tiap hari pkl 09.00 WIB, sehingga bukan data realtime. Sehubungan dengan tingginya kebutuhan, harap konfirmasikan ketersediaan di masing-masing lokasi apotek.
             </strong>
