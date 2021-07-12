@@ -63,9 +63,9 @@
               <v-progress-linear indeterminate color="grey"></v-progress-linear>
             </v-col>
             <v-col class="my-auto" cols="12" md="6" order-md="1" order="3" v-else>
-              Stok {{ formatTanggal(selected.tanggal) }}
+              <!-- Stok {{ formatTanggal(selected.tanggal) }} -->
               <br class="d-block d-md-none" />
-              ({{ formatDate(selected.tanggal) }} 09.00 WIB )</v-col
+              Stok <strong>{{ formatDate(selected.tanggal) }} 09.00 WIB </strong></v-col
             >
             <v-col
               cols="12"
