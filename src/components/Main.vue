@@ -213,8 +213,13 @@
       >
         <v-card elevation="5" class="card" height="100%">
           <v-row class="pa-5">
-            <v-col cols="12" lg="7" class="d-flex flex-column justify-space-between pb-0">
+            <v-col cols="12" lg="6" class="d-flex flex-column justify-space-between">
               <div>
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/id/thumb/c/c3/Kimia_Farma_logo.svg/1200px-Kimia_Farma_logo.svg.png"
+                  alt="Logo Apotek"
+                  class="logo-card mb-3"
+                />
                 <v-card-title class="text-lg-h5 text-md-h4 font-weight-bold pt-0 pl-0">
                   {{ formatNama(apotek.nama) }}
                 </v-card-title>
@@ -227,7 +232,6 @@
                 > -->
               </div>
               <div>
-                <v-card-title class="text font-weight-bold px-0">{{ apotek.obat }}</v-card-title>
                 <!-- <v-card-subtitle class="text px-0 pb-0 pb-lg-5"
                   >Didistribusikan pada:
                   {{ formatTanggal(apotek.tanggal) }}</v-card-subtitle
@@ -235,6 +239,7 @@
               </div>
             </v-col>
             <v-col
+              offset-lg="1"
               lg="5"
               cols="12"
               class="
@@ -248,7 +253,12 @@
               "
             >
               <div>
-                <v-card-subtitle class="pa-0 grey--text text-h6 text--darken-3 text-lg-right"
+                <v-card-title
+                  class="text font-weight-bold px-0 d-flex justify-start justify-lg-end"
+                >
+                  <span>{{ apotek.obat }} </span></v-card-title
+                >
+                <v-card-subtitle class="pa-0 grey--text text-h6 text--darken-3 text-lg-right pt-5"
                   >Stok</v-card-subtitle
                 >
                 <v-card-title
@@ -281,41 +291,30 @@
 
               <!-- <span class="badgeDistributor badge--small mb-3"><v-icon class="mr-2">mdi-map-marker</v-icon> Maps</span> -->
 
-              <v-card-actions
-                class="px-0 pt-md-5 pb-2 pb-md-4 d-flex flex-column flex-md-row justify-end"
-              >
-                <a
-                  :href="'tel:' + apotek.msisdn"
-                  v-if="checkNull(apotek.msisdn)"
-                  class="d-none d-md-block"
-                >
-                  <v-btn rounded color="info" class="mr-2">
-                    <v-icon class="mr-2">mdi-phone</v-icon> {{ apotek.msisdn }}
-                  </v-btn>
-                </a>
-                <a v-else class="d-none d-md-block">
-                  <v-btn rounded outlined disabled color="info" class="mr-2">
-                    <v-icon class="mr-2">mdi-phone</v-icon> Tidak Tersedia
-                  </v-btn>
-                </a>
-                <a v-bind:href="getLoc(apotek.latitude, apotek.longitude)" target="_blank">
-                  <v-btn rounded color="success">
-                    <v-icon class="mr-2">mdi-map-marker</v-icon> Maps
-                  </v-btn>
-                </a>
+              <v-card-actions class="px-0 pb-2 pb-md-4 d-flex flex-column flex-md-row justify-end">
+                <div class="pb-md-0 pb-3">
+                  <a :href="'tel:' + apotek.msisdn" v-if="checkNull(apotek.msisdn)" class="">
+                    <v-btn rounded color="info" class="mr-md-2">
+                      <v-icon class="mr-md-2">mdi-phone</v-icon>
+                      <span class="d-none d-md-block">{{ apotek.msisdn }}</span>
+                    </v-btn>
+                  </a>
+                  <a v-else class>
+                    <v-btn rounded outlined disabled color="info" class="mr-md-2">
+                      <v-icon class="mr-md-2">mdi-phone</v-icon>
+                      <span class="d-none d-md-block">Tidak Tersedia</span>
+                    </v-btn>
+                  </a>
+                </div>
+                <div>
+                  <a v-bind:href="getLoc(apotek.latitude, apotek.longitude)" target="_blank">
+                    <v-btn rounded color="success">
+                      <v-icon class="mr-md-2">mdi-map-marker</v-icon>
+                      <span class="d-none d-md-block">Maps</span>
+                    </v-btn>
+                  </a>
+                </div>
               </v-card-actions>
-            </v-col>
-            <v-col class="d-flex d-md-none py-0 my-0 pb-lg-3 justify-end px-0 mx-0">
-              <a :href="'tel:' + apotek.msisdn" v-if="checkNull(apotek.msisdn)">
-                <v-btn rounded color="info" class="mr-2">
-                  <v-icon class="mr-2">mdi-phone</v-icon> {{ apotek.msisdn }}
-                </v-btn>
-              </a>
-              <a v-else>
-                <v-btn rounded outlined disabled color="info" class="mr-2">
-                  <v-icon class="mr-2">mdi-phone</v-icon> Tidak Tersedia
-                </v-btn>
-              </a>
             </v-col>
           </v-row>
         </v-card>
@@ -879,6 +878,12 @@
     padding: 0;
     margin: 0;
     width: 100%;
+  }
+
+  .logo-card {
+    max-width: 100%;
+    height: 50px;
+    object-fit: cover;
   }
 
   .card {
