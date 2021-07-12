@@ -89,8 +89,17 @@
               />
             </v-col>
           </v-row>
-          <div class="text-lg-subtitle-2 text-caption py-5 font-italic red--text" cols="12" md="6" order-md="1" order="3" v-if="!loadingToolbar" >
-              *Saat ini, data diupdate secara berkala tiap hari pkl 09.00 WIB, sehingga bukan data realtime. Sehubungan dengan tingginya kebutuhan, harap konfirmasikan ketersediaan di masing-masing lokasi apotek.*
+          <div
+            class="text-lg-subtitle-2 text-caption py-5 font-italic red--text"
+            cols="12"
+            md="6"
+            order-md="1"
+            order="3"
+            v-if="!loadingToolbar"
+          >
+            *Saat ini, data diupdate secara berkala tiap hari pkl 09.00 WIB, sehingga bukan data
+            realtime. Sehubungan dengan tingginya kebutuhan, harap konfirmasikan ketersediaan di
+            masing-masing lokasi apotek.*
           </div>
 
           <!-- {{ formatTanggal(apotek.tanggal) }} -->
@@ -272,16 +281,22 @@
 
               <!-- <span class="badgeDistributor badge--small mb-3"><v-icon class="mr-2">mdi-map-marker</v-icon> Maps</span> -->
 
-              <v-card-actions class="px-0 pt-md-5 pt-0 pb-3 pb-s-0 pb-md-0 pb-lg-0 pb-xl-0 d-flex flex-column flex-md-row justify-end">
-                <a :href="'tel:'+apotek.msisdn" v-if="checkNull(apotek.msisdn)" class="d-none d-md-block">
-                <v-btn rounded color="info" class="mr-2">
-                  <v-icon class="mr-2">mdi-phone</v-icon> {{apotek.msisdn}}
-                </v-btn>
+              <v-card-actions
+                class="px-0 pt-md-5 pb-2 pb-md-4 d-flex flex-column flex-md-row justify-end"
+              >
+                <a
+                  :href="'tel:' + apotek.msisdn"
+                  v-if="checkNull(apotek.msisdn)"
+                  class="d-none d-md-block"
+                >
+                  <v-btn rounded color="info" class="mr-2">
+                    <v-icon class="mr-2">mdi-phone</v-icon> {{ apotek.msisdn }}
+                  </v-btn>
                 </a>
                 <a v-else class="d-none d-md-block">
-                <v-btn rounded outlined disabled color="info" class="mr-2">
-                  <v-icon class="mr-2">mdi-phone</v-icon> Tidak Tersedia
-                </v-btn>
+                  <v-btn rounded outlined disabled color="info" class="mr-2">
+                    <v-icon class="mr-2">mdi-phone</v-icon> Tidak Tersedia
+                  </v-btn>
                 </a>
                 <a v-bind:href="getLoc(apotek.latitude, apotek.longitude)" target="_blank">
                   <v-btn rounded color="success">
@@ -291,16 +306,16 @@
               </v-card-actions>
             </v-col>
             <v-col class="d-flex d-md-none py-0 my-0 pb-lg-3 justify-end px-0 mx-0">
-              <a :href="'tel:'+apotek.msisdn" v-if="checkNull(apotek.msisdn)">
+              <a :href="'tel:' + apotek.msisdn" v-if="checkNull(apotek.msisdn)">
                 <v-btn rounded color="info" class="mr-2">
-                  <v-icon class="mr-2">mdi-phone</v-icon> {{apotek.msisdn}}
+                  <v-icon class="mr-2">mdi-phone</v-icon> {{ apotek.msisdn }}
                 </v-btn>
-                </a>
-                <a v-else>
+              </a>
+              <a v-else>
                 <v-btn rounded outlined disabled color="info" class="mr-2">
                   <v-icon class="mr-2">mdi-phone</v-icon> Tidak Tersedia
                 </v-btn>
-                </a>
+              </a>
             </v-col>
           </v-row>
         </v-card>
@@ -645,9 +660,9 @@
       },
       checkNull(value) {
         if (typeof value == "undefined") {
-          return false
-        } else{
-          return value
+          return false;
+        } else {
+          return value;
         }
       },
       formatAngka(num) {
