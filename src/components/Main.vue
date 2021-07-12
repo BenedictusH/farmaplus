@@ -215,11 +215,11 @@
           <v-row class="pa-5">
             <v-col cols="12" lg="6" class="d-flex flex-column justify-space-between">
               <div>
-                <img
+                <!-- <img
                   src="https://upload.wikimedia.org/wikipedia/id/thumb/c/c3/Kimia_Farma_logo.svg/1200px-Kimia_Farma_logo.svg.png"
                   alt="Logo Apotek"
                   class="logo-card mb-3"
-                />
+                /> -->
                 <v-card-title class="text-lg-h5 text-md-h4 font-weight-bold pt-0 pl-0">
                   {{ formatNama(apotek.nama) }}
                 </v-card-title>
@@ -300,19 +300,19 @@
                     </v-btn>
                   </a>
                   <a v-else class>
-                    <v-btn rounded outlined disabled color="info" class="mr-md-2">
+                    <v-btn rounded outlined disabled color="info">
                       <v-icon class="mr-md-2">mdi-phone</v-icon>
                       <span class="d-none d-md-block">Tidak Tersedia</span>
                     </v-btn>
                   </a>
                 </div>
                 <div>
-                  <a v-bind:href="getLoc(apotek.latitude, apotek.longitude)" target="_blank">
-                    <v-btn rounded color="success">
+                  <!-- <a v-bind:href="getLoc(apotek.latitude, apotek.longitude)" target="_blank">
+                    <v-btn rounded color="success" class="ml-md-2">
                       <v-icon class="mr-md-2">mdi-map-marker</v-icon>
                       <span class="d-none d-md-block">Maps</span>
                     </v-btn>
-                  </a>
+                  </a> -->
                 </div>
               </v-card-actions>
             </v-col>
