@@ -307,12 +307,12 @@
                   </a>
                 </div>
                 <div>
-                  <!-- <a v-bind:href="getLoc(apotek.latitude, apotek.longitude)" target="_blank">
+                  <a v-bind:href="getLoc(apotek.latitude, apotek.longitude)" target="_blank">
                     <v-btn rounded color="success" class="ml-md-2">
                       <v-icon class="mr-md-2">mdi-map-marker</v-icon>
                       <span class="d-none d-md-block">Maps</span>
                     </v-btn>
-                  </a> -->
+                  </a>
                 </div>
               </v-card-actions>
             </v-col>
@@ -332,14 +332,6 @@
         >
         </v-autocomplete>
       </v-col>
-      <!-- <v-col>
-      <div class="text-center mt-10 px-5">
-        <p class="">
-          {{ (start - 1) * limit + 1 }} - {{ (start - 1) * limit + limit }} of
-          {{ amount }}
-        </p>
-      </div>
-      </v-col> -->
 
       <!-- lg pagination -->
       <v-col cols="8 mt-5 d-md-block d-none" md="5">
@@ -520,83 +512,6 @@
 
         //
       },
-      // async getJumlahObatProv() {
-      //   // var list_provinsis = await Promise.all(
-      //   //   this.selected.provinsi.map(async (provinsi) => {
-      //   //     return await Promise.all(
-      //   //       this.provinsis.map((prov) => {
-      //   //
-      //   //         if (provinsi == prov.nama) {
-      //   //
-      //   //           return prov;
-      //   //         } else {
-      //   //
-      //   //         }
-      //   //       })
-      //   //     );
-      //   //   })
-      //   // );
-      //   //
-      //   var listJumlahObats = await Promise.all(
-      //     this.provinsis.map((provinsi) => {
-      //       return provinsi.jumlah.map((tgl) => {
-      //         if (this.selected.tanggal == tgl.tanggal) {
-      //           return tgl;
-      //         }
-      //       });
-      //     })
-      //   );
-
-      //   // var azth = listJumlahObats.map((jumlah) => {
-      //   //   try {
-      //   //     return jumlah[0].azithromycin;
-      //   //   } catch (e) {
-      //   //     return 0;
-      //   //   }
-      //   // });
-
-      //   await Promise.all(
-      //     this.options.obat.map((r) => {
-      //       var obat = r.toLowerCase();
-      //       var jumlah = listJumlahObats
-      //         .map((jumlah) => {
-      //           try {
-      //             return jumlah[0][obat];
-      //           } catch (e) {
-      //             return 0;
-      //           }
-      //         })
-      //         .reduce((a, b) => a + b, 0);
-
-      //       var item = {
-      //         obat: "",
-      //         jumlah: 0,
-      //       };
-      //       item.obat = r;
-      //       item.jumlah = this.formatAngka(jumlah);
-
-      //       this.tableItems.push(item);
-      //       console.log("haha");
-      //       var itemInt = {
-      //         jumlah: 0,
-      //       };
-      //       itemInt.jumlah = jumlah;
-      //       console.log(jumlah);
-      //       this.tableItemsInt.push(itemInt);
-      //     })
-      //   );
-      //   // var jumlahObatPBF = [2066186, 3235100, 52895297, 205900, 11856, 83]
-      //   // var jumlahObatRS = [1649724, 1441082, 5525667, 1108732, 63346, 139]
-      //   // this.tableItems.map((item, index) => {
-      //   //
-      //   //   this.tableItems[index]['PBF'] = this.formatAngka( jumlahObatPBF[index])
-      //   //   this.tableItems[index]['RS'] = this.formatAngka(jumlahObatRS[index])
-      //   // })
-      //   //
-      //   // this.jumlah = azth;
-      //   //
-      //   // return x.reduce((a, b) => a + b, 0);
-      // },
       getTotal(items) {
         var x = items.map((r) => {
           return r.jumlah;
@@ -660,7 +575,10 @@
       checkNull(value) {
         if (typeof value == "undefined") {
           return false;
-        } else {
+        } else if (value.length <= 4) {
+          return false
+        }
+        else {
           return value;
         }
       },
@@ -755,7 +673,7 @@
               this.provinsis.map(async (provinsi) => {
                 if (provinsi.nama == selected_provinsi) {
                   await Promise.all(
-                    provinsi.Kabkota.map((r) => {
+                    provinsi.kabkota.map((r) => {
                       select_kabkota.push(r.nama);
                     })
                   );
