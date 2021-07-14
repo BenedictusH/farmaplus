@@ -629,6 +629,8 @@
           return "0" + number;
         } else if (number.substring(0, 2) == "62") {
           return number;
+        }else if (number.substring(0, 2) == "08") {
+          return number;
         } else {
           return "021" + number;
         }
