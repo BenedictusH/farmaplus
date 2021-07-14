@@ -86,7 +86,7 @@
                 class="logo"
               />
               <img
-                src="https://1.bp.blogspot.com/-Rxt27KxQsog/XxayOZeDIJI/AAAAAAAACa0/64O97OMazGARKcKItopsuYy6_dWMq3dxACLcBGAsYHQ/w1200-h630-p-k-no-nu/Logo%2BBiofarma.png"
+                src="https://upload.wikimedia.org/wikipedia/id/thumb/c/c3/Kimia_Farma_logo.svg/1200px-Kimia_Farma_logo.svg.png"
                 class="logo"
               />
               </v-col>
