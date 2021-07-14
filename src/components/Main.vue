@@ -617,7 +617,7 @@
         if (merek == "KF") {
           return "https://upload.wikimedia.org/wikipedia/id/thumb/c/c3/Kimia_Farma_logo.svg/1200px-Kimia_Farma_logo.svg.png";
         } else if (merek == "BERKAT") {
-          return "https://d1fdloi71mui9q.cloudfront.net/qmFDkjfLTNG9QLKEzWxs_nJt9FVncnA2MmX7J";
+          return "https://i.ibb.co/3pPTRBk/berkat.jpg"
         } else {
           return "";
         }
