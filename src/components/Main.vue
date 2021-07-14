@@ -72,7 +72,7 @@
               md="6"
               order-md="3"
               order="1"
-              class="d-flex justify-md-end justify-center my-auto"
+              class="d-flex justify-md-end justify-center my-auto marquee"
               style="column-gap: 2rem"
             >
               <img
@@ -85,6 +85,18 @@
               />
               <img
                 src="https://1.bp.blogspot.com/-Rxt27KxQsog/XxayOZeDIJI/AAAAAAAACa0/64O97OMazGARKcKItopsuYy6_dWMq3dxACLcBGAsYHQ/w1200-h630-p-k-no-nu/Logo%2BBiofarma.png"
+                class="logo"
+              /><img src="https://i.ibb.co/3pPTRBk/berkat.jpg" class="logo" />
+              <img
+                src="https://logos-download.com/wp-content/uploads/2017/01/Watsons_logo_logotype.png"
+                class="logo"
+              />
+              <img
+                src="https://upload.wikimedia.org/wikipedia/id/8/89/Logo_Apotek_K-24.png"
+                class="logo"
+              />
+              <img
+                src="https://lh3.googleusercontent.com/proxy/qpUyhOipyBMkeX_vZEfLOQPbff2Ce23x-N_3jmVP94X23ZEp9UdIFn1vLlQeDx99UHlHn9Iqa4are8E3i7NFIHsXHondM0jb_1Ov6LmZAOLF"
                 class="logo"
               />
             </v-col>
@@ -617,7 +629,13 @@
         if (merek == "KF") {
           return "https://upload.wikimedia.org/wikipedia/id/thumb/c/c3/Kimia_Farma_logo.svg/1200px-Kimia_Farma_logo.svg.png";
         } else if (merek == "BERKAT") {
-          return "https://i.ibb.co/3pPTRBk/berkat.jpg"
+          return "https://i.ibb.co/3pPTRBk/berkat.jpg";
+        } else if (merek == "WATSONS") {
+          return "https://logos-download.com/wp-content/uploads/2017/01/Watsons_logo_logotype.png";
+        } else if (merek == "K24") {
+          return "https://upload.wikimedia.org/wikipedia/id/8/89/Logo_Apotek_K-24.png";
+        } else if (merek == "CENTURY") {
+          return "https://lh3.googleusercontent.com/proxy/qpUyhOipyBMkeX_vZEfLOQPbff2Ce23x-N_3jmVP94X23ZEp9UdIFn1vLlQeDx99UHlHn9Iqa4are8E3i7NFIHsXHondM0jb_1Ov6LmZAOLF";
         } else {
           return "";
         }
@@ -629,7 +647,7 @@
           return "0" + number;
         } else if (number.substring(0, 2) == "62") {
           return number;
-        }else if (number.substring(0, 2) == "08") {
+        } else if (number.substring(0, 2) == "08") {
           return number;
         } else {
           return "021" + number;
@@ -1004,6 +1022,20 @@
   }
   .badge--small {
     padding: 0.1rem 0.65rem 0.2rem;
+  }
+
+  .marquee {
+    animation: marqueeLeft 10s linear infinite;
+    position: relative;
+  }
+
+  @keyframes marqueeLeft {
+    0% {
+      left: 0;
+    }
+    100% {
+      left: -200%;
+    }
   }
 
   @keyframes gradient {
