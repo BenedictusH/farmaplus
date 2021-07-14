@@ -72,9 +72,11 @@
               md="6"
               order-md="3"
               order="1"
-              class="d-flex justify-md-end justify-center my-auto marquee"
+              class="d-flex justify-md-end justify-center my-auto"
               style="column-gap: 2rem"
             >
+            <v-row>
+              <v-col cols="12 d-flex justify-center justify-md-end gap">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/d/de/Logo_of_the_Ministry_of_Health_of_the_Republic_of_Indonesia.png"
                 class="logo"
@@ -86,7 +88,10 @@
               <img
                 src="https://1.bp.blogspot.com/-Rxt27KxQsog/XxayOZeDIJI/AAAAAAAACa0/64O97OMazGARKcKItopsuYy6_dWMq3dxACLcBGAsYHQ/w1200-h630-p-k-no-nu/Logo%2BBiofarma.png"
                 class="logo"
-              /><img src="https://i.ibb.co/3pPTRBk/berkat.jpg" class="logo" />
+              />
+              </v-col>
+              <v-col cols="12 d-flex justify-center justify-md-end gap">
+              <img src="https://i.ibb.co/3pPTRBk/berkat.jpg" class="logo" />
               <img
                 src="https://logos-download.com/wp-content/uploads/2017/01/Watsons_logo_logotype.png"
                 class="logo"
@@ -99,6 +104,8 @@
                 src="https://lh3.googleusercontent.com/proxy/qpUyhOipyBMkeX_vZEfLOQPbff2Ce23x-N_3jmVP94X23ZEp9UdIFn1vLlQeDx99UHlHn9Iqa4are8E3i7NFIHsXHondM0jb_1Ov6LmZAOLF"
                 class="logo"
               />
+              </v-col>
+            </v-row>
             </v-col>
           </v-row>
           <div
@@ -971,6 +978,10 @@
     -moz-box-shadow: 0px 10px 5px 0px rgba(255, 255, 255, 0.9);
   }
 
+  .gap {
+    gap: 20px;
+  }
+
   .left {
     width: 30%;
   }
@@ -1022,20 +1033,6 @@
   }
   .badge--small {
     padding: 0.1rem 0.65rem 0.2rem;
-  }
-
-  .marquee {
-    animation: marqueeLeft 10s linear infinite;
-    position: relative;
-  }
-
-  @keyframes marqueeLeft {
-    0% {
-      left: 0;
-    }
-    100% {
-      left: -200%;
-    }
   }
 
   @keyframes gradient {
