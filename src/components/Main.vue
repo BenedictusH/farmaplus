@@ -212,8 +212,8 @@
         v-show="!loadingBody"
       >
         <v-card elevation="5" class="card d-flex flex-column" height="100%">
-          <v-row class="pa-5 pb-md-0">
-            <v-col cols="12" lg="6" class="d-flex flex-column justify-space-between">
+          <v-row class="pa-5">
+            <v-col cols="12" lg="7" class="d-flex flex-column justify-space-between">
               <div>
                 <img :src="logoBrand(apotek.brand)" alt="Logo Apotek" class="logo-card mb-3" />
                 <v-card-title class="text-lg-h5 text-md-h4 font-weight-bold pt-0 pl-0">
@@ -235,7 +235,6 @@
               </div>
             </v-col>
             <v-col
-              offset-lg="1"
               lg="5"
               cols="12"
               class="
@@ -291,7 +290,7 @@
               </div>
               <!-- card-actions for hp -->
               <v-card-actions class="px-0 pb-2 d-flex flex-column-reverse d-md-none">
-                <div
+                <!-- <div
                   class="d-flex align-center justify-center whatsapp pt-md-0 pt-3"
                   v-if="apotek.wa"
                   v-bind:href="getWa(apotek)"
@@ -316,12 +315,16 @@
                       </svg>
                     </v-btn>
                   </a>
-                </div>
+                </div> -->
                 <div class="pt-md-0 pt-3">
-                  <a :href="'tel:' + apotek.msisdn" v-if="checkNull(apotek.msisdn)" class="">
+                  <a
+                    :href="'tel:' + formatTelpon(apotek.msisdn)"
+                    v-if="checkNull(apotek.msisdn)"
+                    class=""
+                  >
                     <v-btn rounded color="info" class="mr-md-2">
                       <v-icon class="mr-md-2">mdi-phone</v-icon>
-                      <span class="d-none d-md-block">{{ apotek.msisdn }}</span>
+                      <span class="d-none d-md-block">{{ formatTelpon(apotek.msisdn) }}</span>
                     </v-btn>
                   </a>
                   <a v-else class>
@@ -348,7 +351,7 @@
           <v-row class="flex-grow-1 pa-8 pt-0 align-end d-none d-md-flex">
             <v-col cols="12" class="pa-0 ">
               <v-card-actions class="pa-0 d-flex flex-row align-center  justify-end">
-                <div
+                <!-- <div
                   class="d-flex align-center justify-center whatsapp"
                   v-if="apotek.wa"
                   v-bind:href="getWa(apotek)"
@@ -373,12 +376,12 @@
                       </svg>
                     </v-btn>
                   </a>
-                </div>
+                </div> -->
                 <div>
-                  <a :href="'tel:' + apotek.msisdn" v-if="checkNull(apotek.msisdn)">
+                  <a :href="'tel:' + formatTelpon(apotek.msisdn)" v-if="checkNull(apotek.msisdn)">
                     <v-btn rounded color="info" class="mr-md-2">
                       <v-icon class="mr-md-2">mdi-phone</v-icon>
-                      <span class="d-none d-md-block">{{ apotek.msisdn }}</span>
+                      <span class="d-none d-md-block">{{ formatTelpon(apotek.msisdn) }}</span>
                     </v-btn>
                   </a>
                   <a v-else class>
@@ -615,6 +618,19 @@
           return "https://upload.wikimedia.org/wikipedia/id/thumb/c/c3/Kimia_Farma_logo.svg/1200px-Kimia_Farma_logo.svg.png";
         } else if (merek == "BERKAT") {
           return "https://d1fdloi71mui9q.cloudfront.net/qmFDkjfLTNG9QLKEzWxs_nJt9FVncnA2MmX7J";
+        } else {
+          return "";
+        }
+      },
+      formatTelpon(number) {
+        if (number.substring(0, 3) == "021") {
+          return number;
+        } else if (number.substring(0, 2) == "21") {
+          return "0" + number;
+        } else if (number.substring(0, 2) == "62") {
+          return number;
+        } else {
+          return "021" + number;
         }
       },
       capitalizeFirstLetter(str) {
@@ -622,12 +638,14 @@
         return str.charAt(0).toUpperCase() + lower.slice(1);
       },
       getWa(object) {
-        if (object.msisdn[0] == "0") {
-          return "https://wa.me/62" + object.msisdn.substring(1);
-        } else if (object.msisdn[0] + object.msisdn[1] == "62") {
-          return "https://wa.me/" + object.msisdn;
-        } else if (object.msisdn[0] + object.msisdn[1] + object.msisdn[2] == "+62") {
-          return "https://wa.me/" + object.msisdn.substring(1);
+        let nomor = this.formatTelpon(object.msisdn);
+
+        if (nomor[0] == "0") {
+          return "https://wa.me/62" + nomor.substring(1);
+        } else if (nomor[0] + nomor[1] == "62") {
+          return "https://wa.me/" + nomor;
+        } else if (nomor[0] + nomor[1] + nomor[2] == "+62") {
+          return "https://wa.me/" + nomor.substring(1);
         }
       },
       formatNama(nama) {
