@@ -317,14 +317,13 @@
               </div>
               <!-- card-actions for hp -->
               <v-card-actions class="px-0 pb-2 d-flex flex-column-reverse d-md-none">
-                <!-- <div
+                <div
                   class="d-flex align-center justify-center whatsapp pt-md-0 pt-3"
                   v-if="apotek.wa"
-                  v-bind:href="getWa(apotek)"
                 >
                   <a
                     class="d-flex align-center justify-center whatsapp"
-                    v-bind:href="getWa('628119431818')"
+                    v-bind:href="getWa(apotek)"
                     target="_blank"
                   >
                     <v-btn rounded color="#25D366" class="mr-md-2">
@@ -342,7 +341,7 @@
                       </svg>
                     </v-btn>
                   </a>
-                </div> -->
+                </div>
                 <div class="pt-md-0 pt-3">
                   <a
                     :href="'tel:' + formatTelpon(apotek.msisdn)"
@@ -667,6 +666,8 @@
           return number;
         } else if (number[0] == "8") {
           return "0" + number;
+        } else if (number[0] == "(") {
+          return number;
         } else {
           return "021" + number;
         }
@@ -743,6 +744,13 @@
           return false;
         } else {
           return value;
+        }
+      },
+      checkNullWa(value) {
+        if (typeof value == "undefined") {
+          return false
+        } else {
+          return true
         }
       },
       formatAngka(num) {
