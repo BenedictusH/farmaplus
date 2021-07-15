@@ -378,14 +378,13 @@
           <v-row class="flex-grow-1 pa-8 pt-0 align-end d-none d-md-flex">
             <v-col cols="12" class="pa-0 ">
               <v-card-actions class="pa-0 d-flex flex-row align-center  justify-end">
-                <!-- <div
+                <div
                   class="d-flex align-center justify-center whatsapp"
                   v-if="apotek.wa"
-                  v-bind:href="getWa(apotek)"
                 >
                   <a
                     class="d-flex align-center justify-center whatsapp"
-                    v-bind:href="getWa('628119431818')"
+                    v-bind:href="getWa(apotek)"
                     target="_blank"
                   >
                     <v-btn rounded color="#25D366" class="mr-md-2">
@@ -403,7 +402,7 @@
                       </svg>
                     </v-btn>
                   </a>
-                </div> -->
+                </div>
                 <div>
                   <a :href="'tel:' + formatTelpon(apotek.msisdn)" v-if="checkNull(apotek.msisdn)">
                     <v-btn rounded color="info" class="mr-md-2">
@@ -412,7 +411,7 @@
                     </v-btn>
                   </a>
                   <a v-else class>
-                    <v-btn rounded outlined disabled color="info">
+                    <v-btn rounded outlined disabled color="info" class="mr-md-2">
                       <v-icon class="mr-md-2">mdi-phone</v-icon>
                       <span class="d-none d-md-block">Tidak Tersedia</span>
                     </v-btn>
@@ -664,6 +663,10 @@
           return number;
         } else if (number.substring(0, 2) == "08") {
           return number;
+        } else if (number.substring(0, 1) == "0") {
+          return number;
+        } else if (number[0] == "8") {
+          return "0" + number;
         } else {
           return "021" + number;
         }
