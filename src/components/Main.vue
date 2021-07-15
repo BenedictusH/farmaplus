@@ -295,7 +295,7 @@
                   <span
                     v-else-if="apotek.status == 'under20'"
                     class="
-                      yellow--text
+                      orange--text
                       text--darken-2
                       spaccing
                       text-h5 text-md-h4
