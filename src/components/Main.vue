@@ -101,10 +101,14 @@
                 class="logo"
               />
               <img
-                src="https://upload.wikimedia.org/wikipedia/id/8/89/Logo_Apotek_K-24.png"
+                src="https://logos-download.com/wp-content/uploads/2017/01/Watsons_logo_logotype.png"
+                class="logo"
+              /> -->
+              <img
+                src="https://i.ibb.co/nbmgXx5/k24-new.png"
                 class="logo"
               />
-              <img
+              <!-- <img
                 src="https://lh3.googleusercontent.com/proxy/qpUyhOipyBMkeX_vZEfLOQPbff2Ce23x-N_3jmVP94X23ZEp9UdIFn1vLlQeDx99UHlHn9Iqa4are8E3i7NFIHsXHondM0jb_1Ov6LmZAOLF"
                 class="logo"
               /> -->
@@ -298,7 +302,7 @@
                   <span
                     v-else-if="apotek.status == 'under20'"
                     class="
-                      yellow--text
+                      orange--text
                       text--darken-2
                       spaccing
                       text-h5 text-md-h4
@@ -351,7 +355,7 @@
                     </v-btn>
                   </a>
                   <a v-else class>
-                    <v-btn rounded outlined disabled color="info">
+                    <v-btn rounded outlined disabled color="info" class="mr-md-2">
                       <v-icon class="mr-md-2">mdi-phone</v-icon>
                       <span class="d-none d-md-block">Tidak Tersedia</span>
                     </v-btn>
@@ -644,7 +648,7 @@
         } else if (merek == "WATSONS") {
           return "https://logos-download.com/wp-content/uploads/2017/01/Watsons_logo_logotype.png";
         } else if (merek == "K24") {
-          return "https://upload.wikimedia.org/wikipedia/id/8/89/Logo_Apotek_K-24.png";
+          return "https://i.ibb.co/nbmgXx5/k24-new.png";
         } else if (merek == "CENTURY") {
           return "https://lh3.googleusercontent.com/proxy/qpUyhOipyBMkeX_vZEfLOQPbff2Ce23x-N_3jmVP94X23ZEp9UdIFn1vLlQeDx99UHlHn9Iqa4are8E3i7NFIHsXHondM0jb_1Ov6LmZAOLF";
         } else {
