@@ -85,25 +85,26 @@
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Logo_BUMN_Untuk_Indonesia_2020.svg/2560px-Logo_BUMN_Untuk_Indonesia_2020.svg.png"
                 class="logo"
               />
-              <img
-                src="https://1.bp.blogspot.com/-Rxt27KxQsog/XxayOZeDIJI/AAAAAAAACa0/64O97OMazGARKcKItopsuYy6_dWMq3dxACLcBGAsYHQ/w1200-h630-p-k-no-nu/Logo%2BBiofarma.png"
-                class="logo"
-              />
+              
               </v-col>
               <v-col cols="12 d-flex justify-center justify-md-end gap">
               <img src="https://i.ibb.co/3pPTRBk/berkat.jpg" class="logo" />
               <img
+                src="https://upload.wikimedia.org/wikipedia/id/thumb/c/c3/Kimia_Farma_logo.svg/1200px-Kimia_Farma_logo.svg.png"
+                class="logo"
+              />
+              <!-- <img
                 src="https://logos-download.com/wp-content/uploads/2017/01/Watsons_logo_logotype.png"
                 class="logo"
-              />
+              /> -->
               <img
-                src="https://upload.wikimedia.org/wikipedia/id/8/89/Logo_Apotek_K-24.png"
+                src="https://i.ibb.co/nbmgXx5/k24-new.png"
                 class="logo"
               />
-              <img
+              <!-- <img
                 src="https://lh3.googleusercontent.com/proxy/qpUyhOipyBMkeX_vZEfLOQPbff2Ce23x-N_3jmVP94X23ZEp9UdIFn1vLlQeDx99UHlHn9Iqa4are8E3i7NFIHsXHondM0jb_1Ov6LmZAOLF"
                 class="logo"
-              />
+              /> -->
               </v-col>
             </v-row>
             </v-col>
@@ -640,7 +641,7 @@
         } else if (merek == "WATSONS") {
           return "https://logos-download.com/wp-content/uploads/2017/01/Watsons_logo_logotype.png";
         } else if (merek == "K24") {
-          return "https://upload.wikimedia.org/wikipedia/id/8/89/Logo_Apotek_K-24.png";
+          return "https://i.ibb.co/nbmgXx5/k24-new.png";
         } else if (merek == "CENTURY") {
           return "https://lh3.googleusercontent.com/proxy/qpUyhOipyBMkeX_vZEfLOQPbff2Ce23x-N_3jmVP94X23ZEp9UdIFn1vLlQeDx99UHlHn9Iqa4are8E3i7NFIHsXHondM0jb_1Ov6LmZAOLF";
         } else {
