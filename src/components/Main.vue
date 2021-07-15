@@ -889,17 +889,13 @@
       },
       async reset() {
         this.selectingObat = [];
-        this.selected = {
-          name: [],
-          obat: [],
-          provinsi: [],
-          kabkota: [],
-          tanggal: [],
-          start: 0,
-          limit: 10,
-        };
-        var res2 = await api.getLastShipment();
-        this.selected.tanggal = res2.data[0]["tanggal"];
+        this.selected.obat = []
+        this.selected.provinsi = []
+        this.selected.kabkota = []
+        this.selected.start = 0
+        this.selected.limit = 10
+        // var res2 = await api.getLastShipment();
+        // this.selected.tanggal = res2.data[0]["tanggal"];
       },
       // async getLastShipment() {
       //   var res2 = await api.getLastShipment();
