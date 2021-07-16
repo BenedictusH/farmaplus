@@ -10,89 +10,49 @@
         py-lg-15 py-3
       "
     >
-      <div class="text-lg-h2 text-h3 font-weight-bold pl-5 white--text text-center">
+      <div
+        class="text-lg-h2 text-h3 font-weight-bold pl-5 white--text text-center"
+      >
         Farma Plus
-        <div class="pt-3 text-h5 white--text text-center">Find your medicine here</div>
+        <div class="pt-3 text-h5 white--text text-center">
+          Find your medicine here
+        </div>
       </div>
     </div>
     <!-- Toolbar Desktop -->
     <div class="toolbar" style="background-color: white">
       <v-row class="px-lg-16 px-0 pt-5" no-gutters>
-        <!-- <v-col cols="4" class="px-5">
-          <span class="pl-5">Obat</span>
-          <v-autocomplete
-            v-model="selected.obat"
-            :items="options.obat"
-            chips
-            filled
-            hide-details
-            multiple
-            clearable
-            deletable-chips
-            rounded
-            dense
-          >
-          </v-autocomplete>
-        </v-col> -->
-
-        <!-- <v-col cols="2 px-5 mt-5">
-          <v-autocomplete
-            v-model="limit"
-            :items="limitOptions"
-            filled
-            hide-details
-            deletable-chips
-            rounded
-          >
-          </v-autocomplete>
-        </v-col>
-        <v-col cols="8 mt-5">
-          <div class="text-center">
-            <v-pagination
-              v-model="start"
-              :length="parseInt(amount / limit) + 1"
-              total-visible="10"
-              circle
-            ></v-pagination>
-          </div>
-        </v-col> -->
-
         <v-col cols="12" class="py-5 px-5 text-lg-h5 text-h6">
           <v-row>
-            <v-col cols="12" md="6" v-if="loadingToolbar" order-md="2" order="2">
-              <v-progress-linear indeterminate color="grey"></v-progress-linear>
-            </v-col>
-            <v-col class="my-auto" cols="12" md="6" order-md="1" order="3" v-else>
+            <v-col class="my-auto" cols="12" md="8" order="2" order-md="1">
               <!-- Stok {{ formatTanggal(selected.tanggal) }} -->
-              <br class="d-block d-md-none" />
-              Stok <strong>{{ formatDate(selected.tanggal) }} 09.00 WIB </strong></v-col
+              <v-progress-linear
+                indeterminate
+                color="grey"
+                v-if="loadingToolbar"
+              ></v-progress-linear>
+              <div v-else>
+                Stok
+                <strong>{{ formatDate(selected.tanggal) }} 09.00 WIB </strong>
+              </div></v-col
             >
+
             <v-col
-              cols="12"
-              md="6"
-              order-md="3"
+              cols="12 "
+              md="4"
+              class="d-flex justify-center justify-md-end gap"
               order="1"
-              class="d-flex justify-md-end justify-center my-auto"
-              style="column-gap: 2rem"
+              order-md="2"
             >
-              <v-row>
-                <v-col cols="12 d-flex justify-center justify-md-end gap">
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/d/de/Logo_of_the_Ministry_of_Health_of_the_Republic_of_Indonesia.png"
-                    class="logo"
-                  />
-                  <img src="../assets/BUMN.png" class="logo" />
-                  <!-- <img
-                src="https://upload.wikimedia.org/wikipedia/id/thumb/c/c3/Kimia_Farma_logo.svg/1200px-Kimia_Farma_logo.svg.png"
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/d/de/Logo_of_the_Ministry_of_Health_of_the_Republic_of_Indonesia.png"
                 class="logo"
-              /> -->
-                </v-col>
-                <v-col cols="12 d-flex justify-center justify-md-end gap">
-                  <div v-for="brand in brands" :key="brand">
-                    <img :src="brand.img" class="logo" />
-                  </div>
-                </v-col>
-              </v-row>
+              />
+              <img src="../assets/BUMN.png" class="logo" />
+              <!-- <img
+              src="https://upload.wikimedia.org/wikipedia/id/thumb/c/c3/Kimia_Farma_logo.svg/1200px-Kimia_Farma_logo.svg.png"
+              class="logo"
+            /> -->
             </v-col>
           </v-row>
           <div
@@ -103,9 +63,9 @@
             order="3"
             v-if="!loadingToolbar"
           >
-            *Saat ini, data diupdate secara berkala tiap hari pkl 09.00 WIB, sehingga bukan data
-            realtime. Sehubungan dengan tingginya kebutuhan, harap konfirmasikan ketersediaan di
-            masing-masing lokasi apotek.*
+            *Saat ini, data diupdate secara berkala tiap hari pkl 09.00 WIB,
+            sehingga bukan data realtime. Sehubungan dengan tingginya kebutuhan,
+            harap konfirmasikan ketersediaan di masing-masing lokasi apotek.*
           </div>
 
           <!-- {{ formatTanggal(apotek.tanggal) }} -->
@@ -125,7 +85,9 @@
           </v-data-table>
         </v-col>
         <v-col cols="12" class="px-5 pb-5 text-center">
-          Menampilkan <strong>{{ formatAngka(getTotal(tableItemsInt)) }}</strong> Obat</v-col
+          Menampilkan
+          <strong>{{ formatAngka(getTotal(tableItemsInt)) }}</strong>
+          Obat</v-col
         >
 
         <v-col cols="12" md="4" class="px-5">
@@ -161,7 +123,7 @@
           </v-autocomplete>
         </v-col>
         <v-col cols="12" md="4" class="px-5">
-          <span class="pl-5">Brand</span>
+          <span class="pl-5">Apotek</span>
           <v-autocomplete
             v-model="selected.brand"
             :items="options.brand"
@@ -183,20 +145,18 @@
                 close
                 @click:close="remove(data.item)"
               >
-                <v-avatar left>
-                  <v-img :src="data.item.img"></v-img>
-                </v-avatar>
-                {{ data.item.name }}
+                <!-- {{ data.item.name }} -->
+                <img :src="data.item.img" class="avatar"/>
               </v-chip>
             </template>
             <template v-slot:item="data">
               <template>
-                <v-list-item-avatar>
-                  <img :src="data.item.img" />
-                </v-list-item-avatar>
                 <v-list-item-content>
-                  <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                  <v-list-item-title
+                    v-html="data.item.name"
+                  ></v-list-item-title>
                 </v-list-item-content>
+                <img :src="data.item.img" class="avatar" />
               </template>
             </template>
           </v-autocomplete>
@@ -223,7 +183,16 @@
           order="4"
           class="d-flex justify-end align-center pr-md-5 pr-5 mt-5"
         >
-          <v-btn color="error" elevation="2" class="ml-5" rounded @click="reset">Reset</v-btn>
+          <v-btn color="error" elevation="2" class="ml-5" rounded @click="reset"
+            >Reset</v-btn
+          >
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12" class="d-flex justify-center justify-md-center flex-wrap gap">
+          <div v-for="brand in brands" :key="brand">
+            <img :src="brand.img" class="logo" />
+          </div>
         </v-col>
       </v-row>
     </div>
@@ -233,13 +202,21 @@
       align="stretch"
       v-if="!loadingBody && amount == 0"
     >
-      <v-col cols="12" class="d-flex align-center justify-center" style="height: 50vh">
+      <v-col
+        cols="12"
+        class="d-flex align-center justify-center"
+        style="height: 50vh"
+      >
         <v-alert outlined type="warning" prominent border="left">
           {{ amountWriter() }}
         </v-alert>
       </v-col>
     </v-row>
-    <v-row class="px-lg-16 px-3 pb-10 mt-5 cards-body" align="stretch" v-if="amount !== 0">
+    <v-row
+      class="px-lg-16 px-3 pb-10 mt-5 cards-body"
+      align="stretch"
+      v-if="amount !== 0"
+    >
       <v-col
         lg="6"
         cols="12"
@@ -248,7 +225,8 @@
         :key="index * 10"
         v-show="loadingBody"
       >
-        <v-skeleton-loader type="article" class="mb-6" elevation="2"> </v-skeleton-loader>
+        <v-skeleton-loader type="article" class="mb-6" elevation="2">
+        </v-skeleton-loader>
       </v-col>
       <v-col
         v-for="(apotek, index) in body"
@@ -262,19 +240,29 @@
           elevation="5"
           class="card d-flex flex-column"
           height="100%"
-          style="border-radius:15px;"
+          style="border-radius: 15px"
         >
           <v-row class="pa-5">
-            <v-col cols="12" lg="7" class="d-flex flex-column justify-space-between">
+            <v-col
+              cols="12"
+              lg="7"
+              class="d-flex flex-column justify-space-between"
+            >
               <div>
-                <img :src="logoBrand(apotek.brand)" alt="Logo Apotek" class="logo-card mb-3" />
+                <img
+                  :src="logoBrand(apotek.brand)"
+                  alt="Logo Apotek"
+                  class="logo-card mb-3"
+                />
                 <v-card-title
                   class="text-lg-h5 text-md-h4 font-weight-bold pt-0 pl-0"
-                  style="word-wrap: normal;"
+                  style="word-wrap: normal"
                 >
                   {{ formatNama(apotek.nama) }}
                 </v-card-title>
-                <v-card-subtitle class="px-0 pb-0">{{ apotek.alamat }}</v-card-subtitle
+                <v-card-subtitle class="px-0 pb-0">{{
+                  apotek.alamat
+                }}</v-card-subtitle
                 ><v-card-subtitle class="px-0 pb-0 pa-0"
                   >{{ apotek.kabkota }}, {{ apotek.provinsi }}</v-card-subtitle
                 >
@@ -304,13 +292,29 @@
             >
               <div>
                 <v-card-title
-                  class="text-right font-weight-bold px-0 d-flex flex-column justify-start justify-lg-end align-lg-end align-start"
+                  class="
+                    text-right
+                    font-weight-bold
+                    px-0
+                    d-flex
+                    flex-column
+                    justify-start justify-lg-end
+                    align-lg-end align-start
+                  "
                 >
                   <span>{{ apotek.obat }} </span>
-                  <span class="font-weight-regular text-caption">{{ apotek.obatDetail }} </span>
+                  <span class="font-weight-regular text-caption"
+                    >{{ apotek.obatDetail }}
+                  </span>
                 </v-card-title>
 
-                <v-card-subtitle class="pa-0 grey--text text-h6 text--darken-3 text-lg-right pt-5"
+                <v-card-subtitle
+                  class="
+                    pa-0
+                    grey--text
+                    text-h6 text--darken-3 text-lg-right
+                    pt-5
+                  "
                   >Stok</v-card-subtitle
                 >
                 <v-card-title
@@ -324,11 +328,13 @@
                     green--text
                     text--darken-4
                     d-flex
-                    justify-lg-end
-                    justify-start
+                    justify-lg-end justify-start
                   "
                 >
-                  <span v-if="apotek.status == 'habis'" class="red--text spaccing">
+                  <span
+                    v-if="apotek.status == 'habis'"
+                    class="red--text spaccing"
+                  >
                     {{ formatStatus(apotek.status) }}</span
                   >
                   <span
@@ -348,9 +354,17 @@
                 </v-card-title>
               </div>
               <!-- card-actions for hp -->
-              <v-card-actions class="px-0 pb-2 d-flex flex-column-reverse d-md-none">
+              <v-card-actions
+                class="px-0 pb-2 d-flex flex-column-reverse d-md-none"
+              >
                 <div
-                  class="d-flex align-center justify-center whatsapp pt-md-0 pt-3"
+                  class="
+                    d-flex
+                    align-center
+                    justify-center
+                    whatsapp
+                    pt-md-0 pt-3
+                  "
                   v-if="checkNullWa(apotek.wa)"
                 >
                   <a
@@ -383,18 +397,29 @@
                   >
                     <v-btn rounded color="info" class="mr-md-2">
                       <v-icon class="mr-md-2">mdi-phone</v-icon>
-                      <span class="d-none d-md-block">{{ formatTelpon(apotek.msisdn) }}</span>
+                      <span class="d-none d-md-block">{{
+                        formatTelpon(apotek.msisdn)
+                      }}</span>
                     </v-btn>
                   </a>
                   <a v-else class>
-                    <v-btn rounded outlined disabled color="info" class="mr-md-2">
+                    <v-btn
+                      rounded
+                      outlined
+                      disabled
+                      color="info"
+                      class="mr-md-2"
+                    >
                       <v-icon class="mr-md-2">mdi-phone</v-icon>
                       <span class="d-none d-md-block">Tidak Tersedia</span>
                     </v-btn>
                   </a>
                 </div>
                 <div>
-                  <a v-bind:href="getLoc(apotek.latitude, apotek.longitude)" target="_blank">
+                  <a
+                    v-bind:href="getLoc(apotek.latitude, apotek.longitude)"
+                    target="_blank"
+                  >
                     <v-btn rounded color="success" class="ml-md-2">
                       <v-icon class="mr-md-2">mdi-map-marker</v-icon>
                       <span class="d-none d-md-block">Maps</span>
@@ -408,10 +433,15 @@
           </v-row>
           <!-- card-actions for md and up -->
           <v-row class="flex-grow-1 pa-8 pt-0 align-end d-none d-md-flex">
-            <v-col cols="12" class="pa-0 ">
-              <v-card-actions class="pa-0 d-flex flex-row align-center  justify-start ">
+            <v-col cols="12" class="pa-0">
+              <v-card-actions
+                class="pa-0 d-flex flex-row align-center justify-start"
+              >
                 <div>
-                  <a v-bind:href="getLoc(apotek.latitude, apotek.longitude)" target="_blank">
+                  <a
+                    v-bind:href="getLoc(apotek.latitude, apotek.longitude)"
+                    target="_blank"
+                  >
                     <v-btn rounded color="success mr-md-2">
                       <v-icon class="mr-md-2">mdi-map-marker</v-icon>
                       <span class="d-none d-md-block">Maps</span>
@@ -420,14 +450,25 @@
                 </div>
 
                 <div>
-                  <a :href="'tel:' + formatTelpon(apotek.msisdn)" v-if="checkNull(apotek.msisdn)">
+                  <a
+                    :href="'tel:' + formatTelpon(apotek.msisdn)"
+                    v-if="checkNull(apotek.msisdn)"
+                  >
                     <v-btn rounded color="info" class="mr-md-2">
                       <v-icon class="mr-md-2">mdi-phone</v-icon>
-                      <span class="d-none d-md-block">{{ formatTelpon(apotek.msisdn) }}</span>
+                      <span class="d-none d-md-block">{{
+                        formatTelpon(apotek.msisdn)
+                      }}</span>
                     </v-btn>
                   </a>
                   <a v-else class>
-                    <v-btn rounded outlined disabled color="info" class="mr-md-2">
+                    <v-btn
+                      rounded
+                      outlined
+                      disabled
+                      color="info"
+                      class="mr-md-2"
+                    >
                       <v-icon class="mr-md-2">mdi-phone</v-icon>
                       <span class="d-none d-md-block">Tidak Tersedia</span>
                     </v-btn>
@@ -522,10 +563,14 @@
     </v-row>
     <v-footer dark padless>
       <v-col cols="12 pa-0">
-        <v-card flat tile class="grey lighten-4 grey--text text--darken-1 text-center">
+        <v-card
+          flat
+          tile
+          class="grey lighten-4 grey--text text--darken-1 text-center"
+        >
           <v-card-text class="grey--text text--darken-3">
-            Copyright &copy; 2021, Kementerian Kesehatan Republik Indonesia. All Rights Reserved.
-            Developed by Tekira
+            Copyright &copy; 2021, Kementerian Kesehatan Republik Indonesia. All
+            Rights Reserved. Developed by Tekira
           </v-card-text>
 
           <v-divider></v-divider>
@@ -536,630 +581,645 @@
 </template>
 
 <script>
-  import api, { STRAPI_URL } from "../api/api.js";
+import api, { STRAPI_URL } from "../api/api.js";
 
-  export default {
-    name: "HelloWorld",
+export default {
+  name: "HelloWorld",
 
-    data: () => ({
-      shipment: [],
-      date: [],
-      menu: false,
-      menuInput: false,
-      loadingToolbar: true,
-      loadingBody: true,
-      start: 1,
-      limit: 10,
-      limitOptions: [10, 20, 50, 100],
-      selected: {
-        name: [],
-        obat: [],
-        provinsi: [],
-        kabkota: [],
-        tanggal: [],
-        brand: [],
+  data: () => ({
+    shipment: [],
+    date: [],
+    menu: false,
+    menuInput: false,
+    loadingToolbar: true,
+    loadingBody: true,
+    start: 1,
+    limit: 10,
+    limitOptions: [10, 20, 50, 100],
+    selected: {
+      name: [],
+      obat: [],
+      provinsi: [],
+      kabkota: [],
+      tanggal: [],
+      brand: [],
+    },
+    input: {
+      name: [],
+      obat: [],
+      provinsi: [],
+      kabkota: [],
+      tanggal: [],
+    },
+    provinsis: [],
+    body: [],
+    jumlah: "",
+    options: [],
+    headers: [
+      {
+        text: "Jenis Obat",
+        value: "obat",
       },
-      input: {
-        name: [],
-        obat: [],
-        provinsi: [],
-        kabkota: [],
-        tanggal: [],
+      { text: "Total Obat", value: "jumlah" },
+    ],
+    tableItems: [],
+    tableItemsInt: [],
+    selectingObat: [],
+    province: "",
+    brands: [
+      {
+        id: "KF",
+        name: "Kimia Farma",
+        img: STRAPI_URL + "/uploads/KF_133893f927.png",
       },
-      provinsis: [],
-      body: [],
-      jumlah: "",
-      options: [],
-      headers: [
-        {
-          text: "Jenis Obat",
-          value: "obat",
-        },
-        { text: "Total Obat", value: "jumlah" },
-      ],
-      tableItems: [],
-      tableItemsInt: [],
-      selectingObat: [],
-      province: "",
-      brands: [
-        {
-          id: "KF",
-          name: "Kimia Farma",
-          img: STRAPI_URL + "/uploads/KF_133893f927.png",
-        },
-        {
-          id: "BERKAT",
-          name: "Apotek Berkat",
-          img: STRAPI_URL + "/uploads/BERKAT_fb45ec9d5a.png",
-        },
-        {
-          id: "WATSONS",
-          name: "Watsons",
-          img: STRAPI_URL + "/uploads/WATSONS_499f011979.png",
-        },
-        {
-          id: "K24",
-          name: "K24",
-          img: STRAPI_URL + "/uploads/K24_76e69d7a7c.png",
-        },
-        {
-          id: "CENTURY",
-          name: "Century",
-          img: STRAPI_URL + "/uploads/CENTURY_b0a02bdfde.png",
-        },
-        {
-          id: "GENERIK",
-          name: "Generik",
-          img: STRAPI_URL + "/uploads/GENERIK_0424106aca.png",
-        },
-        {
-          id: "AJIWARAS",
-          name: "Ajiwaras",
-          img: STRAPI_URL + "/uploads/AJIWARAS_fbf23f272a.png",
-        },
-        {
-          id: "GUARDIAN",
-          name: "Guardian",
-          img: STRAPI_URL + "/uploads/GUARDIAN_aa0274dafa.png",
-        },
-      ],
-    }),
-    methods: {
-      formatStatus(status) {
-        if (status == "under20") {
-          return "Di Bawah 20";
-        } else {
-          return status[0].toUpperCase() + status.substring(1);
-        }
+      {
+        id: "BERKAT",
+        name: "Apotek Berkat",
+        img: STRAPI_URL + "/uploads/BERKAT_fb45ec9d5a.png",
       },
-      copyToClipboard(text) {
-        var dummy = document.createElement("textarea");
-        document.body.appendChild(dummy);
-        dummy.value = text;
-        dummy.select();
-        document.execCommand("copy");
-        document.body.removeChild(dummy);
+      {
+        id: "WATSONS",
+        name: "Watsons",
+        img: STRAPI_URL + "/uploads/WATSONS_499f011979.png",
       },
-      async getJumlah() {
-        var total_provinsi = [];
-        await Promise.all(
-          this.selected["provinsi"].map(async (selected_provinsi) => {
-            //
-            await Promise.all(
-              this.provinsis.map(async (provinsi) => {
-                if (provinsi.nama == selected_provinsi) {
-                  await Promise.all(
-                    provinsi.jumlah.map((r) => {
-                      if (this.selected.tanggal == r.tanggal) {
-                        total_provinsi.push(r);
-                      }
-                    })
-                  );
-                }
-              })
-            );
-          })
-        );
-        if (total_provinsi.length == 0) {
+      {
+        id: "K24",
+        name: "K24",
+        img: STRAPI_URL + "/uploads/K24_76e69d7a7c.png",
+      },
+      // {
+      //   id: "CENTURY",
+      //   name: "Century",
+      //   img: STRAPI_URL + "/uploads/CENTURY_b0a02bdfde.png",
+      // },
+      // {
+      //   id: "GENERIK",
+      //   name: "Generik",
+      //   img: STRAPI_URL + "/uploads/GENERIK_0424106aca.png",
+      // },
+      // {
+      //   id: "AJIWARAS",
+      //   name: "Ajiwaras",
+      //   img: STRAPI_URL + "/uploads/AJIWARAS_fbf23f272a.png",
+      // },
+      // {
+      //   id: "GUARDIAN",
+      //   name: "Guardian",
+      //   img: STRAPI_URL + "/uploads/GUARDIAN_aa0274dafa.png",
+      // },
+    ],
+  }),
+  methods: {
+    formatStatus(status) {
+      if (status == "under20") {
+        return "Di Bawah 20";
+      } else {
+        return status[0].toUpperCase() + status.substring(1);
+      }
+    },
+    copyToClipboard(text) {
+      var dummy = document.createElement("textarea");
+      document.body.appendChild(dummy);
+      dummy.value = text;
+      dummy.select();
+      document.execCommand("copy");
+      document.body.removeChild(dummy);
+    },
+    async getJumlah() {
+      var total_provinsi = [];
+      await Promise.all(
+        this.selected["provinsi"].map(async (selected_provinsi) => {
+          //
           await Promise.all(
             this.provinsis.map(async (provinsi) => {
-              await Promise.all(
-                provinsi.jumlah.map((r) => {
-                  if (this.selected.tanggal == r.tanggal) {
-                    // console.log(r)
-                    total_provinsi.push(r);
-                  }
-                })
-              );
+              if (provinsi.nama == selected_provinsi) {
+                await Promise.all(
+                  provinsi.jumlah.map((r) => {
+                    if (this.selected.tanggal == r.tanggal) {
+                      total_provinsi.push(r);
+                    }
+                  })
+                );
+              }
             })
           );
-        }
-        this.tableItems = [];
-        this.tableItemsInt = [];
+        })
+      );
+      if (total_provinsi.length == 0) {
         await Promise.all(
-          this.options.obat.map((r) => {
-            var obat = r.toLowerCase();
-            var jumlah = total_provinsi
-              .map((jumlah) => {
-                try {
-                  return jumlah[obat];
-                } catch (e) {
-                  return 0;
-                }
-              })
-              .reduce((a, b) => a + b, 0);
-            var item = {
-              obat: "",
-              jumlah: 0,
-            };
-            item.obat = r;
-            item.jumlah = this.formatAngka(jumlah);
-
-            this.tableItems.push(item);
-            // console.log("haha");
-            var itemInt = {
-              jumlah: 0,
-            };
-            itemInt.jumlah = jumlah;
-            // console.log(jumlah);
-            this.tableItemsInt.push(itemInt);
-          })
-        );
-
-        //
-      },
-      getTotal(items) {
-        var x = items.map((r) => {
-          return r.jumlah;
-        });
-        return x.reduce((a, b) => a + b, 0);
-      },
-      logoBrand(brand) {
-        var merek = brand.toUpperCase();
-
-        if (merek == "KF") {
-          return "https://upload.wikimedia.org/wikipedia/id/thumb/c/c3/Kimia_Farma_logo.svg/1200px-Kimia_Farma_logo.svg.png";
-        } else if (merek == "BERKAT") {
-          return "https://i.ibb.co/fDRd2Vj/message-Image-1626365949727.jpg";
-        } else if (merek == "WATSONS") {
-          return "https://logos-download.com/wp-content/uploads/2017/01/Watsons_logo_logotype.png";
-        } else if (merek == "K24") {
-          return "https://i.ibb.co/nbmgXx5/k24-new.png";
-        } else if (merek == "CENTURY") {
-          return "https://lh3.googleusercontent.com/proxy/qpUyhOipyBMkeX_vZEfLOQPbff2Ce23x-N_3jmVP94X23ZEp9UdIFn1vLlQeDx99UHlHn9Iqa4are8E3i7NFIHsXHondM0jb_1Ov6LmZAOLF";
-        } else {
-          return "";
-        }
-      },
-      formatTelpon(number) {
-        if (number.substring(0, 3) == "021") {
-          return number;
-        } else if (number.substring(0, 2) == "21") {
-          return "0" + number;
-        } else if (number.substring(0, 2) == "62") {
-          return number;
-        } else if (number.substring(0, 3) == "+62") {
-          return number;
-        } else if (number.substring(0, 2) == "08") {
-          return number;
-        } else if (number.substring(0, 1) == "0") {
-          return number;
-        } else if (number[0] == "8") {
-          return "0" + number;
-        } else if (number[0] == "(") {
-          return number;
-        } else {
-          return "021" + number;
-        }
-      },
-      capitalizeFirstLetter(str) {
-        const lower = str.toLowerCase();
-        return str.charAt(0).toUpperCase() + lower.slice(1);
-      },
-      getWa(object) {
-        let nomor = this.formatTelpon(object.wa);
-
-        if (nomor[0] == "0") {
-          return "https://wa.me/62" + nomor.substring(1);
-        } else if (nomor[0] + nomor[1] == "62") {
-          return "https://wa.me/" + nomor;
-        } else if (nomor[0] + nomor[1] + nomor[2] == "+62") {
-          return "https://wa.me/" + nomor.substring(1);
-        } else {
-          return false;
-        }
-      },
-      formatNama(nama) {
-        if (nama.toLowerCase().includes("apotek")) {
-          return nama;
-        } else {
-          return `Apotek ${nama}`;
-        }
-      },
-      formatDate(input) {
-        var date = new Date(input).getDay();
-
-        let bulans = [
-          "Januari",
-          "Februari",
-          "Maret",
-          "April",
-          "Mei",
-          "Juni",
-          "Juli",
-          "Agustus",
-          "September",
-          "Oktober",
-          "November",
-          "Desember",
-        ];
-
-        let hari = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
-
-        const getHari = new Proxy(hari, {
-          get(target, prop) {
-            if (!isNaN(prop)) {
-              prop = parseInt(prop, 10);
-              if (prop < 0) {
-                prop += target.length;
-              }
-            }
-            return target[prop];
-          },
-        });
-
-        var tanggal = input.toString().slice(input.length - 2);
-        var bulan = input
-          .toString()
-          .slice(0, 7)
-          .slice(5);
-        var tahun = input.toString().slice(0, 4);
-        return getHari[date - 1] + ", " + tanggal + " " + bulans[parseInt(bulan) - 1] + " " + tahun;
-      },
-      getLoc(lat, long) {
-        return `http://maps.google.co.uk/maps?q=${lat},${long}`;
-      },
-      getImageUrl(input) {
-        return require("@/assets/" + input + ".png");
-      },
-      checkNull(value) {
-        if (typeof value == "undefined") {
-          return false;
-        } else if (value.length <= 4) {
-          return false;
-        } else {
-          return value;
-        }
-      },
-      checkNullWa(value) {
-        if (typeof value == "undefined" || value == "-" || value == "") {
-          return false;
-        } else {
-          return true;
-        }
-      },
-      formatAngka(num) {
-        var a = 0;
-        if (num > 999999) {
-          a = (num / 1000000).toFixed(1) + "m";
-        } else if (num < 0) {
-          a = 0;
-        } else {
-          a = num > 9999 ? (num / 1000).toFixed(1) + "k" : num;
-        }
-        return a.toString().replace(".", ",");
-      },
-      formatTanggal(tanggal) {
-        var today = new Date();
-        var target = new Date(tanggal);
-        var Difference_In_Date = (today.getTime() - target.getTime()) / (1000 * 3600 * 24);
-        if (Difference_In_Date > -1) {
-          return "hari ini";
-        } else {
-          return -1 * Difference_In_Date + " hari yang lalu";
-        }
-      },
-      async refreshPage() {
-        await this.getOptions();
-
-        this.loadingToolbar = false;
-
-        var res = await this.update();
-        await this.getJumlah();
-        this.body = res.data;
-        this.loadingBody = false;
-      },
-      async getOptions() {
-        var obat = await api.find("obats");
-        this.options["obat"] = obat.map((ob) => {
-          return this.capitalizeFirstLetter(ob.nama);
-        });
-
-        var provinsi = await api.find("provinses");
-        this.options["provinsi"] = provinsi.map((ob) => {
-          return ob.nama;
-        });
-        this.provinsis = provinsi;
-
-        // var placeholder = []
-        // this.brands.map((brand) => {
-        //   placeholder.push(brand.name)
-        // })
-
-        this.options["brand"] = this.brands;
-
-        // var provinsi = await api.find("provinses");
-        //
-        // this.options["provinsi"] = provinsi;
-      },
-      remove(item) {
-        this.selected.brand = this.selected.brand.filter(function(el) {
-          return el.code != item.code;
-        });
-      },
-      async update() {
-        this.province = this.selected.provinsi;
-        this.loadingBody = true;
-
-        var res = await api.filter(
-          this.selected.name,
-          this.selected.obat,
-          this.selected.provinsi,
-          this.selected.kabkota,
-          this.selected.brand,
-          this.selected.tanggal,
-          this.start - 1,
-          this.limit
-        );
-        this.body = res.data;
-        //
-
-        // this.loadingBody = true;
-
-        var res2 = await api.count(
-          this.selected.name,
-          this.selected.obat,
-          this.selected.provinsi,
-          this.selected.kabkota,
-          this.selected.brand,
-          this.selected.tanggal,
-        );
-        this.amount = res2.data;
-        //
-        // this.getJumlahObatProv();
-        this.loadingBody = false;
-
-        // await this.getKabkot()
-      },
-      async getKabkot() {
-        //
-        //
-        var select_kabkota = [];
-        await Promise.all(
-          this.selected["provinsi"].map(async (selected_provinsi) => {
-            //
+          this.provinsis.map(async (provinsi) => {
             await Promise.all(
-              this.provinsis.map(async (provinsi) => {
-                if (provinsi.nama == selected_provinsi) {
-                  await Promise.all(
-                    provinsi.kabkota.map((r) => {
-                      select_kabkota.push(r.nama);
-                    })
-                  );
-                  this.options["kabkota"] = select_kabkota;
+              provinsi.jumlah.map((r) => {
+                if (this.selected.tanggal == r.tanggal) {
+                  // console.log(r)
+                  total_provinsi.push(r);
                 }
               })
             );
           })
         );
-      },
-      amountWriter() {
-        if (this.amount == 0) {
-          return "Tidak tersedia";
-        } else if (this.amount == 1) {
-          return "Menampilkan 1 apotek";
-        } else {
-          return "Menampilkan " + this.amount + " apotek";
-        }
-      },
-      async reset() {
-        this.selectingObat = [];
-        this.selected.obat = [];
-        this.selected.provinsi = [];
-        this.selected.kabkota = [];
-        this.selected.brand = [];
-        this.selected.start = 0;
-        this.selected.limit = 10;
-        // var res2 = await api.getLastShipment();
-        // this.selected.tanggal = res2.data[0]["tanggal"];
-      },
-      // async getLastShipment() {
-      //   var res2 = await api.getLastShipment();
+      }
+      this.tableItems = [];
+      this.tableItemsInt = [];
+      await Promise.all(
+        this.options.obat.map((r) => {
+          var obat = r.toLowerCase();
+          var jumlah = total_provinsi
+            .map((jumlah) => {
+              try {
+                return jumlah[obat];
+              } catch (e) {
+                return 0;
+              }
+            })
+            .reduce((a, b) => a + b, 0);
+          var item = {
+            obat: "",
+            jumlah: 0,
+          };
+          item.obat = r;
+          item.jumlah = this.formatAngka(jumlah);
+
+          this.tableItems.push(item);
+          // console.log("haha");
+          var itemInt = {
+            jumlah: 0,
+          };
+          itemInt.jumlah = jumlah;
+          // console.log(jumlah);
+          this.tableItemsInt.push(itemInt);
+        })
+      );
+
       //
-      //   return (res2.data[0]["tanggal"]).toString()
-      // },
     },
-    async mounted() {
-      var res2 = await api.getLastShipment();
-      this.selected.tanggal = res2.data[0]["tanggal"];
-      // this.selected.tanggal = '2021-07-11';
-      await this.refreshPage();
-      // this.options["obat"]= this.selected.obat
-      // await this.getJumlahObatProv();
-      // await this.getOptions();
+    getTotal(items) {
+      var x = items.map((r) => {
+        return r.jumlah;
+      });
+      return x.reduce((a, b) => a + b, 0);
     },
-    watch: {
-      selected: {
-        handler() {
-          this.update();
-          if (this.start * this.amount > parseInt(this.amount / this.limit) + 1) {
-            this.start = 1;
+    logoBrand(brand) {
+      var merek = brand.toUpperCase();
+      var a = this.brands.filter(function(el) { return el.id == merek; })
+      return a[0]["img"]
+    },
+    formatTelpon(number) {
+      if (number.substring(0, 3) == "021") {
+        return number;
+      } else if (number.substring(0, 2) == "21") {
+        return "0" + number;
+      } else if (number.substring(0, 2) == "62") {
+        return number;
+      } else if (number.substring(0, 3) == "+62") {
+        return number;
+      } else if (number.substring(0, 2) == "08") {
+        return number;
+      } else if (number.substring(0, 1) == "0") {
+        return number;
+      } else if (number[0] == "8") {
+        return "0" + number;
+      } else if (number[0] == "(") {
+        return number;
+      } else {
+        return "021" + number;
+      }
+    },
+    capitalizeFirstLetter(str) {
+      const lower = str.toLowerCase();
+      return str.charAt(0).toUpperCase() + lower.slice(1);
+    },
+    getWa(object) {
+      let nomor = this.formatTelpon(object.wa);
+
+      if (nomor[0] == "0") {
+        return "https://wa.me/62" + nomor.substring(1);
+      } else if (nomor[0] + nomor[1] == "62") {
+        return "https://wa.me/" + nomor;
+      } else if (nomor[0] + nomor[1] + nomor[2] == "+62") {
+        return "https://wa.me/" + nomor.substring(1);
+      } else {
+        return false;
+      }
+    },
+    formatNama(nama) {
+      if (nama.toLowerCase().includes("apotek")) {
+        return nama;
+      } else {
+        return `Apotek ${nama}`;
+      }
+    },
+    formatDate(input) {
+      var date = new Date(input).getDay();
+
+      let bulans = [
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember",
+      ];
+
+      let hari = [
+        "Senin",
+        "Selasa",
+        "Rabu",
+        "Kamis",
+        "Jumat",
+        "Sabtu",
+        "Minggu",
+      ];
+
+      const getHari = new Proxy(hari, {
+        get(target, prop) {
+          if (!isNaN(prop)) {
+            prop = parseInt(prop, 10);
+            if (prop < 0) {
+              prop += target.length;
+            }
           }
-          // this.getKabkot()
+          return target[prop];
         },
-        deep: true,
-      },
-      start() {
-        //
-        // if (newV > parseInt(this.amount/this.limit)+1) {
-        //   this.start = 1
-        // }
-        this.update();
-      },
-      limit() {
-        this.update();
-      },
-      selectingObat: function(newvar) {
-        var x = newvar.map((r) => {
-          return r.obat;
-        });
-        this.selected.obat = x;
-      },
-      province: function(newvar) {
-        if (newvar.length == 0) {
-          this.options["kabkota"] = [];
-          this.selected["kabkota"] = [];
-          this.tableItems = [];
-          this.tableItemsInt = [];
-          this.getJumlah();
-        } else {
-          this.getKabkot();
-          this.getJumlah();
-        }
-      },
+      });
+
+      var tanggal = input.toString().slice(input.length - 2);
+      var bulan = input.toString().slice(0, 7).slice(5);
+      var tahun = input.toString().slice(0, 4);
+      return (
+        getHari[date - 1] +
+        ", " +
+        tanggal +
+        " " +
+        bulans[parseInt(bulan) - 1] +
+        " " +
+        tahun
+      );
     },
-  };
+    getLoc(lat, long) {
+      return `http://maps.google.co.uk/maps?q=${lat},${long}`;
+    },
+    getImageUrl(input) {
+      return require("@/assets/" + input + ".png");
+    },
+    checkNull(value) {
+      if (typeof value == "undefined") {
+        return false;
+      } else if (value.length <= 4) {
+        return false;
+      } else {
+        return value;
+      }
+    },
+    checkNullWa(value) {
+      if (typeof value == "undefined" || value == "-" || value == "") {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    formatAngka(num) {
+      var a = 0;
+      if (num > 999999) {
+        a = (num / 1000000).toFixed(1) + "m";
+      } else if (num < 0) {
+        a = 0;
+      } else {
+        a = num > 9999 ? (num / 1000).toFixed(1) + "k" : num;
+      }
+      return a.toString().replace(".", ",");
+    },
+    formatTanggal(tanggal) {
+      var today = new Date();
+      var target = new Date(tanggal);
+      var Difference_In_Date =
+        (today.getTime() - target.getTime()) / (1000 * 3600 * 24);
+      if (Difference_In_Date > -1) {
+        return "hari ini";
+      } else {
+        return -1 * Difference_In_Date + " hari yang lalu";
+      }
+    },
+    async refreshPage() {
+      await this.getOptions();
+
+      this.loadingToolbar = false;
+
+      var res = await this.update();
+      await this.getJumlah();
+      this.body = res.data;
+      this.loadingBody = false;
+    },
+    async getOptions() {
+      var obat = await api.find("obats");
+      this.options["obat"] = obat.map((ob) => {
+        return this.capitalizeFirstLetter(ob.nama);
+      });
+
+      var provinsi = await api.find("provinses");
+      this.options["provinsi"] = provinsi.map((ob) => {
+        return ob.nama;
+      });
+      this.provinsis = provinsi;
+
+      // var placeholder = []
+      // this.brands.map((brand) => {
+      //   placeholder.push(brand.name)
+      // })
+
+      this.options["brand"] = this.brands;
+
+      // var provinsi = await api.find("provinses");
+      //
+      // this.options["provinsi"] = provinsi;
+    },
+    remove(item) {
+      this.selected.brand = this.selected.brand.filter(function (el) {
+        return el.code != item.code;
+      });
+    },
+    async update() {
+      this.province = this.selected.provinsi;
+      this.loadingBody = true;
+
+      var res = await api.filter(
+        this.selected.name,
+        this.selected.obat,
+        this.selected.provinsi,
+        this.selected.kabkota,
+        this.selected.brand,
+        this.selected.tanggal,
+        this.start - 1,
+        this.limit
+      );
+      this.body = res.data;
+      //
+
+      // this.loadingBody = true;
+
+      var res2 = await api.count(
+        this.selected.name,
+        this.selected.obat,
+        this.selected.provinsi,
+        this.selected.kabkota,
+        this.selected.brand,
+        this.selected.tanggal
+      );
+      this.amount = res2.data;
+      //
+      // this.getJumlahObatProv();
+      this.loadingBody = false;
+
+      // await this.getKabkot()
+    },
+    async getKabkot() {
+      //
+      //
+      var select_kabkota = [];
+      await Promise.all(
+        this.selected["provinsi"].map(async (selected_provinsi) => {
+          //
+          await Promise.all(
+            this.provinsis.map(async (provinsi) => {
+              if (provinsi.nama == selected_provinsi) {
+                await Promise.all(
+                  provinsi.kabkota.map((r) => {
+                    select_kabkota.push(r.nama);
+                  })
+                );
+                this.options["kabkota"] = select_kabkota;
+              }
+            })
+          );
+        })
+      );
+    },
+    amountWriter() {
+      if (this.amount == 0) {
+        return "Tidak tersedia";
+      } else if (this.amount == 1) {
+        return "Menampilkan 1 apotek";
+      } else {
+        return "Menampilkan " + this.amount + " apotek";
+      }
+    },
+    async reset() {
+      this.selectingObat = [];
+      this.selected.obat = [];
+      this.selected.provinsi = [];
+      this.selected.kabkota = [];
+      this.selected.brand = [];
+      this.selected.start = 0;
+      this.selected.limit = 10;
+      // var res2 = await api.getLastShipment();
+      // this.selected.tanggal = res2.data[0]["tanggal"];
+    },
+    // async getLastShipment() {
+    //   var res2 = await api.getLastShipment();
+    //
+    //   return (res2.data[0]["tanggal"]).toString()
+    // },
+  },
+  async mounted() {
+    var res2 = await api.getLastShipment();
+    this.selected.tanggal = res2.data[0]["tanggal"];
+    // this.selected.tanggal = '2021-07-11';
+    await this.refreshPage();
+    // this.options["obat"]= this.selected.obat
+    // await this.getJumlahObatProv();
+    // await this.getOptions();
+  },
+  watch: {
+    selected: {
+      handler() {
+        this.update();
+        if (this.start * this.amount > parseInt(this.amount / this.limit) + 1) {
+          this.start = 1;
+        }
+        // this.getKabkot()
+      },
+      deep: true,
+    },
+    start() {
+      //
+      // if (newV > parseInt(this.amount/this.limit)+1) {
+      //   this.start = 1
+      // }
+      this.update();
+    },
+    limit() {
+      this.update();
+    },
+    selectingObat: function (newvar) {
+      var x = newvar.map((r) => {
+        return r.obat;
+      });
+      this.selected.obat = x;
+    },
+    province: function (newvar) {
+      if (newvar.length == 0) {
+        this.options["kabkota"] = [];
+        this.selected["kabkota"] = [];
+        this.tableItems = [];
+        this.tableItemsInt = [];
+        this.getJumlah();
+      } else {
+        this.getKabkot();
+        this.getJumlah();
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
-  @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
-  * {
-    font-family: "Montserrat", sans-serif;
-  }
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
+* {
+  font-family: "Montserrat", sans-serif;
+}
 
-  .logo {
-    height: 50px;
-    object-fit: contain;
-    max-width: 150px;
-  }
+.logo {
+  height: 50px;
+  object-fit: contain;
+  max-width: 150px;
+}
 
+.wrapper {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.logo-card {
+  max-width: 100%;
+  height: 50px;
+  object-fit: cover;
+}
+
+.avatar {
+  max-width: 80px;
+  max-height: 40px;
+  object-fit: contain;
+  margin-right: 5px;
+}
+
+.card {
+  overflow: hidden;
+}
+
+.height-adjuster {
+  height: 100%;
+}
+
+.card-left {
+  width: 50%;
+}
+
+a {
+  text-decoration: none;
+}
+
+.toolbar {
+  box-shadow: 0px 10px 5px 0px rgba(255, 255, 255, 0.9);
+  -webkit-box-shadow: 0px 10px 5px 0px rgba(255, 255, 255, 0.9);
+  -moz-box-shadow: 0px 10px 5px 0px rgba(255, 255, 255, 0.9);
+}
+
+.gap {
+  gap: 20px;
+}
+
+.left {
+  width: 30%;
+}
+
+.right {
+  width: 70%;
+}
+
+.card {
+  min-height: 10rem;
+  max-height: auto;
+}
+
+.header {
+  width: 100%;
+  height: 300px;
+  background-color: #16b3ac;
+  background-image: linear-gradient(
+    160deg,
+    #16b3ac 0%,
+    #16b3ac 35%,
+    #d1dc03 90%
+  );
+  background-size: 1000% 1000%;
+  animation: 20s gradient infinite ease;
+}
+
+.whatsapp {
+}
+
+.filterGreen {
+  filter: invert(100%);
+  transition: filter 0.2s ease;
+}
+
+.filterGreen:hover {
+  filter: invert(90%) sepia(96%) saturate(421%) hue-rotate(80deg)
+    brightness(95%) contrast(86%);
+}
+
+.filterGrey {
+  filter: invert(70%);
+}
+
+.badgeDistributor {
+  box-sizing: border-box;
+  display: inline-block;
+  background-color: #3498db;
+  color: white;
+
+  border-radius: 3rem;
+  text-align: center;
+
+  font-size: 0.9rem;
+  font-weight: 400;
+  padding: 0.05rem 0.8rem 0.1rem;
+  line-height: inherit;
+}
+.badge--small {
+  padding: 0.1rem 0.65rem 0.2rem;
+}
+
+@keyframes gradient {
+  32.5% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 0%;
+  }
+}
+
+@media only screen and (max-width: 1248px) {
   .wrapper {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-  }
-
-  .logo-card {
-    max-width: 100%;
-    height: 50px;
-    object-fit: cover;
-  }
-
-  .card {
     overflow: hidden;
   }
 
-  .height-adjuster {
-    height: 100%;
-  }
-
-  .card-left {
-    width: 50%;
-  }
-
-  a {
-    text-decoration: none;
-  }
-
-  .toolbar {
-    box-shadow: 0px 10px 5px 0px rgba(255, 255, 255, 0.9);
-    -webkit-box-shadow: 0px 10px 5px 0px rgba(255, 255, 255, 0.9);
-    -moz-box-shadow: 0px 10px 5px 0px rgba(255, 255, 255, 0.9);
-  }
-
-  .gap {
-    gap: 20px;
-  }
-
-  .left {
-    width: 30%;
-  }
-
-  .right {
-    width: 70%;
-  }
-
-  .card {
-    min-height: 10rem;
-    max-height: auto;
+  .logo {
+    height: 40px;
+    margin-top: -15px;
   }
 
   .header {
-    width: 100%;
-    height: 300px;
-    background-color: #16b3ac;
-    background-image: linear-gradient(160deg, #16b3ac 0%, #16b3ac 35%, #d1dc03 90%);
-    background-size: 1000% 1000%;
-    animation: 20s gradient infinite ease;
+    height: 200px;
   }
-
-  .whatsapp {
-  }
-
-  .filterGreen {
-    filter: invert(100%);
-    transition: filter 0.2s ease;
-  }
-
-  .filterGreen:hover {
-    filter: invert(90%) sepia(96%) saturate(421%) hue-rotate(80deg) brightness(95%) contrast(86%);
-  }
-
-  .filterGrey {
-    filter: invert(70%);
-  }
-
-  .badgeDistributor {
-    box-sizing: border-box;
-    display: inline-block;
-    background-color: #3498db;
-    color: white;
-
-    border-radius: 3rem;
-    text-align: center;
-
-    font-size: 0.9rem;
-    font-weight: 400;
-    padding: 0.05rem 0.8rem 0.1rem;
-    line-height: inherit;
-  }
-  .badge--small {
-    padding: 0.1rem 0.65rem 0.2rem;
-  }
-
-  @keyframes gradient {
-    32.5% {
-      background-position: 100% 100%;
-    }
-    75% {
-      background-position: 0% 0%;
-    }
-  }
-
-  @media only screen and (max-width: 1248px) {
-    .wrapper {
-      overflow: hidden;
-    }
-
-    .logo {
-      height: 40px;
-      margin-top: -15px;
-    }
-
-    .header {
-      height: 200px;
-    }
-  }
+}
 </style>
 
 Copyright (c) 2021, Kementerian Kesehatan Republik Indonesia. All Rights Reserved. Developed by.
