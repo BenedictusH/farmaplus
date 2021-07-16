@@ -1,4 +1,4 @@
-const STRAPI_URL = "https://farmaplus-api.kemkes.go.id";
+export const STRAPI_URL = "https://farmaplus-api.kemkes.go.id";
 var qs = require("qs");
 import axios from "axios";
 
@@ -54,7 +54,7 @@ export default {
   //       
   //     });
   // },
-  async filter(name, obat, provinsi, kabkota, tanggal, start, limit) {
+  async filter(name, obat, provinsi, kabkota, brand, tanggal, start, limit) {
     
     const query = qs.stringify({
       _where: {
@@ -63,6 +63,7 @@ export default {
             { obat_contains: obat },
             { provinsi_contains: provinsi },
             { kabkota_contains: kabkota },
+            { brand_contains: brand },
             { tanggal_contains: tanggal },
             { nama_contains: name }
           ],
@@ -75,7 +76,7 @@ export default {
     var response = axios.get(`${STRAPI_URL}/${path}?${query}&_sort=jumlah:DESC&_start=${newStart}&_limit=${limit}`);
     return response;
   },
-  async count(name, obat, provinsi, kabkota, tanggal) {
+  async count(name, obat, provinsi, kabkota, brand, tanggal) {
     // 
     const query = qs.stringify({
       _where: {
@@ -84,6 +85,7 @@ export default {
             { obat_contains: obat },
             { provinsi_contains: provinsi },
             { kabkota_contains: kabkota },
+            { brand_contains: brand },
             { tanggal_contains: tanggal },
             { nama_contains: name }
           ],
