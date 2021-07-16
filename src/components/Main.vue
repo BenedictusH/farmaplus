@@ -1143,6 +1143,10 @@ a {
   width: 70%;
 }
 
+.v-card__text, .v-card__title {
+  word-break: normal !important
+}
+
 .card {
   min-height: 10rem;
   max-height: auto;
