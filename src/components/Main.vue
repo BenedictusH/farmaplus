@@ -325,7 +325,7 @@
               <v-card-actions class="px-0 pb-2 d-flex flex-column-reverse d-md-none">
                 <div
                   class="d-flex align-center justify-center whatsapp pt-md-0 pt-3"
-                  v-if="apotek.wa"
+                  v-if="apotek.wa != undefined || apotek.wa != '-'"
                 >
                   <a
                     class="d-flex align-center justify-center whatsapp pt-0"
@@ -345,6 +345,7 @@
                           fill-rule="evenodd"
                         />
                       </svg>
+                      <!-- {{apotek.wa}} -->
                     </v-btn>
                   </a>
                 </div>
@@ -408,7 +409,7 @@
                 </div>
                 <div
                   class="d-flex align-center justify-center whatsapp"
-                  v-if="apotek.wa"
+                  v-if="apotek.wa != '-'"
                 >
                   <a
                     class="d-flex align-center justify-center whatsapp"
@@ -428,6 +429,7 @@
                           fill-rule="evenodd"
                         />
                       </svg>
+                      <!-- {{apotek.wa}} -->
                     </v-btn>
                   </a>
                 </div>  
@@ -683,6 +685,8 @@
           return "0" + number;
         } else if (number.substring(0, 2) == "62") {
           return number;
+        } else if (number.substring(0, 3) == "+62") {
+          return number;
         } else if (number.substring(0, 2) == "08") {
           return number;
         } else if (number.substring(0, 1) == "0") {
@@ -708,6 +712,8 @@
           return "https://wa.me/" + nomor;
         } else if (nomor[0] + nomor[1] + nomor[2] == "+62") {
           return "https://wa.me/" + nomor.substring(1);
+        } else {
+          return false
         }
       },
       formatNama(nama) {
