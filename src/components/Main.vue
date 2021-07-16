@@ -325,7 +325,7 @@
               <v-card-actions class="px-0 pb-2 d-flex flex-column-reverse d-md-none">
                 <div
                   class="d-flex align-center justify-center whatsapp pt-md-0 pt-3"
-                  v-if="apotek.wa != '-'"
+                  v-if="checkNullWa(apotek.wa)"
                 >
                   <a
                     class="d-flex align-center justify-center whatsapp pt-0"
@@ -409,7 +409,7 @@
                 </div>
                 <div
                   class="d-flex align-center justify-center whatsapp"
-                  v-if="apotek.wa != '-'"
+                  v-if="checkNullWa(apotek.wa)"
                 >
                   <a
                     class="d-flex align-center justify-center whatsapp"
@@ -704,7 +704,7 @@
         return str.charAt(0).toUpperCase() + lower.slice(1);
       },
       getWa(object) {
-        let nomor = this.formatTelpon(object.msisdn);
+        let nomor = this.formatTelpon(object.wa);
 
         if (nomor[0] == "0") {
           return "https://wa.me/62" + nomor.substring(1);
@@ -776,7 +776,7 @@
         }
       },
       checkNullWa(value) {
-        if (typeof value == "undefined") {
+        if (typeof value == "undefined" || value == "-" || value == "") {
           return false
         } else {
           return true
