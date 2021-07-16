@@ -91,27 +91,13 @@
               /> -->
               </v-col>
               <v-col cols="12 d-flex justify-center justify-md-end gap">
+              <div v-for="brand in brands"
+                :key="brand">
                 <img
-                src="https://upload.wikimedia.org/wikipedia/id/thumb/c/c3/Kimia_Farma_logo.svg/1200px-Kimia_Farma_logo.svg.png"
+                v-bind:src="`../assets/${brand.code}.png`"
                 class="logo"
               />
-              <img src="https://i.ibb.co/fDRd2Vj/message-Image-1626365949727.jpg" class="logo" />
-              <!-- <img
-                src="https://logos-download.com/wp-content/uploads/2017/01/Watsons_logo_logotype.png"
-                class="logo"
-              />
-              <img
-                src="https://logos-download.com/wp-content/uploads/2017/01/Watsons_logo_logotype.png"
-                class="logo"
-              /> -->
-              <img
-                src="https://i.ibb.co/nbmgXx5/k24-new.png"
-                class="logo"
-              />
-              <!-- <img
-                src="https://lh3.googleusercontent.com/proxy/qpUyhOipyBMkeX_vZEfLOQPbff2Ce23x-N_3jmVP94X23ZEp9UdIFn1vLlQeDx99UHlHn9Iqa4are8E3i7NFIHsXHondM0jb_1Ov6LmZAOLF"
-                class="logo"
-              /> -->
+              </div>
               </v-col>
             </v-row>
             </v-col>
@@ -149,7 +135,7 @@
           Menampilkan <strong>{{ formatAngka(getTotal(tableItemsInt)) }}</strong> Obat</v-col
         >
 
-        <v-col cols="12" md="6" class="px-5">
+        <v-col cols="12" md="4" class="px-5">
           <span class="pl-5">Provinsi</span>
           <v-autocomplete
             v-model="selected.provinsi"
@@ -165,7 +151,7 @@
           >
           </v-autocomplete>
         </v-col>
-        <v-col cols="12" md="6" class="px-5">
+        <v-col cols="12" md="4" class="px-5">
           <span class="pl-5">Kabupaten/Kota</span>
           <v-autocomplete
             v-model="selected.kabkota"
@@ -179,6 +165,47 @@
             rounded
             dense
           >
+          </v-autocomplete>
+        </v-col>
+        <v-col cols="12" md="4" class="px-5">
+          <span class="pl-5">Brand</span>
+          <v-autocomplete
+            v-model="selected.brand"
+            :items="options.brand"
+            item-text="name"
+            item-value="id"
+            chips
+            filled
+            hide-details
+            multiple
+            clearable
+            deletable-chips
+            rounded
+            dense
+          >
+            <template v-slot:selection="data">
+                <v-chip
+                  v-bind="data.attrs"
+                  :input-value="data.selected"
+                  close
+                  @click:close="remove(data.item)"
+                >
+                  <v-avatar left>
+                    <v-img :src="data.item.img"></v-img>
+                  </v-avatar>
+                  {{ data.item.name }}
+                </v-chip>
+              </template>
+              <template v-slot:item="data">
+                <template>
+                  <v-list-item-avatar>
+                    <img :src="data.item.img">
+                  </v-list-item-avatar>
+                  <v-list-item-content>
+                    <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                  </v-list-item-content>
+                </template>
+              </template>
           </v-autocomplete>
         </v-col>
         <v-col
@@ -524,7 +551,6 @@
       loadingBody: true,
       start: 1,
       limit: 10,
-      dialog: false,
       limitOptions: [10, 20, 50, 100],
       selected: {
         name: [],
@@ -532,6 +558,7 @@
         provinsi: [],
         kabkota: [],
         tanggal: [],
+        brand: []
       },
       input: {
         name: [],
@@ -555,22 +582,50 @@
       tableItemsInt: [],
       selectingObat: [],
       province: "",
+      brands: [
+        {
+          id: "KF",
+          name: "Kimia Farma",
+          img: "../assets/KF"
+        },
+        {
+          id: "BERKAT",
+          name: "Apotek Berkat",
+          img: "../assets/BERKAT.png"
+        },
+        {
+          id: "WATSONS",
+          name: "Watsons",
+          img: "../assets/WATSONS.png"
+        },
+        {
+          id: "K24",
+          name: "K24",
+          img: "../assets/K24.png"
+        },
+        {
+          id: "CENTURY",
+          name: "Century",
+          img: "../assets/CENTURY.png"
+        },
+        {
+          id: "GENERIK",
+          name: "Generik",
+          img: "../assets/GENERIK.png"
+        },
+        {
+          id: "AJIWARAS",
+          name: "Ajiwaras",
+          img: "../assets/AJIWARAS.png"
+        },
+        {
+          id: "GUARDIAN",
+          name: "Guardian",
+          img: "../assets/GUARDIAN.png"
+        },
+      ],
     }),
     methods: {
-      async optionsToTable() {
-        // await Promise.all(
-        //   this.options.obat.map((r) => {
-        //     var item = {
-        //       obat: "",
-        //       jumlah: 0,
-        //     };
-        //     item.obat = r;
-        //     item.jumlah = 1000;
-        //     this.tableItems.push(item);
-        //   })
-        // );
-        //
-      },
       formatStatus(status) {
         if (status == "under20") {
           return "Di Bawah 20";
@@ -662,7 +717,6 @@
       },
       logoBrand(brand) {
         var merek = brand.toUpperCase();
-        console.log("ini brand" + merek);
 
         if (merek == "KF") {
           return "https://upload.wikimedia.org/wikipedia/id/thumb/c/c3/Kimia_Farma_logo.svg/1200px-Kimia_Farma_logo.svg.png";
@@ -766,6 +820,9 @@
       getLoc(lat, long) {
         return `http://maps.google.co.uk/maps?q=${lat},${long}`;
       },
+      getImageUrl(input) {
+        return '../assets/'+input+'.png'
+      },
       checkNull(value) {
         if (typeof value == "undefined") {
           return false;
@@ -805,7 +862,6 @@
       },
       async refreshPage() {
         await this.getOptions();
-        this.optionsToTable();
 
         this.loadingToolbar = false;
 
@@ -826,9 +882,19 @@
         });
         this.provinsis = provinsi;
 
+        // var placeholder = []
+        // this.brands.map((brand) => {
+        //   placeholder.push(brand.name)
+        // })
+
+        this.options["brand"] = this.brands
+
         // var provinsi = await api.find("provinses");
         //
         // this.options["provinsi"] = provinsi;
+      },
+      remove (item) {
+        this.selected.brand = this.selected.brand.filter(function(el) { return el.code != item.code; })
       },
       async update() {
         this.province = this.selected.provinsi;
@@ -853,7 +919,7 @@
           this.selected.obat,
           this.selected.provinsi,
           this.selected.kabkota,
-          this.selected.tanggal
+          this.selected.tanggal,
         );
         this.amount = res2.data;
         //
@@ -898,6 +964,7 @@
         this.selected.obat = []
         this.selected.provinsi = []
         this.selected.kabkota = []
+        this.selected.brand = []
         this.selected.start = 0
         this.selected.limit = 10
         // var res2 = await api.getLastShipment();
@@ -908,21 +975,6 @@
       //
       //   return (res2.data[0]["tanggal"]).toString()
       // },
-      resetInput() {
-        this.input = {
-          name: [],
-          obat: [],
-          provinsi: [],
-          kabkota: [],
-          tanggal: [],
-          start: 0,
-          limit: 10,
-        };
-      },
-      searchInput() {
-        // this.selected = JSON.parse(JSON.stringify(this.input));
-        this.dialog = false;
-      },
     },
     async mounted() {
       var res2 = await api.getLastShipment();
