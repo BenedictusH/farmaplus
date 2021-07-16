@@ -325,7 +325,7 @@
               <v-card-actions class="px-0 pb-2 d-flex flex-column-reverse d-md-none">
                 <div
                   class="d-flex align-center justify-center whatsapp pt-md-0 pt-3"
-                  v-if="apotek.wa != undefined || apotek.wa != '-'"
+                  v-if="apotek.wa != '-'"
                 >
                   <a
                     class="d-flex align-center justify-center whatsapp pt-0"
