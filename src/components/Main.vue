@@ -647,26 +647,26 @@ export default {
         name: "K24",
         img: STRAPI_URL + "/uploads/K24_76e69d7a7c.png",
       },
-      // {
-      //   id: "CENTURY",
-      //   name: "Century",
-      //   img: STRAPI_URL + "/uploads/CENTURY_b0a02bdfde.png",
-      // },
-      // {
-      //   id: "GENERIK",
-      //   name: "Generik",
-      //   img: STRAPI_URL + "/uploads/GENERIK_0424106aca.png",
-      // },
-      // {
-      //   id: "AJIWARAS",
-      //   name: "Ajiwaras",
-      //   img: STRAPI_URL + "/uploads/AJIWARAS_fbf23f272a.png",
-      // },
-      // {
-      //   id: "GUARDIAN",
-      //   name: "Guardian",
-      //   img: STRAPI_URL + "/uploads/GUARDIAN_aa0274dafa.png",
-      // },
+      {
+        id: "CENTURY",
+        name: "Century",
+        img: STRAPI_URL + "/uploads/CENTURY_b0a02bdfde.png",
+      },
+      {
+        id: "GENERIK",
+        name: "Generik",
+        img: STRAPI_URL + "/uploads/GENERIK_0424106aca.png",
+      },
+      {
+        id: "AJIWARAS",
+        name: "Ajiwaras",
+        img: STRAPI_URL + "/uploads/AJIWARAS_fbf23f272a.png",
+      },
+      {
+        id: "GUARDIAN",
+        name: "Guardian",
+        img: STRAPI_URL + "/uploads/GUARDIAN_aa0274dafa.png",
+      },
     ],
   }),
   methods: {
@@ -1164,9 +1164,6 @@ a {
   );
   background-size: 1000% 1000%;
   animation: 20s gradient infinite ease;
-}
-
-.whatsapp {
 }
 
 .filterGreen {
