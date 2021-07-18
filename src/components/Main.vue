@@ -586,6 +586,11 @@
           name: "Guardian",
           img: STRAPI_URL + "/uploads/GUARDIAN_aa0274dafa.png",
         },
+        {
+          id: "LIFEPACK",
+          name: "Lifepack",
+          img: STRAPI_URL + "/uploads/LIFEPACK_05a8b09c77.png",
+        },
       ],
     }),
     methods: {
