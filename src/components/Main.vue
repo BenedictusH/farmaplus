@@ -786,8 +786,11 @@
           a = (num / 1000000).toFixed(1) + " juta";
         } else if (num < 0) {
           a = 0;
-        } else {
+        } else if (num > 9999) {
           a = num > 9999 ? (num / 1000).toFixed(1) + " ribu" : num;
+        } else {
+          // a = num > 999 ? (num / 100).toFixed(2) + " ribu" : num;
+          a = num
         }
         return a.toString().replace(".", ",");
       },
@@ -798,7 +801,7 @@
         } else if (num < 0) {
           a = 0;
         } else {
-          a = num > 9999 ? (num / 1000).toFixed(1) + " rb" : num;
+          a = num > 999 ? (num / 1000).toFixed(1) + " rb" : num;   
         }
         return a.toString().replace(".", ",");
       },
