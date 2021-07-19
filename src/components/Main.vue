@@ -177,9 +177,11 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12" class="d-flex justify-center justify-md-center flex-wrap gap">
-          <div v-for="brand in brands" :key="brand">
-            <img :src="brand.img" class="logo" />
+        <v-col cols="12" class=" px-lg-16 px-3">
+          <div class="d-flex justify-center justify-md-center flex-wrap gap px-7">
+            <div v-for="brand in brands" :key="brand">
+              <img :src="brand.img" class="logo" />
+            </div>
           </div>
         </v-col>
       </v-row>
@@ -293,19 +295,8 @@
                   <span v-if="apotek.status == 'habis'" class="red--text spaccing">
                     {{ formatStatus(apotek.status) }}</span
                   >
-                  <span
-                    v-else-if="apotek.status == 'under20'"
-                    class="
-                      orange--text
-                      text--darken-2
-                      spaccing
-                      text-h5 text-md-h4
-                    "
-                  >
-                    {{ formatStatus(apotek.status) }}</span
-                  >
                   <span v-else class="green--text spaccing">
-                    {{ formatStatus(apotek.status) }}
+                    {{ formatJumlah(apotek.jumlah) }}
                   </span>
                 </v-card-title>
               </div>
@@ -797,6 +788,17 @@
           a = 0;
         } else {
           a = num > 9999 ? (num / 1000).toFixed(1) + " ribu" : num;
+        }
+        return a.toString().replace(".", ",");
+      },
+      formatJumlah(num) {
+        var a = 0;
+        if (num > 999999) {
+          a = (num / 1000000).toFixed(1) + " jt";
+        } else if (num < 0) {
+          a = 0;
+        } else {
+          a = num > 9999 ? (num / 1000).toFixed(1) + " rb" : num;
         }
         return a.toString().replace(".", ",");
       },
