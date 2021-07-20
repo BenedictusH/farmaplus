@@ -30,7 +30,7 @@
               ></v-progress-linear>
               <div v-else>
                 Stok
-                <strong>{{ formatDate(selected.tanggal) }} 09.00 WIB </strong>
+                <strong>{{ formatDate(selected.tanggal) }} 17.00 WIB </strong>
               </div></v-col
             >
 
@@ -56,7 +56,7 @@
             order="3"
             v-if="!loadingToolbar"
           >
-            *Saat ini, data diupdate secara berkala tiap hari pkl 09.00 WIB, sehingga bukan data
+            *Saat ini, data diupdate secara berkala tiap hari pkl 17.00 WIB, sehingga bukan data
             realtime. Sehubungan dengan tingginya kebutuhan, harap konfirmasikan ketersediaan di
             masing-masing lokasi apotek.*
           </div>
