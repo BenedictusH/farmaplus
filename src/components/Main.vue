@@ -673,7 +673,15 @@
         });
         return a[0]["img"];
       },
-      formatTelpon(number) {
+      formatTelpon(telephone) {
+        var number
+
+        if (telephone.substring(telephone.toString().length-2) == '.0') {
+          number = telephone.slice(0, -2)
+        } else {
+          number = telephone
+        }
+
         if (number.substring(0, 3) == "021") {
           return number;
         } else if (number.substring(0, 2) == "21") {
