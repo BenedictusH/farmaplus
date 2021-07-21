@@ -803,7 +803,12 @@
         } else {
           a = num > 999 ? (num / 1000).toFixed(1) + " rb" : num;   
         }
-        return a.toString().replace(".", ",");
+
+        if (a.substring(a.length-5) == ".0 rb" || a.substring(a.length-5) == ".0 jt") {
+          return a.toString().replace(".0", "");
+        } else {
+          return a.toString().replace(".", ",");
+        }
       },
       async refreshPage() {
         await this.getOptions();
