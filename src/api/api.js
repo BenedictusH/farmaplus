@@ -112,4 +112,10 @@ export default {
     
     return response.data;
   },
+  async filterAPI(name, start, limit) {
+    var path = name;
+    var newStart = start * limit
+    var response = axios.get(`${STRAPI_URL}/${path}?&_sort=jumlah:DESC&_start=${newStart}&_limit=${limit}`);
+    return response;
+  },
 };

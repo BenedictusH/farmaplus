@@ -265,8 +265,10 @@
                     align-lg-end align-start
                   "
                 >
-                  <span>{{ apotek.obat }} </span>
-                  <span class="font-weight-regular text-caption">{{ apotek.obatDetail }} </span>
+                  <span class="text-uppercase">{{ apotek.obat }} </span>
+                  <span class="font-weight-regular text-caption text-uppercase"
+                    >{{ apotek.obatDetail }}
+                  </span>
                 </v-card-title>
 
                 <v-card-subtitle
@@ -296,9 +298,14 @@
                     {{ formatStatus(apotek.status) }}</span
                   >
                   <span v-else class="green--text spaccing">
-                    {{ formatJumlah(apotek.jumlah) }}
+                    {{ formatJumlah(apotek.jumlah.toString()) }}
                   </span>
                 </v-card-title>
+                <!-- <v-card-subtitle class="pa-0 pt-5 text-md-right"
+                  >Terakhir diupdate <br class="d-block d-md-none" />
+                  <strong>{{ timeSince(new Date(apotek.updatedAt)) }}</strong> yang
+                  lalu</v-card-subtitle
+                > -->
               </div>
               <!-- card-actions for hp -->
               <v-card-actions class="px-0 pb-2 d-flex flex-column-reverse d-md-none">
@@ -499,6 +506,7 @@
     data: () => ({
       shipment: [],
       date: [],
+      aDay: 24 * 60 * 60 * 1000,
       menu: false,
       menuInput: false,
       loadingToolbar: true,
@@ -592,6 +600,32 @@
           return status[0].toUpperCase() + status.substring(1);
         }
       },
+      timeSince(date) {
+        var seconds = Math.floor((new Date() - new Date(date)) / 1000);
+
+        var interval = seconds / 31536000;
+
+        if (interval > 1) {
+          return Math.floor(interval) + " tahun";
+        }
+        interval = seconds / 2592000;
+        if (interval > 1) {
+          return Math.floor(interval) + " bulan";
+        }
+        interval = seconds / 86400;
+        if (interval > 1) {
+          return Math.floor(interval) + " hari";
+        }
+        interval = seconds / 3600;
+        if (interval > 1) {
+          return Math.floor(interval) + " jam";
+        }
+        interval = seconds / 60;
+        if (interval > 1) {
+          return Math.floor(interval) + " menit ";
+        }
+        return Math.floor(seconds) + " detik";
+      },
       async getJumlah() {
         var total_provinsi = [];
         await Promise.all(
@@ -674,12 +708,12 @@
         return a[0]["img"];
       },
       formatTelpon(telephone) {
-        var number
+        var number;
 
-        if (telephone.substring(telephone.toString().length-2) == '.0') {
-          number = telephone.slice(0, -2)
+        if (telephone.substring(telephone.toString().length - 2) == ".0") {
+          number = telephone.slice(0, -2);
         } else {
-          number = telephone
+          number = telephone;
         }
 
         if (number.substring(0, 3) == "021") {
@@ -798,7 +832,7 @@
           a = num > 9999 ? (num / 1000).toFixed(1) + " ribu" : num;
         } else {
           // a = num > 999 ? (num / 100).toFixed(2) + " ribu" : num;
-          a = num
+          a = num;
         }
         return a.toString().replace(".", ",");
       },
@@ -809,10 +843,10 @@
         } else if (num < 0) {
           a = 0;
         } else {
-          a = num > 999 ? (num / 1000).toFixed(1) + " rb" : num;   
+          a = num > 999 ? (num / 1000).toFixed(1) + " rb" : num;
         }
 
-        if (a.substring(a.length-5) == ".0 rb" || a.substring(a.length-5) == ".0 jt") {
+        if (a.substring(a.length - 5) == ".0 rb" || a.substring(a.length - 5) == ".0 jt") {
           return a.toString().replace(".0", "");
         } else {
           return a.toString().replace(".", ",");
@@ -843,8 +877,10 @@
         this.options["brand"] = this.brands;
       },
       remove(item) {
-        this.selected.brand = this.selected.brand.filter(function(el) {
-          return el.code != item.code;
+        this.selected.brand.map((merek, index) => {
+          if (merek == item.id) {
+            this.selected.brand.splice(index, 1);
+          }
         });
       },
       async update() {
@@ -861,6 +897,9 @@
           this.start - 1,
           this.limit
         );
+        // var res3 = await api.filterAPI("lifepacks", this.start - 1, this.limit);
+        // this.body = res.data.concat(res3.data);
+
         this.body = res.data;
         //
 
