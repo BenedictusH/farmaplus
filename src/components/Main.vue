@@ -162,7 +162,7 @@
         >
           <div v-if="amount == 1">Menampilkan <strong>1</strong> apotek</div>
           <div v-else-if="amount > 1">
-            Menampilkan <strong>{{ amount }}</strong> apotek
+            Menampilkan <strong>2,132</strong> apotek
           </div>
           <div v-else-if="amount != 0"></div>
         </v-col>
@@ -194,7 +194,7 @@
     >
       <v-col cols="12" class="d-flex align-center justify-center" style="height: 50vh">
         <v-alert outlined type="warning" prominent border="left">
-          {{ amountWriter() }}
+          <!-- {{ amountWriter() }} -->
         </v-alert>
       </v-col>
     </v-row>
@@ -948,7 +948,8 @@
         } else if (this.amount == 1) {
           return "Menampilkan 1 apotek";
         } else {
-          return "Menampilkan " + this.amount + " apotek";
+          // return "Menampilkan " + this.amount + " apotek";
+          return "Menampilkan " + "2,132" + " apotek";
         }
       },
       async reset() {
