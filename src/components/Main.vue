@@ -58,7 +58,7 @@
           >
             *Saat ini, data diupdate secara berkala tiap hari pkl 17.00 WIB, sehingga bukan data
             realtime. Sehubungan dengan tingginya kebutuhan, harap konfirmasikan ketersediaan di
-            masing-masing lokasi apotek.*
+            masing-masing lokasi apotek. Pembelian obat harus menggunakan resep dokter.*
           </div>
 
           <v-data-table
@@ -82,7 +82,7 @@
           Obat</v-col
         >
 
-        <v-col cols="12" md="4" class="px-5">
+        <v-col cols="12" md="6" class="px-5">
           <span class="pl-5">Provinsi</span>
           <v-autocomplete
             v-model="selected.provinsi"
@@ -98,7 +98,7 @@
           >
           </v-autocomplete>
         </v-col>
-        <v-col cols="12" md="4" class="px-5">
+        <v-col cols="12" md="6" class="px-5">
           <span class="pl-5">Kabupaten/Kota</span>
           <v-autocomplete
             v-model="selected.kabkota"
@@ -114,7 +114,7 @@
           >
           </v-autocomplete>
         </v-col>
-        <v-col cols="12" md="4" class="px-5">
+        <!-- <v-col cols="12" md="4" class="px-5">
           <span class="pl-5">Apotek</span>
           <v-autocomplete
             v-model="selected.brand"
@@ -137,7 +137,6 @@
                 close
                 @click:close="remove(data.item)"
               >
-                <!-- {{ data.item.name }} -->
                 <img :src="data.item.img" class="avatar" />
               </v-chip>
             </template>
@@ -150,7 +149,7 @@
               </template>
             </template>
           </v-autocomplete>
-        </v-col>
+        </v-col> -->
         <v-col
           class="d-flex justify-center align-center mt-5 flex-column"
           cols="12"
@@ -161,7 +160,9 @@
           v-show="!loadingBody"
         >
           <div v-if="amount == 1">Menampilkan <strong>1</strong> apotek</div>
-          <div v-else-if="amount > 1">Menampilkan <strong>2,132</strong> apotek</div>
+          <div v-else-if="amount > 1">
+            Menampilkan <strong>2,132</strong> apotek
+          </div>
           <div v-else-if="amount != 0"></div>
         </v-col>
         <v-col
@@ -175,10 +176,12 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12" class=" px-lg-16 px-3">
-          <div class="d-flex justify-center justify-md-center flex-wrap gap px-7">
+        <v-col cols="12" class=" px-lg-16 px-3 text-center">
+          Pilih apotek
+          <div class="d-flex justify-center justify-md-center flex-wrap gap px-7 mt-3">
             <div v-for="brand in brands" :key="brand">
-              <img :src="brand.img" class="logo" />
+              <!-- <img :src="brand.img" class="logo" /> -->
+              <img :src="brand.img" class="logo select-logo" @click="selectBrand(brand.id)" :class="{'selected-logo': selected.brand == brand.id, 'notselected-logo': selected.brand != brand.id}"/>
             </div>
           </div>
         </v-col>
@@ -589,6 +592,11 @@
           name: "Lifepack",
           img: STRAPI_URL + "/uploads/LIFEPACK_05a8b09c77.png",
         },
+        {
+          id: "MIKA",
+          name: "Mitra Keluarga",
+          img: STRAPI_URL + "/uploads/MITRAKELUARGA_4874deae2d.png",
+        },
       ],
     }),
     methods: {
@@ -739,8 +747,11 @@
         const lower = str.toLowerCase();
         return str.charAt(0).toUpperCase() + lower.slice(1);
       },
+      selectBrand(input) {
+        this.selected.brand = input
+      },
       getWa(object) {
-        let nomor = this.formatTelpon(object.wa);
+        let nomor = this.formatTelpon(object.wa.replace(/ /g, ""));
 
         if (nomor[0] == "0") {
           return "https://wa.me/62" + nomor.substring(1);
@@ -919,6 +930,45 @@
 
         // await this.getKabkot()
       },
+      async updateApotek(collection) {
+        this.province = this.selected.provinsi;
+        this.loadingBody = true;
+
+        var res = await api.filterCollection(
+          collection,
+          this.selected.name,
+          this.selected.obat,
+          this.selected.provinsi,
+          this.selected.kabkota,
+          this.selected.brand,
+          this.selected.tanggal,
+          this.start - 1,
+          this.limit
+        );
+        // var res3 = await api.filterAPI("lifepacks", this.start - 1, this.limit);
+        // this.body = res.data.concat(res3.data);
+
+        this.body = res.data;
+        //
+
+        // this.loadingBody = true;
+
+        var res2 = await api.countCollection(
+          collection,
+          this.selected.name,
+          this.selected.obat,
+          this.selected.provinsi,
+          this.selected.kabkota,
+          this.selected.brand,
+          this.selected.tanggal
+        );
+        this.amount = res2.data;
+        //
+        // this.getJumlahObatProv();
+        this.loadingBody = false;
+
+        // await this.getKabkot()
+      },
       async getKabkot() {
         //
         //
@@ -1009,6 +1059,27 @@
   @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
   * {
     font-family: "Montserrat", sans-serif;
+  }
+
+  .select-logo {
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.1);
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0 6px 12px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.1);
+    transition: 0.3s ease;
+  }
+
+  .select-logo:hover {
+    filter: brightness(0.8);
+  }
+
+  .notselected-logo {
+    background-color: white;
+  }
+
+  .selected-logo {
+    background-color: rgb(202, 202, 202);
   }
 
   .logo {
