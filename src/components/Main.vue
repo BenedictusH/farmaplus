@@ -114,7 +114,7 @@
         </v-col>
         <v-col cols="12" md="4" class="px-5">
           <span class="pl-5">Apotek</span>
-          <v-autocomplete
+          <v-select
             v-model="selected.brand"
             :items="options.brand"
             item-text="name"
@@ -122,9 +122,7 @@
             chips
             filled
             hide-details
-            multiple
             clearable
-            deletable-chips
             rounded
             dense
           >
@@ -132,8 +130,6 @@
               <v-chip
                 v-bind="data.attrs"
                 :input-value="data.selected"
-                close
-                @click:close="remove(data.item)"
               >
                 <!-- {{ data.item.name }} -->
                 <img :src="data.item.img" class="avatar" />
@@ -147,7 +143,7 @@
                 <img :src="data.item.img" class="avatar" />
               </template>
             </template>
-          </v-autocomplete>
+          </v-select>
         </v-col>
         <v-col
           class="d-flex justify-center align-center mt-5 flex-column"
