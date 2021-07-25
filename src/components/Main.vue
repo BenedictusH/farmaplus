@@ -56,9 +56,7 @@
             order="3"
             v-if="!loadingToolbar"
           >
-            *Saat ini, data diupdate secara berkala tiap hari pkl 17.00 WIB, sehingga bukan data
-            realtime. Sehubungan dengan tingginya kebutuhan, harap konfirmasikan ketersediaan di
-            masing-masing lokasi apotek. Pembelian obat harus menggunakan resep dokter.*
+            *Saat ini, data diupdate secara berkala tiap hari pkl 17.00 WIB, sehingga bukan data realtime. Sehubungan dengan tingginya kebutuhan, harap konfirmasikan ketersediaan di masing-masing lokasi apotek. Pembelian obat selain multivitamin harus menggunakan resep dokter.*
           </div>
 
           <v-data-table
@@ -82,7 +80,7 @@
           Obat</v-col
         >
 
-        <v-col cols="12" md="6" class="px-5">
+        <v-col cols="12" md="4" class="px-5">
           <span class="pl-5">Provinsi</span>
           <v-autocomplete
             v-model="selected.provinsi"
@@ -98,7 +96,7 @@
           >
           </v-autocomplete>
         </v-col>
-        <v-col cols="12" md="6" class="px-5">
+        <v-col cols="12" md="4" class="px-5">
           <span class="pl-5">Kabupaten/Kota</span>
           <v-autocomplete
             v-model="selected.kabkota"
@@ -114,7 +112,7 @@
           >
           </v-autocomplete>
         </v-col>
-        <!-- <v-col cols="12" md="4" class="px-5">
+        <v-col cols="12" md="4" class="px-5">
           <span class="pl-5">Apotek</span>
           <v-autocomplete
             v-model="selected.brand"
@@ -137,6 +135,7 @@
                 close
                 @click:close="remove(data.item)"
               >
+                <!-- {{ data.item.name }} -->
                 <img :src="data.item.img" class="avatar" />
               </v-chip>
             </template>
@@ -149,7 +148,7 @@
               </template>
             </template>
           </v-autocomplete>
-        </v-col> -->
+        </v-col>
         <v-col
           class="d-flex justify-center align-center mt-5 flex-column"
           cols="12"
@@ -176,12 +175,10 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12" class=" px-lg-16 px-3 text-center">
-          Pilih apotek
-          <div class="d-flex justify-center justify-md-center flex-wrap gap px-7 mt-3">
+        <v-col cols="12" class=" px-lg-16 px-3">
+          <div class="d-flex justify-center justify-md-center flex-wrap gap px-7">
             <div v-for="brand in brands" :key="brand">
-              <!-- <img :src="brand.img" class="logo" /> -->
-              <img :src="brand.img" class="logo select-logo" @click="selectBrand(brand.id)" :class="{'selected-logo': selected.brand == brand.id, 'notselected-logo': selected.brand != brand.id}"/>
+              <img :src="brand.img" class="logo" />
             </div>
           </div>
         </v-col>
@@ -232,7 +229,7 @@
                   class="text-lg-h5 text-md-h4 font-weight-bold pt-0 pl-0"
                   style="word-wrap: normal"
                 >
-                  {{ formatNama(apotek.nama) }}
+                  {{ formatNama(apotek) }}
                 </v-card-title>
                 <v-card-subtitle class="px-0 pb-0">{{ apotek.alamat }}</v-card-subtitle
                 ><v-card-subtitle class="px-0 pb-0 pa-0"
@@ -550,53 +547,53 @@
         {
           id: "KF",
           name: "Kimia Farma",
-          img: STRAPI_URL + "/uploads/KF_133893f927.png",
+          img: STRAPI_URL + "/uploads/KF_034c7f7f10.png",
         },
         {
           id: "BERKAT",
           name: "Apotek Berkat",
-          img: STRAPI_URL + "/uploads/BERKAT_fb45ec9d5a.png",
+          img: STRAPI_URL + "/uploads/apotek_berkat_2d6569ba18.jpg",
         },
         {
           id: "WATSONS",
           name: "Watsons",
-          img: STRAPI_URL + "/uploads/WATSONS_499f011979.png",
+          img: STRAPI_URL + "/uploads/WATSONS_ef20e24e35.png",
         },
         {
           id: "K24",
           name: "K24",
-          img: STRAPI_URL + "/uploads/K24_76e69d7a7c.png",
+          img: STRAPI_URL + "/uploads/Logo_Apotek_K_24_apoteknya_Indonesia_1_a80b9cfa35.png",
         },
         {
           id: "CENTURY",
           name: "Century",
-          img: STRAPI_URL + "/uploads/CENTURY_b0a02bdfde.png",
+          img: STRAPI_URL + "/uploads/CENTURY_png_0e7f2a4d06.jpg",
         },
         {
           id: "GENERIK",
           name: "Generik",
-          img: STRAPI_URL + "/uploads/GENERIK_0424106aca.png",
+          img: STRAPI_URL + "/uploads/Logo_Apotek_Generik_f681c8ca13.jpg",
         },
         {
           id: "AJIWARAS",
           name: "Ajiwaras",
-          img: STRAPI_URL + "/uploads/AJIWARAS_fbf23f272a.png",
+          img: STRAPI_URL + "/uploads/AJIWARA_Snew_7aa7910ca9.png",
         },
         {
           id: "GUARDIAN",
           name: "Guardian",
-          img: STRAPI_URL + "/uploads/GUARDIAN_aa0274dafa.png",
+          img: STRAPI_URL + "/uploads/GUARDIAN_1_e4d774eb1f.png",
         },
         {
           id: "LIFEPACK",
           name: "Lifepack",
-          img: STRAPI_URL + "/uploads/LIFEPACK_05a8b09c77.png",
+          img: STRAPI_URL + "/uploads/LIFEPACK_36cd872500.png",
         },
         {
           id: "MIKA",
           name: "Mitra Keluarga",
-          img: STRAPI_URL + "/uploads/MITRAKELUARGA_4874deae2d.png",
-        },
+          img: STRAPI_URL + "/uploads/MITRAKELUARGA_3d2c3ff51f.png",
+        }
       ],
     }),
     methods: {
@@ -763,11 +760,13 @@
           return false;
         }
       },
-      formatNama(nama) {
-        if (nama.toLowerCase().includes("apotek")) {
-          return nama;
+      formatNama(object) {
+        if (object.nama.toLowerCase().includes("apotek")) {
+          return object.nama;
+        } else if (object.brand == "MIKA") {
+          return `Instalasi Farmasi ${object.nama}`
         } else {
-          return `Apotek ${nama}`;
+          return `Apotek ${object.nama}`;
         }
       },
       formatDate(input) {
@@ -1061,27 +1060,6 @@
     font-family: "Montserrat", sans-serif;
   }
 
-  .select-logo {
-    padding: 5px;
-    border-radius: 10px;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.1);
-    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.1);
-    -moz-box-shadow: 0 6px 12px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.1);
-    transition: 0.3s ease;
-  }
-
-  .select-logo:hover {
-    filter: brightness(0.8);
-  }
-
-  .notselected-logo {
-    background-color: white;
-  }
-
-  .selected-logo {
-    background-color: rgb(202, 202, 202);
-  }
-
   .logo {
     height: 50px;
     object-fit: contain;
@@ -1179,6 +1157,3 @@
     }
   }
 </style>
-
-Copyright (c) 2021, Kementerian Kesehatan Republik Indonesia. All Rights Reserved. Developed by
-Tekira
