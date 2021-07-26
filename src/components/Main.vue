@@ -114,7 +114,7 @@
         </v-col>
         <v-col cols="12" md="4" class="px-5">
           <span class="pl-5">Apotek</span>
-          <v-select
+          <v-autocomplete
             v-model="selected.brand"
             :items="options.brand"
             item-text="name"
@@ -122,7 +122,9 @@
             chips
             filled
             hide-details
+            multiple
             clearable
+            deletable-chips
             rounded
             dense
           >
@@ -130,6 +132,8 @@
               <v-chip
                 v-bind="data.attrs"
                 :input-value="data.selected"
+                close
+                @click:close="remove(data.item)"
               >
                 <!-- {{ data.item.name }} -->
                 <img :src="data.item.img" class="avatar" />
@@ -143,7 +147,7 @@
                 <img :src="data.item.img" class="avatar" />
               </template>
             </template>
-          </v-select>
+          </v-autocomplete>
         </v-col>
         <v-col
           class="d-flex justify-center align-center mt-5 flex-column"
@@ -188,7 +192,7 @@
     >
       <v-col cols="12" class="d-flex align-center justify-center" style="height: 50vh">
         <v-alert outlined type="warning" prominent border="left">
-          <!-- {{ amountWriter() }} -->
+          Tidak Tersedia
         </v-alert>
       </v-col>
     </v-row>
@@ -493,7 +497,7 @@
 </template>
 
 <script>
-  import api, { STRAPI_URL } from "../api/api.js";
+  import api from "../api/api.js";
 
   export default {
     name: "HelloWorld",
@@ -543,53 +547,68 @@
         {
           id: "KF",
           name: "Kimia Farma",
-          img: STRAPI_URL + "/uploads/KF_034c7f7f10.png",
+          img: require("../assets/logos/KF.png"),
         },
         {
           id: "BERKAT",
           name: "Apotek Berkat",
-          img: STRAPI_URL + "/uploads/apotek_berkat_2d6569ba18.jpg",
+          img: require("../assets/logos/BERKAT.png")
         },
         {
           id: "WATSONS",
           name: "Watsons",
-          img: STRAPI_URL + "/uploads/WATSONS_ef20e24e35.png",
+          img: require("../assets/logos/WATSONS.png")
         },
         {
           id: "K24",
           name: "K24",
-          img: STRAPI_URL + "/uploads/Logo_Apotek_K_24_apoteknya_Indonesia_1_a80b9cfa35.png",
+          img: require("../assets/logos/K24.png")
         },
         {
           id: "CENTURY",
           name: "Century",
-          img: STRAPI_URL + "/uploads/CENTURY_png_0e7f2a4d06.jpg",
+          img: require("../assets/logos/CENTURY.png")
         },
         {
           id: "GENERIK",
           name: "Generik",
-          img: STRAPI_URL + "/uploads/Logo_Apotek_Generik_f681c8ca13.jpg",
+          img: require("../assets/logos/GENERIK.png")
         },
         {
           id: "AJIWARAS",
           name: "Ajiwaras",
-          img: STRAPI_URL + "/uploads/AJIWARA_Snew_7aa7910ca9.png",
+          img: require("../assets/logos/AJIWARAS.png")
         },
         {
           id: "GUARDIAN",
           name: "Guardian",
-          img: STRAPI_URL + "/uploads/GUARDIAN_1_e4d774eb1f.png",
+          img: require("../assets/logos/GUARDIAN.png")
         },
         {
           id: "LIFEPACK",
           name: "Lifepack",
-          img: STRAPI_URL + "/uploads/LIFEPACK_36cd872500.png",
+          img: require("../assets/logos/LIFEPACK.png")
         },
         {
           id: "MIKA",
           name: "Mitra Keluarga",
-          img: STRAPI_URL + "/uploads/MITRAKELUARGA_3d2c3ff51f.png",
-        }
+          img: require("../assets/logos/MIKA.png")
+        },
+        {
+          id: "FARMAKU",
+          name: "Farmaku",
+          img: require("../assets/logos/FARMAKU.png")
+        },
+        // {
+        //   id: "VIVA",
+        //   name: "Viva",
+        //   img: require("../assets/logos/VIVA.png")
+        // },
+        // {
+        //   id: "MITRASANA",
+        //   name: "Mitrasana",
+        //   img: require("../assets/logos/MITRASANA.png")
+        // }
       ],
     }),
     methods: {
