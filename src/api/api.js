@@ -54,7 +54,7 @@ export default {
   //
   //     });
   // },
-  async filter(name, obat, provinsi, kabkota, brand, tanggal, start, limit) {
+  async filter(name, obat, provinsi, kabkota, brand, start, limit) {
     const query = qs.stringify({
       _where: {
         _or: [
@@ -63,21 +63,20 @@ export default {
             { provinsi_contains: provinsi },
             { kabkota_contains: kabkota },
             { brand_contains: brand },
-            { tanggal_contains: tanggal },
             { nama_contains: name },
           ],
         ],
       },
     });
     //
-    var path = "outlets";
+    var path = "masters";
     var newStart = start * limit;
     var response = axios.get(
       `${STRAPI_URL}/${path}?${query}&_sort=jumlah:DESC&_start=${newStart}&_limit=${limit}`
     );
     return response;
   },
-  async count(name, obat, provinsi, kabkota, brand, tanggal) {
+  async count(name, obat, provinsi, kabkota, brand) {
     //
     const query = qs.stringify({
       _where: {
@@ -87,14 +86,13 @@ export default {
             { provinsi_contains: provinsi },
             { kabkota_contains: kabkota },
             { brand_contains: brand },
-            { tanggal_contains: tanggal },
             { nama_contains: name },
           ],
         ],
       },
     });
     //
-    var path = "outlets";
+    var path = "masters";
     var response = axios.get(
       `${STRAPI_URL}/${path}/count?${query}&_sort=jumlah:DESC`
     );
