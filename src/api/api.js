@@ -55,6 +55,13 @@ export default {
   //     });
   // },
   async filter(name, obat, provinsi, kabkota, brand, start, limit) {
+    if (provinsi == "Daerah Khusus Ibukota Jakarta") {
+      provinsi = "Jakarta"
+    } else if (provinsi == "Daerah Istimewa Yogyakarta") {
+      provinsi = "Yogyakarta"
+    }
+
+
     const query = qs.stringify({
       _where: {
         _or: [
@@ -77,7 +84,11 @@ export default {
     return response;
   },
   async count(name, obat, provinsi, kabkota, brand) {
-    //
+    if (provinsi == "Daerah Khusus Ibukota Jakarta") {
+      provinsi = "Jakarta"
+    } else if (provinsi == "Daerah Istimewa Yogyakarta") {
+      provinsi = "Yogyakarta"
+    }
     const query = qs.stringify({
       _where: {
         _or: [
