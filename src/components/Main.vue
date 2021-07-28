@@ -787,6 +787,11 @@ export default {
         id: "MITRASANA",
         name: "Mitrasana",
         img: require("../assets/logos/MITRASANA.png")
+      },
+      {
+        id: "GOAPOTEK",
+        name: "Goapotik",
+        img: require("../assets/logos/GOAPOTIK.png")
       }
     ],
   }),
