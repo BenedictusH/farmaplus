@@ -32,22 +32,22 @@
               ></v-progress-linear>
               <div v-else>
                 Stok
-                <strong>{{ formatDate(selected.tanggal) }} 17.00 WIB </strong>
+                <strong>{{ formatDate(selected.tanggal) }} </strong>
               </div></v-col
             >
 
             <v-col
               cols="12 "
               md="4"
-              class="d-flex justify-center justify-md-end gap"
+              class="d-flex justify-center justify-md-end gapatas"
               order="1"
               order-md="2"
             >
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/d/de/Logo_of_the_Ministry_of_Health_of_the_Republic_of_Indonesia.png"
-                class="logo"
+                class="logoatas"
               />
-              <img src="../assets/BUMN.png" class="logo" />
+              <img src="../assets/BUMN.png" class="logoatas" />
             </v-col>
           </v-row>
           <div
@@ -778,11 +778,6 @@ export default {
         name: "Farmaku",
         img: require("../assets/logos/FARMAKU.png"),
       },
-      // {
-      //   id: "VIVA",
-      //   name: "Viva",
-      //   img: require("../assets/logos/VIVA.png")
-      // },
       {
         id: "MITRASANA",
         name: "Mitrasana",
@@ -792,7 +787,12 @@ export default {
         id: "GOAPOTEK",
         name: "Goapotik",
         img: require("../assets/logos/GOAPOTIK.png")
-      }
+      },
+      {
+        id: "VIVA",
+        name: "Viva",
+        img: require("../assets/logos/VIVA.png")
+      },
     ],
   }),
   methods: {
@@ -1224,11 +1224,22 @@ export default {
       this.selected.start = 0;
       this.selected.limit = 10;
     },
+    convertDate(date) {
+      var yyyy = date.getFullYear().toString();
+      var mm = (date.getMonth()+1).toString();
+      var dd  = date.getDate().toString();
+
+      var mmChars = mm.split('');
+      var ddChars = dd.split('');
+
+      return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
+    }
   },
   async mounted() {
     // var res2 = await api.getLastShipment();
     // this.selected.tanggal = res2.data[0]["tanggal"];
-    this.selected.tanggal = "2021-07-27"
+    var today = new Date()
+    this.selected.tanggal = this.convertDate(today)
 
     await this.refreshPage();
   },
@@ -1282,6 +1293,12 @@ export default {
   max-width: 150px;
 }
 
+.logoatas {
+  height: 50px;
+  object-fit: contain;
+  max-width: 150px;
+}
+
 .wrapper {
   padding: 0;
   margin: 0;
@@ -1314,6 +1331,10 @@ a {
 }
 
 .gap {
+  gap: 20px;
+}
+
+.gapatas {
   gap: 20px;
 }
 
@@ -1370,8 +1391,13 @@ a {
   }
 
   .logo {
-    height: 40px;
+    height: 30px;
+    max-width: 90px;
     margin-top: -15px;
+  }
+
+  .gap {
+    gap: 10px;
   }
 
   .header {
