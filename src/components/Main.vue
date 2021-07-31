@@ -96,6 +96,7 @@
             deletable-chips
             rounded
             dense
+            menu-props="closeOnContentClick"
           >
           </v-autocomplete>
         </v-col>
@@ -112,6 +113,7 @@
             deletable-chips
             rounded
             dense
+            menu-props="closeOnContentClick"
           >
           </v-autocomplete>
         </v-col>
@@ -130,6 +132,7 @@
             deletable-chips
             rounded
             dense
+            menu-props="closeOnContentClick"
           >
             <template v-slot:selection="data">
               <v-chip
@@ -546,6 +549,7 @@
           hide-details
           deletable-chips
           rounded
+          menu-props="closeOnContentClick"
         >
         </v-autocomplete>
       </v-col>
@@ -1049,6 +1053,16 @@
         this.amount = res2.data;
         //
         // this.getJumlahObatProv();
+        let url = window.location.href.split("?");
+        history.pushState(
+          {},
+          "",
+          `${url[0]}?obat=${JSON.stringify(this.selected.obat)}&provinsi=${JSON.stringify(
+            this.selected.provinsi
+          )}&kabkota=${JSON.stringify(this.selected.kabkota)}&brand=${JSON.stringify(
+            this.selected.brand
+          )}&limit=${this.limit}&start=${this.start}`
+        );
         this.loadingBody = false;
 
         // await this.getKabkot()
@@ -1155,6 +1169,15 @@
       // this.selected.tanggal = res2.data[0]["tanggal"];
       var today = new Date();
       this.selected.tanggal = this.convertDate(today);
+      // let url = window.location.href;
+      // let params = new URL(url).searchParams;
+
+      // this.selected.obat = params.get("obat");
+      // this.selected.provinsi = params.get("provinsi");
+      // this.selected.kabkota = params.get("kabkota");
+      // this.selected.brand = params.get("brand");
+      // this.start = params.get("start");
+      // this.limit = params.get("limit");
 
       await this.refreshPage();
     },
