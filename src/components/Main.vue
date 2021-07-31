@@ -59,7 +59,7 @@
             *Saat ini, data diupdate secara berkala tiap hari pkl 17.00 WIB, sehingga bukan data
             realtime. Sehubungan dengan tingginya kebutuhan, harap konfirmasikan ketersediaan di
             masing-masing lokasi apotek. Pembelian obat selain multivitamin harus menggunakan resep
-            dokter.*{{ selectingObat }}{{ selected.obat }}{{ tableItems[1] }}
+            dokter.*
           </div>
 
           <v-data-table
@@ -1190,24 +1190,12 @@
         this.start = await JSON.parse(params.get("start"));
         this.limit = await JSON.parse(params.get("limit"));
 
-        this.selected.obat.map((selected) => {
-          this.tableItems.map((item) => {
-            if (item.obat === selected) {
-              alert(item);
-              this.selectingObat.push(item);
-            }
-          });
+        this.selected.obat.map((res) => {
+          var a = {
+            obat: res,
+          };
+          this.selectingObat.push(a);
         });
-        // this.selected.obat.map((input) => {
-        //   // if (
-        //   //   this.tableItems.forEach((el) => {
-        //   //     el.obat == input;
-        //   //   })
-        //   // ) {
-        //   //   alert("bisa bos");
-        //   // }
-        //   // this.selectingObat.push(this.tableItems[indeks]);
-        // });
       }
 
       await this.refreshPage();
