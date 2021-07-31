@@ -13,7 +13,7 @@
       <div class="text-lg-h2 text-h3 font-weight-bold pl-5 white--text text-center">
         Farma Plus
         <div class="pt-3 text-h5 white--text text-center">
-          Find your medicine here
+          Find your medicine here {{selected.obat}}
         </div>
       </div>
     </div>
@@ -996,6 +996,16 @@
 
         this.loadingToolbar = false;
 
+        let urls = window.location.href;
+        let params = new URL(urls).searchParams;
+
+        this.selected.obat = JSON.parse(params.get("obat"));
+        this.selected.provinsi = JSON.parse(params.get("provinsi"));
+        this.selected.kabkota = JSON.parse(params.get("kabkota"));
+        this.selected.brand = JSON.parse(params.get("brand"));
+        this.start = JSON.parse(params.get("start"));
+        this.limit = JSON.parse(params.get("limit"));
+
         var res = await this.update();
         await this.getJumlah();
         this.body = res.data;
@@ -1063,6 +1073,7 @@
             this.selected.brand
           )}&limit=${this.limit}&start=${this.start}`
         );
+
         this.loadingBody = false;
 
         // await this.getKabkot()
@@ -1169,16 +1180,7 @@
       // this.selected.tanggal = res2.data[0]["tanggal"];
       var today = new Date();
       this.selected.tanggal = this.convertDate(today);
-      // let url = window.location.href;
-      // let params = new URL(url).searchParams;
-
-      // this.selected.obat = params.get("obat");
-      // this.selected.provinsi = params.get("provinsi");
-      // this.selected.kabkota = params.get("kabkota");
-      // this.selected.brand = params.get("brand");
-      // this.start = params.get("start");
-      // this.limit = params.get("limit");
-
+      
       await this.refreshPage();
     },
     watch: {
