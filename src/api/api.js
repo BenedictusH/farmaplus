@@ -67,7 +67,7 @@ export default {
         _or: [
           [
             { obat_contains: obat },
-            { provinsi_contains: provinsi },
+            { provinsi: provinsi },
             { kabkota_contains: kabkota },
             { brand_contains: brand },
             { nama_contains: name },
@@ -76,7 +76,7 @@ export default {
       },
     });
     //
-    var path = "masters";
+    var path = "farmasters";
     var newStart = start * limit;
     var response = axios.get(
       `${STRAPI_URL}/${path}?${query}&_sort=jumlah:DESC&_start=${newStart}&_limit=${limit}`
@@ -94,7 +94,7 @@ export default {
         _or: [
           [
             { obat_contains: obat },
-            { provinsi_contains: provinsi },
+            { provinsi: provinsi },
             { kabkota_contains: kabkota },
             { brand_contains: brand },
             { nama_contains: name },
@@ -103,7 +103,7 @@ export default {
       },
     });
     //
-    var path = "masters";
+    var path = "farmasters";
     var response = axios.get(
       `${STRAPI_URL}/${path}/count?${query}&_sort=jumlah:DESC`
     );
