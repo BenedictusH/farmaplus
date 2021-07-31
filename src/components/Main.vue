@@ -996,16 +996,6 @@
 
         this.loadingToolbar = false;
 
-        let urls = window.location.href;
-        let params = new URL(urls).searchParams;
-
-        this.selected.obat = JSON.parse(params.get("obat"));
-        this.selected.provinsi = JSON.parse(params.get("provinsi"));
-        this.selected.kabkota = JSON.parse(params.get("kabkota"));
-        this.selected.brand = JSON.parse(params.get("brand"));
-        this.start = JSON.parse(params.get("start"));
-        this.limit = JSON.parse(params.get("limit"));
-
         var res = await this.update();
         await this.getJumlah();
         this.body = res.data;
@@ -1063,16 +1053,6 @@
         this.amount = res2.data;
         //
         // this.getJumlahObatProv();
-        let url = window.location.href.split("?");
-        history.pushState(
-          {},
-          "",
-          `${url[0]}?obat=${JSON.stringify(this.selected.obat)}&provinsi=${JSON.stringify(
-            this.selected.provinsi
-          )}&kabkota=${JSON.stringify(this.selected.kabkota)}&brand=${JSON.stringify(
-            this.selected.brand
-          )}&limit=${this.limit}&start=${this.start}`
-        );
 
         this.loadingBody = false;
 
@@ -1175,6 +1155,17 @@
         );
       },
     },
+    async created () {
+      let urls = window.location.href;
+        let params = new URL(urls).searchParams;
+
+        this.selected.obat = await JSON.parse(params.get("obat"));
+        this.selected.provinsi = await JSON.parse(params.get("provinsi"));
+        this.selected.kabkota = await JSON.parse(params.get("kabkota"));
+        this.selected.brand = await JSON.parse(params.get("brand"));
+        this.start = await JSON.parse(params.get("start"));
+        this.limit = await JSON.parse(params.get("limit"));
+    },
     async mounted() {
       // var res2 = await api.getLastShipment();
       // this.selected.tanggal = res2.data[0]["tanggal"];
@@ -1190,14 +1181,44 @@
           if (this.start * this.amount > parseInt(this.amount / this.limit) + 1) {
             this.start = 1;
           }
+          let url = window.location.href.split("?");
+          history.pushState(
+            {},
+            "",
+            `${url[0]}?obat=${JSON.stringify(this.selected.obat)}&provinsi=${JSON.stringify(
+              this.selected.provinsi
+            )}&kabkota=${JSON.stringify(this.selected.kabkota)}&brand=${JSON.stringify(
+              this.selected.brand
+            )}&limit=${this.limit}&start=${this.start}`
+          );
         },
         deep: true,
       },
       start() {
         this.update();
+        let url = window.location.href.split("?");
+        history.pushState(
+          {},
+          "",
+          `${url[0]}?obat=${JSON.stringify(this.selected.obat)}&provinsi=${JSON.stringify(
+            this.selected.provinsi
+          )}&kabkota=${JSON.stringify(this.selected.kabkota)}&brand=${JSON.stringify(
+            this.selected.brand
+          )}&limit=${this.limit}&start=${this.start}`
+        );
       },
       limit() {
         this.update();
+        let url = window.location.href.split("?");
+        history.pushState(
+          {},
+          "",
+          `${url[0]}?obat=${JSON.stringify(this.selected.obat)}&provinsi=${JSON.stringify(
+            this.selected.provinsi
+          )}&kabkota=${JSON.stringify(this.selected.kabkota)}&brand=${JSON.stringify(
+            this.selected.brand
+          )}&limit=${this.limit}&start=${this.start}`
+        );
       },
       selectingObat: function(newvar) {
         var x = newvar.map((r) => {
