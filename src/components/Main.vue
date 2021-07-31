@@ -13,7 +13,7 @@
       <div class="text-lg-h2 text-h3 font-weight-bold pl-5 white--text text-center">
         Farma Plus
         <div class="pt-3 text-h5 white--text text-center">
-          Find your medicine here {{selected.obat}}
+          Find your medicine here
         </div>
       </div>
     </div>
@@ -59,7 +59,7 @@
             *Saat ini, data diupdate secara berkala tiap hari pkl 17.00 WIB, sehingga bukan data
             realtime. Sehubungan dengan tingginya kebutuhan, harap konfirmasikan ketersediaan di
             masing-masing lokasi apotek. Pembelian obat selain multivitamin harus menggunakan resep
-            dokter.*
+            dokter.*{{ selectingObat }}{{ selected.obat }}{{ tableItems[1] }}
           </div>
 
           <v-data-table
@@ -1024,6 +1024,7 @@
       },
       async update() {
         this.province = this.selected.provinsi;
+        this.getKabkot();
         this.loadingBody = true;
 
         var res = await api.filter(
@@ -1097,13 +1098,27 @@
 
         // await this.getKabkot()
       },
+      pushURL() {
+        let url = window.location.href.split("?");
+
+        // let obatUrl = this.selectingObat.map((value) => value.obat);
+        history.pushState(
+          {},
+          "",
+          `${url[0]}?obat=${JSON.stringify(this.selected.obat)}&provinsi=${JSON.stringify(
+            this.selected.provinsi
+          )}&kabkota=${JSON.stringify(this.selected.kabkota)}&brand=${JSON.stringify(
+            this.selected.brand
+          )}&limit=${this.limit}&start=${this.start}`
+        );
+      },
       async getKabkot() {
-        //
-        //
         var select_kabkota = [];
+
         await Promise.all(
           this.selected["provinsi"].map(async (selected_provinsi) => {
             //
+
             await Promise.all(
               this.provinsis.map(async (provinsi) => {
                 if (provinsi.nama == selected_provinsi) {
@@ -1118,6 +1133,10 @@
             );
           })
         );
+        // let urls = window.location.href;
+        // let params = new URL(urls).searchParams;
+
+        // this.selected.kabkota = await JSON.parse(params.get("kabkota"));
       },
       amountWriter() {
         if (this.amount == 0) {
@@ -1155,23 +1174,42 @@
         );
       },
     },
-    async created () {
+    async mounted() {
+      // var res2 = await api.getLastShipment();
+      // this.selected.tanggal = res2.data[0]["tanggal"];
+      var today = new Date();
+      this.selected.tanggal = this.convertDate(today);
       let urls = window.location.href;
-        let params = new URL(urls).searchParams;
+      let params = new URL(urls).searchParams;
 
+      if (urls.includes("?")) {
         this.selected.obat = await JSON.parse(params.get("obat"));
         this.selected.provinsi = await JSON.parse(params.get("provinsi"));
         this.selected.kabkota = await JSON.parse(params.get("kabkota"));
         this.selected.brand = await JSON.parse(params.get("brand"));
         this.start = await JSON.parse(params.get("start"));
         this.limit = await JSON.parse(params.get("limit"));
-    },
-    async mounted() {
-      // var res2 = await api.getLastShipment();
-      // this.selected.tanggal = res2.data[0]["tanggal"];
-      var today = new Date();
-      this.selected.tanggal = this.convertDate(today);
-      
+
+        this.selected.obat.map((selected) => {
+          this.tableItems.map((item) => {
+            if (item.obat === selected) {
+              alert(item);
+              this.selectingObat.push(item);
+            }
+          });
+        });
+        // this.selected.obat.map((input) => {
+        //   // if (
+        //   //   this.tableItems.forEach((el) => {
+        //   //     el.obat == input;
+        //   //   })
+        //   // ) {
+        //   //   alert("bisa bos");
+        //   // }
+        //   // this.selectingObat.push(this.tableItems[indeks]);
+        // });
+      }
+
       await this.refreshPage();
     },
     watch: {
@@ -1181,44 +1219,17 @@
           if (this.start * this.amount > parseInt(this.amount / this.limit) + 1) {
             this.start = 1;
           }
-          let url = window.location.href.split("?");
-          history.pushState(
-            {},
-            "",
-            `${url[0]}?obat=${JSON.stringify(this.selected.obat)}&provinsi=${JSON.stringify(
-              this.selected.provinsi
-            )}&kabkota=${JSON.stringify(this.selected.kabkota)}&brand=${JSON.stringify(
-              this.selected.brand
-            )}&limit=${this.limit}&start=${this.start}`
-          );
+          this.pushURL();
         },
         deep: true,
       },
       start() {
         this.update();
-        let url = window.location.href.split("?");
-        history.pushState(
-          {},
-          "",
-          `${url[0]}?obat=${JSON.stringify(this.selected.obat)}&provinsi=${JSON.stringify(
-            this.selected.provinsi
-          )}&kabkota=${JSON.stringify(this.selected.kabkota)}&brand=${JSON.stringify(
-            this.selected.brand
-          )}&limit=${this.limit}&start=${this.start}`
-        );
+        this.pushURL();
       },
       limit() {
         this.update();
-        let url = window.location.href.split("?");
-        history.pushState(
-          {},
-          "",
-          `${url[0]}?obat=${JSON.stringify(this.selected.obat)}&provinsi=${JSON.stringify(
-            this.selected.provinsi
-          )}&kabkota=${JSON.stringify(this.selected.kabkota)}&brand=${JSON.stringify(
-            this.selected.brand
-          )}&limit=${this.limit}&start=${this.start}`
-        );
+        this.pushURL();
       },
       selectingObat: function(newvar) {
         var x = newvar.map((r) => {
