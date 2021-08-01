@@ -80,7 +80,7 @@
         <v-col cols="12" class="px-5 pb-5 text-center">
           Menampilkan
           <strong>{{ formatAngka(getTotal(tableItemsInt)) }}</strong>
-          Obat</v-col
+          obat</v-col
         >
 
         <v-col cols="12" md="4" class="px-5">
