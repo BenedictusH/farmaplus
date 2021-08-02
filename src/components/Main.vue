@@ -723,6 +723,11 @@
           name: "PharmaPlus",
           img: require("../assets/logos/PHARMAPLUS.png"),
         },
+        {
+          id: "ROXY",
+          name: "Roxy",
+          img: require("../assets/logos/ROXY.png"),
+        },
       ],
     }),
     methods: {
