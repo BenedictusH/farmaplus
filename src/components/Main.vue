@@ -718,6 +718,11 @@
           name: "Halodoc",
           img: require("../assets/logos/HALODOC.png"),
         },
+        {
+          id: "PHARMA",
+          name: "PharmaPlus",
+          img: require("../assets/logos/PHARMAPLUS.png"),
+        },
       ],
     }),
     methods: {
