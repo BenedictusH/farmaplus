@@ -1,3 +1,4 @@
+// export const STRAPI_URL = "https://farmapush.techkyra.com";
 export const STRAPI_URL = "https://farmaplus-api.kemkes.go.id";
 var qs = require("qs");
 import axios from "axios";
@@ -71,7 +72,7 @@ export default {
       },
     });
     //
-    var path = "farmasters";
+    var path = "masterfarmas";
     var newStart = start * limit;
     var response = axios.get(
       `${STRAPI_URL}/${path}?${query}&_sort=jumlah:DESC&_start=${newStart}&_limit=${limit}`
@@ -93,7 +94,7 @@ export default {
       },
     });
     //
-    var path = "farmasters";
+    var path = "masterfarmas";
     var response = axios.get(
       `${STRAPI_URL}/${path}/count?${query}&_sort=jumlah:DESC`
     );

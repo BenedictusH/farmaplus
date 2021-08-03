@@ -912,7 +912,11 @@
         var a = this.brands.filter(function(el) {
           return el.id == merek;
         });
-        return a[0]["img"];
+        if (a[0]) {
+          return a[0]["img"];
+        } else {
+          return this.brands[12]["img"]
+        }
       },
       formatTelpon(telephone) {
         var number;
