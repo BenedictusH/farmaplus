@@ -718,12 +718,12 @@
           img: require("../assets/logos/KF.png"),
         },
         {
-          id: "BERKAT",
+          id: "berkat",
           name: "Apotek Berkat",
           img: require("../assets/logos/BERKAT.png"),
         },
         {
-          id: "WATSONS",
+          id: "watsons",
           name: "Watsons",
           img: require("../assets/logos/WATSONS.png"),
         },
@@ -908,7 +908,8 @@
         return x.reduce((a, b) => a + b, 0);
       },
       logoBrand(brand) {
-        var merek = brand.toUpperCase();
+        var merek = brand
+        // var merek = brand.toUpperCase();
         var a = this.brands.filter(function(el) {
           return el.id == merek;
         });

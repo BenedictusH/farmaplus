@@ -56,21 +56,83 @@ export default {
   //     });
   // },
   async filter(name, obat, provinsi, kabkota, brand, start, limit) {
-
-
-    const query = qs.stringify({
-      _where: {
-        _or: [
-          [
-            { obat_contains: obat },
-            { provinsi: provinsi },
-            { kabkota_contains: kabkota },
-            { brand_contains: brand },
-            { nama_contains: name },
+    var query;
+    if (brand != "GOAPOTEK") {
+      query = qs.stringify({
+        _where: {
+          _or: [
+            [
+              { obat_contains: obat },
+              { provinsi: provinsi },
+              { kabkota_contains: kabkota },
+              { brand: brand },
+              { nama_contains: name },
+            ],
           ],
-        ],
-      },
-    });
+        },
+      });
+    } else {
+      query = qs.stringify({
+        _where: {
+          _or: [
+            [
+              { obat_contains: obat },
+              { provinsi: provinsi },
+              { kabkota_contains: kabkota },
+              {
+                brand_ne: "KIMIA FARMA",
+              },
+              {
+                brand_ne: "berkat",
+              },
+              {
+                brand_ne: "watsons",
+              },
+              {
+                brand_ne: "K24",
+              },
+              {
+                brand_ne: "CENTURY",
+              },
+              {
+                brand_ne: "GENERIK",
+              },
+              {
+                brand_ne: "AJIWARAS",
+              },
+              {
+                brand_ne: "GUARDIAN",
+              },
+              {
+                brand_ne: "LIFEPACK",
+              },
+              {
+                brand_ne: "MIKA",
+              },
+              {
+                brand_ne: "FARMAKU",
+              },
+              {
+                brand_ne: "MITRASANA",
+              },
+              {
+                brand_ne: "VIVA",
+              },
+              {
+                brand_ne: "HALODOC",
+              },
+              {
+                brand_ne: "PHARMA",
+              },
+              {
+                brand_ne: "ROXY",
+              },
+              { nama_contains: name },
+            ],
+          ],
+        },
+      });
+    }
     //
     var path = "masterfarmas";
     var newStart = start * limit;
@@ -80,19 +142,83 @@ export default {
     return response;
   },
   async count(name, obat, provinsi, kabkota, brand) {
-    const query = qs.stringify({
-      _where: {
-        _or: [
-          [
-            { obat_contains: obat },
-            { provinsi: provinsi },
-            { kabkota_contains: kabkota },
-            { brand_contains: brand },
-            { nama_contains: name },
+    var query;
+    if (brand != "GOAPOTEK") {
+      query = qs.stringify({
+        _where: {
+          _or: [
+            [
+              { obat_contains: obat },
+              { provinsi: provinsi },
+              { kabkota_contains: kabkota },
+              { brand: brand },
+              { nama_contains: name },
+            ],
           ],
-        ],
-      },
-    });
+        },
+      });
+    } else {
+      query = qs.stringify({
+        _where: {
+          _or: [
+            [
+              { obat_contains: obat },
+              { provinsi: provinsi },
+              { kabkota_contains: kabkota },
+              {
+                brand_ne: "KIMIA FARMA",
+              },
+              {
+                brand_ne: "berkat",
+              },
+              {
+                brand_ne: "watsons",
+              },
+              {
+                brand_ne: "K24",
+              },
+              {
+                brand_ne: "CENTURY",
+              },
+              {
+                brand_ne: "GENERIK",
+              },
+              {
+                brand_ne: "AJIWARAS",
+              },
+              {
+                brand_ne: "GUARDIAN",
+              },
+              {
+                brand_ne: "LIFEPACK",
+              },
+              {
+                brand_ne: "MIKA",
+              },
+              {
+                brand_ne: "FARMAKU",
+              },
+              {
+                brand_ne: "MITRASANA",
+              },
+              {
+                brand_ne: "VIVA",
+              },
+              {
+                brand_ne: "HALODOC",
+              },
+              {
+                brand_ne: "PHARMA",
+              },
+              {
+                brand_ne: "ROXY",
+              },
+              { nama_contains: name },
+            ],
+          ],
+        },
+      });
+    }
     //
     var path = "masterfarmas";
     var response = axios.get(
