@@ -265,7 +265,7 @@
     >
       <v-col cols="12" class="d-flex align-center justify-center" style="height: 50vh">
         <v-alert outlined type="warning" prominent border="left">
-          Tidak Tersedia
+          Tidak Tersedia; Silahkan pilih opsi lain
         </v-alert>
       </v-col>
     </v-row>
@@ -773,7 +773,7 @@
           img: require("../assets/logos/MITRASANA.png"),
         },
         {
-          id: "GOAPOTEK",
+          id: "GOAPOTIK",
           name: "Goapotik",
           img: require("../assets/logos/GOAPOTIK.png"),
         },
@@ -908,7 +908,7 @@
         return x.reduce((a, b) => a + b, 0);
       },
       logoBrand(brand) {
-        var merek = brand
+        var merek = brand;
         // var merek = brand.toUpperCase();
         var a = this.brands.filter(function(el) {
           return el.id == merek;
@@ -916,7 +916,7 @@
         if (a[0]) {
           return a[0]["img"];
         } else {
-          return this.brands[12]["img"]
+          return this.brands[12]["img"];
         }
       },
       formatTelpon(telephone) {
