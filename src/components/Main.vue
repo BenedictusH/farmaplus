@@ -234,7 +234,7 @@
           v-show="!loadingBody"
         >
           <div v-if="amount == 1">Menampilkan <strong>1</strong> apotek</div>
-          <div v-else-if="amount > 1">Menampilkan <strong>2,132</strong> apotek</div>
+          <div v-else-if="amount > 1">Menampilkan <strong>3.672</strong> apotek</div>
           <div v-else-if="amount != 0"></div>
         </v-col>
         <v-col
