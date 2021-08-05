@@ -1229,7 +1229,7 @@
           return "Menampilkan 1 apotek";
         } else {
           // return "Menampilkan " + this.amount + " apotek";
-          return "Menampilkan " + "2,132" + " apotek";
+          return "Menampilkan " + "3.672" + " apotek";
         }
       },
       async reset() {
