@@ -63,7 +63,7 @@ export default {
           [
             { obat_contains: obat },
             { provinsi: provinsi },
-            { kabkota_contains: kabkota },
+            { kabkota: kabkota },
             { brand: brand },
             { nama_contains: name },
           ],
@@ -86,7 +86,7 @@ export default {
           [
             { obat_contains: obat },
             { provinsi: provinsi },
-            { kabkota_contains: kabkota },
+            { kabkota: kabkota },
             { brand: brand },
             { nama_contains: name },
           ],
