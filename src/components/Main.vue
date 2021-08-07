@@ -59,7 +59,7 @@
             *Saat ini, data diupdate secara berkala tiap hari pkl 17.00 WIB, sehingga bukan data
             realtime. Sehubungan dengan tingginya kebutuhan, harap konfirmasikan ketersediaan di
             masing-masing lokasi apotek. Pembelian obat selain multivitamin harus menggunakan resep
-            dokter.*
+            dokter.* {{ options.kabkota }}
           </div>
 
           <v-data-table
@@ -1211,7 +1211,7 @@
                       select_kabkota.push(r.nama);
                     })
                   );
-                  this.options["kabkota"] = select_kabkota;
+                  this.options["kabkota"] = select_kabkota.sort();
                 }
               })
             );
