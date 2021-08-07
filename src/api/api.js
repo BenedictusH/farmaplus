@@ -71,7 +71,7 @@ export default {
       },
     });
     //
-    var path = "mastersyncs";
+    var path = "mastermasters";
     var newStart = start * limit;
     var response = axios.get(
       `${STRAPI_URL}/${path}?${query}&_sort=jumlah:DESC&_start=${newStart}&_limit=${limit}`
@@ -94,7 +94,7 @@ export default {
       },
     });
     //
-    var path = "mastersyncs";
+    var path = "mastermasters";
     var response = axios.get(
       `${STRAPI_URL}/${path}/count?${query}&_sort=jumlah:DESC`
     );
