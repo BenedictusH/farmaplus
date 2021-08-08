@@ -10,7 +10,9 @@
         py-lg-15 py-3
       "
     >
-      <div class="text-lg-h2 text-h3 font-weight-bold pl-5 white--text text-center">
+      <div
+        class="text-lg-h2 text-h3 font-weight-bold pl-5 white--text text-center"
+      >
         Farma Plus
         <div class="pt-3 text-h5 white--text text-center">
           Find your medicine here
@@ -56,10 +58,10 @@
             order="3"
             v-if="!loadingToolbar"
           >
-            *Saat ini, data diupdate secara berkala tiap hari pkl 17.00 WIB, sehingga bukan data
-            realtime. Sehubungan dengan tingginya kebutuhan, harap konfirmasikan ketersediaan di
-            masing-masing lokasi apotek. Pembelian obat selain multivitamin harus menggunakan resep
-            dokter.* 
+            *Saat ini, data diupdate secara berkala tiap hari pkl 17.00 WIB,
+            sehingga bukan data realtime. Sehubungan dengan tingginya kebutuhan,
+            harap konfirmasikan ketersediaan di masing-masing lokasi apotek.
+            Pembelian obat selain multivitamin harus menggunakan resep dokter.*
           </div>
 
           <v-data-table
@@ -80,7 +82,18 @@
         <v-col cols="12" class="px-5 pb-5 text-center">
           Menampilkan
           <strong>{{ formatAngka(getTotal(tableItemsInt)) }}</strong>
-          obat</v-col
+          obat di
+          <span v-if="selected.provinsi.length == 0">seluruh <strong>Indonesia</strong></span>
+          <span v-else>
+            <v-chip
+              v-for="(prov, index) in selected.provinsi"
+              :key="index"
+              outlined
+              class="mx-1"
+              >{{ prov }}</v-chip
+            >
+          </span>
+          </v-col
         >
 
         <v-col cols="12" md="4" class="px-5">
@@ -181,7 +194,9 @@
             <template v-slot:item="data">
               <template>
                 <v-list-item-content>
-                  <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                  <v-list-item-title
+                    v-html="data.item.name"
+                  ></v-list-item-title>
                 </v-list-item-content>
                 <img :src="data.item.img" class="avatar" />
               </template>
@@ -217,7 +232,9 @@
             <template v-slot:item="data">
               <template>
                 <v-list-item-content>
-                  <v-list-item-title v-html="data.item.name"></v-list-item-title>
+                  <v-list-item-title
+                    v-html="data.item.name"
+                  ></v-list-item-title>
                 </v-list-item-content>
                 <img :src="data.item.img" class="avatar" />
               </template>
@@ -234,7 +251,9 @@
           v-show="!loadingBody"
         >
           <div v-if="amount == 1">Menampilkan <strong>1</strong> apotek</div>
-          <div v-else-if="amount > 1">Menampilkan <strong>3,362</strong> apotek</div>
+          <div v-else-if="amount > 1">
+            Menampilkan <strong>3,362</strong> apotek
+          </div>
           <div v-else-if="amount != 0"></div>
         </v-col>
         <v-col
@@ -244,12 +263,16 @@
           order="4"
           class="d-flex justify-end align-center pr-md-5 pr-5 mt-5"
         >
-          <v-btn color="error" elevation="2" class="ml-5" rounded @click="reset">Reset</v-btn>
+          <v-btn color="error" elevation="2" class="ml-5" rounded @click="reset"
+            >Reset</v-btn
+          >
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="12" class="px-lg-16 px-3">
-          <div class="d-flex justify-center justify-md-center flex-wrap gap px-7">
+          <div
+            class="d-flex justify-center justify-md-center flex-wrap gap px-7"
+          >
             <div v-for="brand in brands" :key="brand">
               <img :src="brand.img" class="logo" />
             </div>
@@ -263,13 +286,21 @@
       align="stretch"
       v-if="!loadingBody && amount == 0"
     >
-      <v-col cols="12" class="d-flex align-center justify-center" style="height: 50vh">
+      <v-col
+        cols="12"
+        class="d-flex align-center justify-center"
+        style="height: 50vh"
+      >
         <v-alert outlined type="warning" prominent border="left">
           Tidak Tersedia; Silahkan pilih opsi lain
         </v-alert>
       </v-col>
     </v-row>
-    <v-row class="px-lg-16 px-3 pb-10 mt-5 cards-body" align="stretch" v-if="amount !== 0">
+    <v-row
+      class="px-lg-16 px-3 pb-10 mt-5 cards-body"
+      align="stretch"
+      v-if="amount !== 0"
+    >
       <v-col
         lg="6"
         cols="12"
@@ -278,7 +309,8 @@
         :key="index * 10"
         v-show="loadingBody"
       >
-        <v-skeleton-loader type="article" class="mb-6" elevation="2"> </v-skeleton-loader>
+        <v-skeleton-loader type="article" class="mb-6" elevation="2">
+        </v-skeleton-loader>
       </v-col>
       <v-col
         v-for="(apotek, index) in body"
@@ -295,16 +327,26 @@
           style="border-radius: 15px"
         >
           <v-row class="pa-5">
-            <v-col cols="12" lg="7" class="d-flex flex-column justify-space-between">
+            <v-col
+              cols="12"
+              lg="7"
+              class="d-flex flex-column justify-space-between"
+            >
               <div>
-                <img :src="logoBrand(apotek.brand)" alt="Logo Apotek" class="logo-card mb-3" />
+                <img
+                  :src="logoBrand(apotek.brand)"
+                  alt="Logo Apotek"
+                  class="logo-card mb-3"
+                />
                 <v-card-title
                   class="text-lg-h5 text-md-h4 font-weight-bold pt-0 pl-0"
                   style="word-wrap: normal"
                 >
                   {{ formatNama(apotek) }}
                 </v-card-title>
-                <v-card-subtitle class="px-0 pb-0">{{ apotek.alamat }}</v-card-subtitle
+                <v-card-subtitle class="px-0 pb-0">{{
+                  apotek.alamat
+                }}</v-card-subtitle
                 ><v-card-subtitle class="px-0 pb-0 pa-0"
                   >{{ apotek.kabkota }}, {{ apotek.provinsi }}</v-card-subtitle
                 >
@@ -365,7 +407,10 @@
                     justify-lg-end justify-start
                   "
                 >
-                  <span v-if="apotek.status == 'habis'" class="red--text spaccing">
+                  <span
+                    v-if="apotek.status == 'habis'"
+                    class="red--text spaccing"
+                  >
                     {{ formatStatus(apotek.status) }}</span
                   >
                   <span v-else class="green--text spaccing">
@@ -374,7 +419,8 @@
                 </v-card-title>
                 <v-card-subtitle class="pa-0 pt-5 text-md-right"
                   >Terakhir diupdate <br class="d-block d-md-none" />
-                  <strong>{{ timeSince(apotek.tanggal) }}</strong> yang lalu</v-card-subtitle
+                  <strong>{{ timeSince(apotek.tanggal) }}</strong> yang
+                  lalu</v-card-subtitle
                 ><v-card-subtitle
                   class="pa-0 text-md-right font-italic red--text"
                   v-if="apotek.obat.toLowerCase() != 'multivitamin'"
@@ -386,7 +432,9 @@
                 >
               </div>
               <!-- card-actions for hp -->
-              <v-card-actions class="px-0 pb-2 d-flex flex-column-reverse d-md-none">
+              <v-card-actions
+                class="px-0 pb-2 d-flex flex-column-reverse d-md-none"
+              >
                 <div
                   class="
                     d-flex
@@ -416,9 +464,19 @@
                       </svg>
                     </v-btn>
                   </a>
-                  <v-dialog v-else transition="dialog-bottom-transition" max-width="600">
+                  <v-dialog
+                    v-else
+                    transition="dialog-bottom-transition"
+                    max-width="600"
+                  >
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn rounded color="#25D366" class="mr-md-2" v-bind="attrs" v-on="on">
+                      <v-btn
+                        rounded
+                        color="#25D366"
+                        class="mr-md-2"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
                         <svg
                           class="filterGreen"
                           height="25"
@@ -448,11 +506,16 @@
                         </v-card-text>
                         <v-card-actions class="justify-end">
                           <a v-bind:href="getWa(apotek)" target="_blank">
-                            <v-btn color="primary" @click="dialog.value = false" class="mr-2"
+                            <v-btn
+                              color="primary"
+                              @click="dialog.value = false"
+                              class="mr-2"
                               >Lanjutkan</v-btn
                             >
                           </a>
-                          <v-btn text @click="dialog.value = false">Kembali</v-btn>
+                          <v-btn text @click="dialog.value = false"
+                            >Kembali</v-btn
+                          >
                         </v-card-actions>
                       </v-card>
                     </template>
@@ -466,11 +529,19 @@
                   >
                     <v-btn rounded color="info" class="mr-md-2">
                       <v-icon class="mr-md-2">mdi-phone</v-icon>
-                      <span class="d-none d-md-block">{{ formatTelpon(apotek.msisdn) }}</span>
+                      <span class="d-none d-md-block">{{
+                        formatTelpon(apotek.msisdn)
+                      }}</span>
                     </v-btn>
                   </a>
                   <a v-else class>
-                    <v-btn rounded outlined disabled color="info" class="mr-md-2">
+                    <v-btn
+                      rounded
+                      outlined
+                      disabled
+                      color="info"
+                      class="mr-md-2"
+                    >
                       <v-icon class="mr-md-2">mdi-phone</v-icon>
                       <span class="d-none d-md-block">Tidak Tersedia</span>
                     </v-btn>
@@ -494,7 +565,9 @@
 
           <v-row class="flex-grow-1 pa-8 pt-0 align-end d-none d-md-flex">
             <v-col cols="12" class="pa-0">
-              <v-card-actions class="pa-0 d-flex flex-row align-center justify-start">
+              <v-card-actions
+                class="pa-0 d-flex flex-row align-center justify-start"
+              >
                 <div>
                   <a
                     v-if="apotek.latitude"
@@ -509,14 +582,25 @@
                 </div>
 
                 <div>
-                  <a :href="'tel:' + formatTelpon(apotek.msisdn)" v-if="checkNull(apotek.msisdn)">
+                  <a
+                    :href="'tel:' + formatTelpon(apotek.msisdn)"
+                    v-if="checkNull(apotek.msisdn)"
+                  >
                     <v-btn rounded color="info" class="mr-md-2">
                       <v-icon class="mr-md-2">mdi-phone</v-icon>
-                      <span class="d-none d-md-block">{{ formatTelpon(apotek.msisdn) }}</span>
+                      <span class="d-none d-md-block">{{
+                        formatTelpon(apotek.msisdn)
+                      }}</span>
                     </v-btn>
                   </a>
                   <a v-else class>
-                    <v-btn rounded outlined disabled color="info" class="mr-md-2">
+                    <v-btn
+                      rounded
+                      outlined
+                      disabled
+                      color="info"
+                      class="mr-md-2"
+                    >
                       <v-icon class="mr-md-2">mdi-phone</v-icon>
                       <span class="d-none d-md-block">Tidak Tersedia</span>
                     </v-btn>
@@ -547,9 +631,19 @@
                       </svg>
                     </v-btn>
                   </a>
-                  <v-dialog v-else transition="dialog-bottom-transition" max-width="600">
+                  <v-dialog
+                    v-else
+                    transition="dialog-bottom-transition"
+                    max-width="600"
+                  >
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn rounded color="#25D366" class="mr-md-2" v-bind="attrs" v-on="on">
+                      <v-btn
+                        rounded
+                        color="#25D366"
+                        class="mr-md-2"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
                         <svg
                           class="filterGreen"
                           height="25"
@@ -573,15 +667,22 @@
                         </v-toolbar>
 
                         <v-card-text>
-                          <div class="text-h5 pa-12">Membeli obat ini memerlukan resep dokter</div>
+                          <div class="text-h5 pa-12">
+                            Membeli obat ini memerlukan resep dokter
+                          </div>
                         </v-card-text>
                         <v-card-actions class="justify-end">
                           <a v-bind:href="getWa(apotek)" target="_blank">
-                            <v-btn color="primary" class="mr-2" @click="dialog.value = false"
+                            <v-btn
+                              color="primary"
+                              class="mr-2"
+                              @click="dialog.value = false"
                               >Lanjutkan</v-btn
                             >
                           </a>
-                          <v-btn text @click="dialog.value = false">Kembali</v-btn>
+                          <v-btn text @click="dialog.value = false"
+                            >Kembali</v-btn
+                          >
                         </v-card-actions>
                       </v-card>
                     </template>
@@ -651,10 +752,14 @@
     </v-row>
     <v-footer dark padless>
       <v-col cols="12 pa-0">
-        <v-card flat tile class="grey lighten-4 grey--text text--darken-1 text-center">
+        <v-card
+          flat
+          tile
+          class="grey lighten-4 grey--text text--darken-1 text-center"
+        >
           <v-card-text class="grey--text text--darken-3">
-            Copyright &copy; 2021, Kementerian Kesehatan Republik Indonesia. All Rights Reserved.
-            Developed by Tekira
+            Copyright &copy; 2021, Kementerian Kesehatan Republik Indonesia. All
+            Rights Reserved. Developed by Tekira
           </v-card-text>
 
           <v-divider></v-divider>
@@ -665,781 +770,807 @@
 </template>
 
 <script>
-  import api from "../api/api.js";
+import api from "../api/api.js";
 
-  export default {
-    name: "HelloWorld",
+export default {
+  name: "HelloWorld",
 
-    data: () => ({
-      shipment: [],
-      date: [],
-      aDay: 24 * 60 * 60 * 1000,
-      menu: false,
-      menuInput: false,
-      loadingToolbar: true,
-      loadingBody: true,
-      start: 1,
-      limit: 10,
-      limitOptions: [10, 20, 50, 100],
-      selected: {
-        name: [],
-        obat: [],
-        provinsi: [],
-        kabkota: [],
-        tanggal: [],
-        brand: [],
+  data: () => ({
+    shipment: [],
+    date: [],
+    aDay: 24 * 60 * 60 * 1000,
+    menu: false,
+    menuInput: false,
+    loadingToolbar: true,
+    loadingBody: true,
+    start: 1,
+    limit: 10,
+    limitOptions: [10, 20, 50, 100],
+    selected: {
+      name: [],
+      obat: [],
+      provinsi: [],
+      kabkota: [],
+      tanggal: [],
+      brand: [],
+    },
+    input: {
+      name: [],
+      obat: [],
+      provinsi: [],
+      kabkota: [],
+      tanggal: [],
+    },
+    provinsis: [],
+    body: [],
+    jumlah: "",
+    options: [],
+    headers: [
+      {
+        text: "Jenis Obat",
+        value: "obat",
       },
-      input: {
-        name: [],
-        obat: [],
-        provinsi: [],
-        kabkota: [],
-        tanggal: [],
+      { text: "Total Obat", value: "jumlah" },
+    ],
+    tableItems: [],
+    tableItemsInt: [],
+    selectingObat: [],
+    province: "",
+    brands: [
+      {
+        id: "KIMIA FARMA",
+        name: "Kimia Farma",
+        img: require("../assets/logos/KF.png"),
       },
-      provinsis: [],
-      body: [],
-      jumlah: "",
-      options: [],
-      headers: [
-        {
-          text: "Jenis Obat",
-          value: "obat",
-        },
-        { text: "Total Obat", value: "jumlah" },
-      ],
-      tableItems: [],
-      tableItemsInt: [],
-      selectingObat: [],
-      province: "",
-      brands: [
-        {
-          id: "KIMIA FARMA",
-          name: "Kimia Farma",
-          img: require("../assets/logos/KF.png"),
-        },
-        {
-          id: "berkat",
-          name: "Apotek Berkat",
-          img: require("../assets/logos/BERKAT.png"),
-        },
-        {
-          id: "watsons",
-          name: "Watsons",
-          img: require("../assets/logos/WATSONS.png"),
-        },
-        {
-          id: "K24",
-          name: "K24",
-          img: require("../assets/logos/K24.png"),
-        },
-        {
-          id: "CENTURY",
-          name: "Century",
-          img: require("../assets/logos/CENTURY.png"),
-        },
-        {
-          id: "GENERIK",
-          name: "Generik",
-          img: require("../assets/logos/GENERIK.png"),
-        },
-        {
-          id: "AJIWARAS",
-          name: "Ajiwaras",
-          img: require("../assets/logos/AJIWARAS.png"),
-        },
-        {
-          id: "GUARDIAN",
-          name: "Guardian",
-          img: require("../assets/logos/GUARDIAN.png"),
-        },
-        {
-          id: "LIFEPACK",
-          name: "Lifepack",
-          img: require("../assets/logos/LIFEPACK.png"),
-        },
-        {
-          id: "MIKA",
-          name: "Mitra Keluarga",
-          img: require("../assets/logos/MIKA.png"),
-        },
-        {
-          id: "FARMAKU",
-          name: "Farmaku",
-          img: require("../assets/logos/FARMAKU.png"),
-        },
-        {
-          id: "MITRASANA",
-          name: "Mitrasana",
-          img: require("../assets/logos/MITRASANA.png"),
-        },
-        {
-          id: "GOAPOTIK",
-          name: "Goapotik",
-          img: require("../assets/logos/GOAPOTIK.png"),
-        },
-        {
-          id: "VIVA",
-          name: "Viva",
-          img: require("../assets/logos/VIVA.png"),
-        },
-        {
-          id: "HALODOC",
-          name: "Halodoc",
-          img: require("../assets/logos/HALODOC.png"),
-        },
-        {
-          id: "PHARMA",
-          name: "PharmaPlus",
-          img: require("../assets/logos/PHARMAPLUS.png"),
-        },
-        {
-          id: "ROXY",
-          name: "Roxy",
-          img: require("../assets/logos/ROXY.png"),
-        },
-      ],
-    }),
-    methods: {
-      formatStatus(status) {
-        if (status == "under20") {
-          return "Di Bawah 20";
-        } else {
-          return status[0].toUpperCase() + status.substring(1);
-        }
+      {
+        id: "berkat",
+        name: "Apotek Berkat",
+        img: require("../assets/logos/BERKAT.png"),
       },
-      timeSince(date) {
-        var seconds = Math.floor((new Date() - new Date(date)) / 1000);
+      {
+        id: "watsons",
+        name: "Watsons",
+        img: require("../assets/logos/WATSONS.png"),
+      },
+      {
+        id: "K24",
+        name: "K24",
+        img: require("../assets/logos/K24.png"),
+      },
+      {
+        id: "CENTURY",
+        name: "Century",
+        img: require("../assets/logos/CENTURY.png"),
+      },
+      {
+        id: "GENERIK",
+        name: "Generik",
+        img: require("../assets/logos/GENERIK.png"),
+      },
+      {
+        id: "AJIWARAS",
+        name: "Ajiwaras",
+        img: require("../assets/logos/AJIWARAS.png"),
+      },
+      {
+        id: "GUARDIAN",
+        name: "Guardian",
+        img: require("../assets/logos/GUARDIAN.png"),
+      },
+      {
+        id: "LIFEPACK",
+        name: "Lifepack",
+        img: require("../assets/logos/LIFEPACK.png"),
+      },
+      {
+        id: "MIKA",
+        name: "Mitra Keluarga",
+        img: require("../assets/logos/MIKA.png"),
+      },
+      {
+        id: "FARMAKU",
+        name: "Farmaku",
+        img: require("../assets/logos/FARMAKU.png"),
+      },
+      {
+        id: "MITRASANA",
+        name: "Mitrasana",
+        img: require("../assets/logos/MITRASANA.png"),
+      },
+      {
+        id: "GOAPOTIK",
+        name: "Goapotik",
+        img: require("../assets/logos/GOAPOTIK.png"),
+      },
+      {
+        id: "VIVA",
+        name: "Viva",
+        img: require("../assets/logos/VIVA.png"),
+      },
+      {
+        id: "HALODOC",
+        name: "Halodoc",
+        img: require("../assets/logos/HALODOC.png"),
+      },
+      {
+        id: "PHARMA",
+        name: "PharmaPlus",
+        img: require("../assets/logos/PHARMAPLUS.png"),
+      },
+      {
+        id: "ROXY",
+        name: "Roxy",
+        img: require("../assets/logos/ROXY.png"),
+      },
+    ],
+  }),
+  methods: {
+    formatStatus(status) {
+      if (status == "under20") {
+        return "Di Bawah 20";
+      } else {
+        return status[0].toUpperCase() + status.substring(1);
+      }
+    },
+    timeSince(date) {
+      var seconds = Math.floor((new Date() - new Date(date)) / 1000);
 
-        var interval = seconds / 31536000;
+      var interval = seconds / 31536000;
 
-        if (interval > 1) {
-          return Math.floor(interval) + " tahun";
-        }
-        interval = seconds / 2592000;
-        if (interval > 1) {
-          return Math.floor(interval) + " bulan";
-        }
-        interval = seconds / 86400;
-        if (interval > 1) {
-          return Math.floor(interval) + " hari";
-        }
-        interval = seconds / 3600;
-        if (interval > 1) {
-          return Math.floor(interval) + " jam";
-        }
-        interval = seconds / 60;
-        if (interval > 1) {
-          return Math.floor(interval) + " menit ";
-        }
-        return Math.floor(seconds) + " detik";
-      },
-      async getJumlah() {
-        var total_provinsi = [];
-        await Promise.all(
-          this.selected["provinsi"].map(async (selected_provinsi) => {
-            //
-            await Promise.all(
-              this.provinsis.map(async (provinsi) => {
-                if (provinsi.nama == selected_provinsi) {
-                  await Promise.all(
-                    provinsi.jumlah.map((r) => {
-                      if (this.selected.tanggal == r.tanggal) {
-                        total_provinsi.push(r);
-                      }
-                    })
-                  );
-                }
-              })
-            );
-          })
-        );
-        if (total_provinsi.length == 0) {
+      if (interval > 1) {
+        return Math.floor(interval) + " tahun";
+      }
+      interval = seconds / 2592000;
+      if (interval > 1) {
+        return Math.floor(interval) + " bulan";
+      }
+      interval = seconds / 86400;
+      if (interval > 1) {
+        return Math.floor(interval) + " hari";
+      }
+      interval = seconds / 3600;
+      if (interval > 1) {
+        return Math.floor(interval) + " jam";
+      }
+      interval = seconds / 60;
+      if (interval > 1) {
+        return Math.floor(interval) + " menit ";
+      }
+      return Math.floor(seconds) + " detik";
+    },
+    async getJumlah() {
+      var total_provinsi = [];
+      await Promise.all(
+        this.selected["provinsi"].map(async (selected_provinsi) => {
+          //
           await Promise.all(
             this.provinsis.map(async (provinsi) => {
-              await Promise.all(
-                provinsi.jumlah.map((r) => {
-                  if (this.selected.tanggal == r.tanggal) {
-                    // console.log(r)
-                    total_provinsi.push(r);
-                  }
-                })
-              );
+              if (provinsi.nama == selected_provinsi) {
+                await Promise.all(
+                  provinsi.jumlah.map((r) => {
+                    if (this.selected.tanggal == r.tanggal) {
+                      total_provinsi.push(r);
+                    }
+                  })
+                );
+              }
             })
           );
-        }
-        this.tableItems = [];
-        this.tableItemsInt = [];
+        })
+      );
+      if (total_provinsi.length == 0) {
         await Promise.all(
-          this.options.obat.map((r) => {
-            var obat = r.toLowerCase();
-            var jumlah = total_provinsi
-              .map((jumlah) => {
-                try {
-                  return jumlah[obat];
-                } catch (e) {
-                  return 0;
-                }
-              })
-              .reduce((a, b) => a + b, 0);
-            var item = {
-              obat: "",
-              jumlah: 0,
-            };
-            item.obat = r;
-            item.jumlah = this.formatAngka(jumlah);
-
-            this.tableItems.push(item);
-            // console.log("haha");
-            var itemInt = {
-              jumlah: 0,
-            };
-            itemInt.jumlah = jumlah;
-            // console.log(jumlah);
-            this.tableItemsInt.push(itemInt);
-          })
-        );
-
-        //
-      },
-      getTotal(items) {
-        var x = items.map((r) => {
-          return r.jumlah;
-        });
-        return x.reduce((a, b) => a + b, 0);
-      },
-      logoBrand(brand) {
-        var merek = brand;
-        // var merek = brand.toUpperCase();
-        var a = this.brands.filter(function(el) {
-          return el.id == merek;
-        });
-        if (a[0]) {
-          return a[0]["img"];
-        } else {
-          return this.brands[12]["img"];
-        }
-      },
-      formatTelpon(telephone) {
-        var number;
-
-        if (telephone.substring(telephone.toString().length - 2) == ".0") {
-          number = telephone.slice(0, -2);
-        } else {
-          number = telephone;
-        }
-
-        number = number
-          .replaceAll("-", "")
-          .replaceAll("(", "")
-          .replaceAll(")", "")
-          .replaceAll(" ", "");
-
-        if (number.substring(0, 3) == "021") {
-          return number;
-        } else if (number.substring(0, 2) == "21") {
-          return "0" + number;
-        } else if (number.substring(0, 2) == "62") {
-          return number;
-        } else if (number.substring(0, 3) == "+62") {
-          return number;
-        } else if (number.substring(0, 2) == "08") {
-          return number;
-        } else if (number.substring(0, 1) == "0") {
-          return number;
-        } else if (number[0] == "8") {
-          return "0" + number;
-        } else if (number[0] == "(") {
-          return number;
-        } else {
-          return "021" + number;
-        }
-      },
-      capitalizeFirstLetter(str) {
-        const lower = str.toLowerCase();
-        return str.charAt(0).toUpperCase() + lower.slice(1);
-      },
-      selectBrand(input) {
-        this.selected.brand = input;
-      },
-      getWa(object) {
-        let nomor = this.formatTelpon(object.wa.replace(/ /g, ""));
-
-        if (nomor[0] == "0") {
-          return "https://wa.me/62" + nomor.substring(1);
-        } else if (nomor[0] + nomor[1] == "62") {
-          return "https://wa.me/" + nomor;
-        } else if (nomor[0] + nomor[1] + nomor[2] == "+62") {
-          return "https://wa.me/" + nomor.substring(1);
-        } else {
-          return false;
-        }
-      },
-      formatNama(object) {
-        if (object.nama.toLowerCase().includes("apotek")) {
-          return object.nama;
-        } else if (object.brand == "MIKA") {
-          return `Instalasi Farmasi ${object.nama}`;
-        } else {
-          return `Apotek ${object.nama}`;
-        }
-      },
-      formatDate(input) {
-        var date = new Date(input).getDay();
-
-        let bulans = [
-          "Januari",
-          "Februari",
-          "Maret",
-          "April",
-          "Mei",
-          "Juni",
-          "Juli",
-          "Agustus",
-          "September",
-          "Oktober",
-          "November",
-          "Desember",
-        ];
-
-        let hari = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
-
-        const getHari = new Proxy(hari, {
-          get(target, prop) {
-            if (!isNaN(prop)) {
-              prop = parseInt(prop, 10);
-              if (prop < 0) {
-                prop += target.length;
-              }
-            }
-            return target[prop];
-          },
-        });
-
-        var tanggal = input.toString().slice(input.length - 2);
-        var bulan = input
-          .toString()
-          .slice(0, 7)
-          .slice(5);
-        var tahun = input.toString().slice(0, 4);
-        return getHari[date - 1] + ", " + tanggal + " " + bulans[parseInt(bulan) - 1] + " " + tahun;
-      },
-      getLoc(lat, long) {
-        return `http://maps.google.co.uk/maps?q=${lat},${long}`;
-      },
-      getImageUrl(input) {
-        return require("@/assets/" + input + ".png");
-      },
-      checkNull(value) {
-        if (typeof value == "undefined") {
-          return false;
-        } else if (value.length <= 4) {
-          return false;
-        } else {
-          return value;
-        }
-      },
-      checkNullWa(value) {
-        if (typeof value == "undefined" || value == "-" || value == "") {
-          return false;
-        } else {
-          return true;
-        }
-      },
-      formatAngka(num) {
-        var a = 0;
-        if (num > 999999) {
-          a = (num / 1000000).toFixed(1) + " juta";
-        } else if (num < 0) {
-          a = 0;
-        } else if (num > 9999) {
-          a = num > 9999 ? (num / 1000).toFixed(1) + " ribu" : num;
-        } else {
-          // a = num > 999 ? (num / 100).toFixed(2) + " ribu" : num;
-          a = num;
-        }
-        return a.toString().replace(".", ",");
-      },
-      formatJumlah(num) {
-        var a = 0;
-        if (num > 999999) {
-          a = (num / 1000000).toFixed(1) + " jt";
-        } else if (num < 0) {
-          a = 0;
-        } else {
-          a = num > 999 ? (num / 1000).toFixed(1) + " rb" : num;
-        }
-
-        if (a.substring(a.length - 5) == ".0 rb" || a.substring(a.length - 5) == ".0 jt") {
-          return a.toString().replace(".0", "");
-        } else {
-          return a.toString().replace(".", ",");
-        }
-      },
-      async refreshPage() {
-        await this.getOptions();
-
-        this.loadingToolbar = false;
-
-        var res = await this.update();
-        await this.getJumlah();
-        this.body = res.data;
-        this.loadingBody = false;
-      },
-      async getOptions() {
-        var obat = await api.find("obats");
-        this.options["obat"] = obat.map((ob) => {
-          return this.capitalizeFirstLetter(ob.nama);
-        });
-
-        var provinsi = await api.find("provinses");
-        this.options["provinsi"] = provinsi.map((ob) => {
-          return ob.nama;
-        });
-        this.provinsis = provinsi;
-
-        this.options["brand"] = this.brands;
-      },
-      remove(item) {
-        this.selected.brand.map((merek, index) => {
-          if (merek == item.id) {
-            this.selected.brand.splice(index, 1);
-          }
-        });
-      },
-      async update() {
-        this.province = this.selected.provinsi;
-        this.getKabkot();
-        this.loadingBody = true;
-
-        var res = await api.filter(
-          this.selected.name,
-          this.selected.obat,
-          this.selected.provinsi,
-          this.selected.kabkota,
-          this.selected.brand,
-          this.start - 1,
-          this.limit
-        );
-        // var res3 = await api.filterAPI("lifepacks", this.start - 1, this.limit);
-        // this.body = res.data.concat(res3.data);
-
-        this.body = res.data;
-        //
-
-        // this.loadingBody = true;
-
-        var res2 = await api.count(
-          this.selected.name,
-          this.selected.obat,
-          this.selected.provinsi,
-          this.selected.kabkota,
-          this.selected.brand
-        );
-        this.amount = res2.data;
-        //
-        // this.getJumlahObatProv();
-
-        this.loadingBody = false;
-
-        // await this.getKabkot()
-      },
-      async updateApotek(collection) {
-        this.province = this.selected.provinsi;
-        this.loadingBody = true;
-
-        var res = await api.filterCollection(
-          collection,
-          this.selected.name,
-          this.selected.obat,
-          this.selected.provinsi,
-          this.selected.kabkota,
-          this.selected.brand,
-          this.selected.tanggal,
-          this.start - 1,
-          this.limit
-        );
-        // var res3 = await api.filterAPI("lifepacks", this.start - 1, this.limit);
-        // this.body = res.data.concat(res3.data);
-
-        this.body = res.data;
-        //
-
-        // this.loadingBody = true;
-
-        var res2 = await api.countCollection(
-          collection,
-          this.selected.name,
-          this.selected.obat,
-          this.selected.provinsi,
-          this.selected.kabkota,
-          this.selected.brand,
-          this.selected.tanggal
-        );
-        this.amount = res2.data;
-        //
-        // this.getJumlahObatProv();
-        this.loadingBody = false;
-
-        // await this.getKabkot()
-      },
-      pushURL() {
-        let url = window.location.href.split("?");
-
-        // let obatUrl = this.selectingObat.map((value) => value.obat);
-        history.pushState(
-          {},
-          "",
-          `${url[0]}?obat=${JSON.stringify(this.selected.obat)}&provinsi=${JSON.stringify(
-            this.selected.provinsi
-          )}&kabkota=${JSON.stringify(this.selected.kabkota)}&brand=${JSON.stringify(
-            this.selected.brand
-          )}&limit=${this.limit}&start=${this.start}`
-        );
-      },
-      async getKabkot() {
-        var select_kabkota = [];
-
-        await Promise.all(
-          this.selected["provinsi"].map(async (selected_provinsi) => {
-            //
-
+          this.provinsis.map(async (provinsi) => {
             await Promise.all(
-              this.provinsis.map(async (provinsi) => {
-                if (provinsi.nama == selected_provinsi) {
-                  await Promise.all(
-                    provinsi.kabkota.map((r) => {
-                      select_kabkota.push(r.nama);
-                    })
-                  );
-                  this.options["kabkota"] = select_kabkota.sort();
+              provinsi.jumlah.map((r) => {
+                if (this.selected.tanggal == r.tanggal) {
+                  // console.log(r)
+                  total_provinsi.push(r);
                 }
               })
             );
           })
         );
-        // let urls = window.location.href;
-        // let params = new URL(urls).searchParams;
-
-        // this.selected.kabkota = await JSON.parse(params.get("kabkota"));
-      },
-      amountWriter() {
-        if (this.amount == 0) {
-          return "Tidak tersedia";
-        } else if (this.amount == 1) {
-          return "Menampilkan 1 apotek";
-        } else {
-          // return "Menampilkan " + this.amount + " apotek";
-          return "Menampilkan " + "3,362" + " apotek";
-        }
-      },
-      async reset() {
-        this.selectingObat = [];
-        this.selected.obat = [];
-        this.selected.provinsi = [];
-        this.selected.kabkota = [];
-        this.selected.brand = [];
-        this.selected.start = 0;
-        this.selected.limit = 10;
-      },
-      convertDate(date) {
-        var yyyy = date.getFullYear().toString();
-        var mm = (date.getMonth() + 1).toString();
-        var dd = date.getDate().toString();
-
-        var mmChars = mm.split("");
-        var ddChars = dd.split("");
-
-        return (
-          yyyy +
-          "-" +
-          (mmChars[1] ? mm : "0" + mmChars[0]) +
-          "-" +
-          (ddChars[1] ? dd : "0" + ddChars[0])
-        );
-      },
-    },
-    async mounted() {
-      // var res2 = await api.getLastShipment();
-      // this.selected.tanggal = res2.data[0]["tanggal"];
-      var today = new Date();
-      this.selected.tanggal = this.convertDate(today);
-      let urls = window.location.href;
-      let params = new URL(urls).searchParams;
-
-      if (urls.includes("?")) {
-        this.selected.obat = await JSON.parse(params.get("obat"));
-        this.selected.provinsi = await JSON.parse(params.get("provinsi"));
-        this.selected.kabkota = await JSON.parse(params.get("kabkota"));
-        this.selected.brand = await JSON.parse(params.get("brand"));
-        this.start = await JSON.parse(params.get("start"));
-        this.limit = await JSON.parse(params.get("limit"));
-
-        this.selected.obat.map((res) => {
-          var a = {
-            obat: res,
+      }
+      this.tableItems = [];
+      this.tableItemsInt = [];
+      await Promise.all(
+        this.options.obat.map((r) => {
+          var obat = r.toLowerCase();
+          var jumlah = total_provinsi
+            .map((jumlah) => {
+              try {
+                return jumlah[obat];
+              } catch (e) {
+                return 0;
+              }
+            })
+            .reduce((a, b) => a + b, 0);
+          var item = {
+            obat: "",
+            jumlah: 0,
           };
-          this.selectingObat.push(a);
-        });
+          item.obat = r;
+          item.jumlah = this.formatAngka(jumlah);
+
+          this.tableItems.push(item);
+          // console.log("haha");
+          var itemInt = {
+            jumlah: 0,
+          };
+          itemInt.jumlah = jumlah;
+          // console.log(jumlah);
+          this.tableItemsInt.push(itemInt);
+        })
+      );
+
+      //
+    },
+    getTotal(items) {
+      var x = items.map((r) => {
+        return r.jumlah;
+      });
+      return x.reduce((a, b) => a + b, 0);
+    },
+    logoBrand(brand) {
+      var merek = brand;
+      // var merek = brand.toUpperCase();
+      var a = this.brands.filter(function (el) {
+        return el.id == merek;
+      });
+      if (a[0]) {
+        return a[0]["img"];
+      } else {
+        return this.brands[12]["img"];
+      }
+    },
+    formatTelpon(telephone) {
+      var number;
+
+      if (telephone.substring(telephone.toString().length - 2) == ".0") {
+        number = telephone.slice(0, -2);
+      } else {
+        number = telephone;
       }
 
-      await this.refreshPage();
+      number = number
+        .replaceAll("-", "")
+        .replaceAll("(", "")
+        .replaceAll(")", "")
+        .replaceAll(" ", "");
+
+      if (number.substring(0, 3) == "021") {
+        return number;
+      } else if (number.substring(0, 2) == "21") {
+        return "0" + number;
+      } else if (number.substring(0, 2) == "62") {
+        return number;
+      } else if (number.substring(0, 3) == "+62") {
+        return number;
+      } else if (number.substring(0, 2) == "08") {
+        return number;
+      } else if (number.substring(0, 1) == "0") {
+        return number;
+      } else if (number[0] == "8") {
+        return "0" + number;
+      } else if (number[0] == "(") {
+        return number;
+      } else {
+        return "021" + number;
+      }
     },
-    watch: {
-      selected: {
-        handler() {
-          this.update();
-          if (this.start * this.amount > parseInt(this.amount / this.limit) + 1) {
-            this.start = 1;
+    capitalizeFirstLetter(str) {
+      const lower = str.toLowerCase();
+      return str.charAt(0).toUpperCase() + lower.slice(1);
+    },
+    selectBrand(input) {
+      this.selected.brand = input;
+    },
+    getWa(object) {
+      let nomor = this.formatTelpon(object.wa.replace(/ /g, ""));
+
+      if (nomor[0] == "0") {
+        return "https://wa.me/62" + nomor.substring(1);
+      } else if (nomor[0] + nomor[1] == "62") {
+        return "https://wa.me/" + nomor;
+      } else if (nomor[0] + nomor[1] + nomor[2] == "+62") {
+        return "https://wa.me/" + nomor.substring(1);
+      } else {
+        return false;
+      }
+    },
+    formatNama(object) {
+      if (object.nama.toLowerCase().includes("apotek")) {
+        return object.nama;
+      } else if (object.brand == "MIKA") {
+        return `Instalasi Farmasi ${object.nama}`;
+      } else {
+        return `Apotek ${object.nama}`;
+      }
+    },
+    formatDate(input) {
+      var date = new Date(input).getDay();
+
+      let bulans = [
+        "Januari",
+        "Februari",
+        "Maret",
+        "April",
+        "Mei",
+        "Juni",
+        "Juli",
+        "Agustus",
+        "September",
+        "Oktober",
+        "November",
+        "Desember",
+      ];
+
+      let hari = [
+        "Senin",
+        "Selasa",
+        "Rabu",
+        "Kamis",
+        "Jumat",
+        "Sabtu",
+        "Minggu",
+      ];
+
+      const getHari = new Proxy(hari, {
+        get(target, prop) {
+          if (!isNaN(prop)) {
+            prop = parseInt(prop, 10);
+            if (prop < 0) {
+              prop += target.length;
+            }
           }
-          this.pushURL();
+          return target[prop];
         },
-        deep: true,
-      },
-      start() {
-        this.update();
-        this.pushURL();
-      },
-      limit() {
-        this.update();
-        this.pushURL();
-      },
-      selectingObat: function(newvar) {
-        var x = newvar.map((r) => {
-          return r.obat;
-        });
-        this.selected.obat = x;
-      },
-      province: function(newvar) {
-        if (newvar.length == 0) {
-          this.options["kabkota"] = [];
-          this.selected["kabkota"] = [];
-          this.tableItems = [];
-          this.tableItemsInt = [];
-          this.getJumlah();
-        } else {
-          this.getKabkot();
-          this.getJumlah();
-        }
-      },
+      });
+
+      var tanggal = input.toString().slice(input.length - 2);
+      var bulan = input.toString().slice(0, 7).slice(5);
+      var tahun = input.toString().slice(0, 4);
+      return (
+        getHari[date - 1] +
+        ", " +
+        tanggal +
+        " " +
+        bulans[parseInt(bulan) - 1] +
+        " " +
+        tahun
+      );
     },
-  };
+    getLoc(lat, long) {
+      return `http://maps.google.co.uk/maps?q=${lat},${long}`;
+    },
+    getImageUrl(input) {
+      return require("@/assets/" + input + ".png");
+    },
+    checkNull(value) {
+      if (typeof value == "undefined") {
+        return false;
+      } else if (value.length <= 4) {
+        return false;
+      } else {
+        return value;
+      }
+    },
+    checkNullWa(value) {
+      if (typeof value == "undefined" || value == "-" || value == "") {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    formatAngka(num) {
+      var a = 0;
+      if (num > 999999) {
+        a = (num / 1000000).toFixed(1) + " juta";
+      } else if (num < 0) {
+        a = 0;
+      } else if (num > 9999) {
+        a = num > 9999 ? (num / 1000).toFixed(1) + " ribu" : num;
+      } else {
+        // a = num > 999 ? (num / 100).toFixed(2) + " ribu" : num;
+        a = num;
+      }
+      return a.toString().replace(".", ",");
+    },
+    formatJumlah(num) {
+      var a = 0;
+      if (num > 999999) {
+        a = (num / 1000000).toFixed(1) + " jt";
+      } else if (num < 0) {
+        a = 0;
+      } else {
+        a = num > 999 ? (num / 1000).toFixed(1) + " rb" : num;
+      }
+
+      if (
+        a.substring(a.length - 5) == ".0 rb" ||
+        a.substring(a.length - 5) == ".0 jt"
+      ) {
+        return a.toString().replace(".0", "");
+      } else {
+        return a.toString().replace(".", ",");
+      }
+    },
+    async refreshPage() {
+      await this.getOptions();
+
+      this.loadingToolbar = false;
+
+      var res = await this.update();
+      await this.getJumlah();
+      this.body = res.data;
+      this.loadingBody = false;
+    },
+    async getOptions() {
+      var obat = await api.find("obats");
+      this.options["obat"] = obat.map((ob) => {
+        return this.capitalizeFirstLetter(ob.nama);
+      });
+
+      var provinsi = await api.find("provinses");
+      this.options["provinsi"] = provinsi.map((ob) => {
+        return ob.nama;
+      });
+      this.provinsis = provinsi;
+
+      this.options["brand"] = this.brands;
+    },
+    remove(item) {
+      this.selected.brand.map((merek, index) => {
+        if (merek == item.id) {
+          this.selected.brand.splice(index, 1);
+        }
+      });
+    },
+    async update() {
+      this.province = this.selected.provinsi;
+      this.getKabkot();
+      this.loadingBody = true;
+
+      var res = await api.filter(
+        this.selected.name,
+        this.selected.obat,
+        this.selected.provinsi,
+        this.selected.kabkota,
+        this.selected.brand,
+        this.start - 1,
+        this.limit
+      );
+      // var res3 = await api.filterAPI("lifepacks", this.start - 1, this.limit);
+      // this.body = res.data.concat(res3.data);
+
+      this.body = res.data;
+      //
+
+      // this.loadingBody = true;
+
+      var res2 = await api.count(
+        this.selected.name,
+        this.selected.obat,
+        this.selected.provinsi,
+        this.selected.kabkota,
+        this.selected.brand
+      );
+      this.amount = res2.data;
+      //
+      // this.getJumlahObatProv();
+
+      this.loadingBody = false;
+
+      // await this.getKabkot()
+    },
+    async updateApotek(collection) {
+      this.province = this.selected.provinsi;
+      this.loadingBody = true;
+
+      var res = await api.filterCollection(
+        collection,
+        this.selected.name,
+        this.selected.obat,
+        this.selected.provinsi,
+        this.selected.kabkota,
+        this.selected.brand,
+        this.selected.tanggal,
+        this.start - 1,
+        this.limit
+      );
+      // var res3 = await api.filterAPI("lifepacks", this.start - 1, this.limit);
+      // this.body = res.data.concat(res3.data);
+
+      this.body = res.data;
+      //
+
+      // this.loadingBody = true;
+
+      var res2 = await api.countCollection(
+        collection,
+        this.selected.name,
+        this.selected.obat,
+        this.selected.provinsi,
+        this.selected.kabkota,
+        this.selected.brand,
+        this.selected.tanggal
+      );
+      this.amount = res2.data;
+      //
+      // this.getJumlahObatProv();
+      this.loadingBody = false;
+
+      // await this.getKabkot()
+    },
+    pushURL() {
+      let url = window.location.href.split("?");
+
+      // let obatUrl = this.selectingObat.map((value) => value.obat);
+      history.pushState(
+        {},
+        "",
+        `${url[0]}?obat=${JSON.stringify(
+          this.selected.obat
+        )}&provinsi=${JSON.stringify(
+          this.selected.provinsi
+        )}&kabkota=${JSON.stringify(
+          this.selected.kabkota
+        )}&brand=${JSON.stringify(this.selected.brand)}&limit=${
+          this.limit
+        }&start=${this.start}`
+      );
+    },
+    async getKabkot() {
+      var select_kabkota = [];
+
+      await Promise.all(
+        this.selected["provinsi"].map(async (selected_provinsi) => {
+          //
+
+          await Promise.all(
+            this.provinsis.map(async (provinsi) => {
+              if (provinsi.nama == selected_provinsi) {
+                await Promise.all(
+                  provinsi.kabkota.map((r) => {
+                    select_kabkota.push(r.nama);
+                  })
+                );
+                this.options["kabkota"] = select_kabkota.sort();
+              }
+            })
+          );
+        })
+      );
+      // let urls = window.location.href;
+      // let params = new URL(urls).searchParams;
+
+      // this.selected.kabkota = await JSON.parse(params.get("kabkota"));
+    },
+    amountWriter() {
+      if (this.amount == 0) {
+        return "Tidak tersedia";
+      } else if (this.amount == 1) {
+        return "Menampilkan 1 apotek";
+      } else {
+        // return "Menampilkan " + this.amount + " apotek";
+        return "Menampilkan " + "3,362" + " apotek";
+      }
+    },
+    async reset() {
+      this.selectingObat = [];
+      this.selected.obat = [];
+      this.selected.provinsi = [];
+      this.selected.kabkota = [];
+      this.selected.brand = [];
+      this.selected.start = 0;
+      this.selected.limit = 10;
+    },
+    convertDate(date) {
+      var yyyy = date.getFullYear().toString();
+      var mm = (date.getMonth() + 1).toString();
+      var dd = date.getDate().toString();
+
+      var mmChars = mm.split("");
+      var ddChars = dd.split("");
+
+      return (
+        yyyy +
+        "-" +
+        (mmChars[1] ? mm : "0" + mmChars[0]) +
+        "-" +
+        (ddChars[1] ? dd : "0" + ddChars[0])
+      );
+    },
+  },
+  async mounted() {
+    // var res2 = await api.getLastShipment();
+    // this.selected.tanggal = res2.data[0]["tanggal"];
+    var today = new Date();
+    this.selected.tanggal = this.convertDate(today);
+    let urls = window.location.href;
+    let params = new URL(urls).searchParams;
+
+    if (urls.includes("?")) {
+      this.selected.obat = await JSON.parse(params.get("obat"));
+      this.selected.provinsi = await JSON.parse(params.get("provinsi"));
+      this.selected.kabkota = await JSON.parse(params.get("kabkota"));
+      this.selected.brand = await JSON.parse(params.get("brand"));
+      this.start = await JSON.parse(params.get("start"));
+      this.limit = await JSON.parse(params.get("limit"));
+
+      this.selected.obat.map((res) => {
+        var a = {
+          obat: res,
+        };
+        this.selectingObat.push(a);
+      });
+    }
+
+    await this.refreshPage();
+  },
+  watch: {
+    selected: {
+      handler() {
+        this.update();
+        if (this.start * this.amount > parseInt(this.amount / this.limit) + 1) {
+          this.start = 1;
+        }
+        this.pushURL();
+      },
+      deep: true,
+    },
+    start() {
+      this.update();
+      this.pushURL();
+    },
+    limit() {
+      this.update();
+      this.pushURL();
+    },
+    selectingObat: function (newvar) {
+      var x = newvar.map((r) => {
+        return r.obat;
+      });
+      this.selected.obat = x;
+    },
+    province: function (newvar) {
+      if (newvar.length == 0) {
+        this.options["kabkota"] = [];
+        this.selected["kabkota"] = [];
+        this.tableItems = [];
+        this.tableItemsInt = [];
+        this.getJumlah();
+      } else {
+        this.getKabkot();
+        this.getJumlah();
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
-  @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
-  * {
-    font-family: "Montserrat", sans-serif;
-  }
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
+* {
+  font-family: "Montserrat", sans-serif;
+}
 
-  .logo {
-    height: 50px;
-    object-fit: contain;
-    max-width: 150px;
-  }
+.logo {
+  height: 50px;
+  object-fit: contain;
+  max-width: 150px;
+}
 
-  .logoatas {
-    height: 50px;
-    object-fit: contain;
-    max-width: 150px;
-  }
+.logoatas {
+  height: 50px;
+  object-fit: contain;
+  max-width: 150px;
+}
 
+.wrapper {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.logo-card {
+  max-width: 100%;
+  height: 50px;
+  object-fit: cover;
+}
+
+.avatar {
+  max-width: 80px;
+  max-height: 40px;
+  object-fit: contain;
+  margin-right: 5px;
+}
+
+.card {
+  overflow: hidden;
+}
+
+.card-left {
+  width: 50%;
+}
+
+a {
+  text-decoration: none;
+}
+
+.gap {
+  gap: 20px;
+}
+
+.gapatas {
+  gap: 20px;
+}
+
+.v-card__text,
+.v-card__title {
+  word-break: normal !important;
+}
+
+.card {
+  min-height: 10rem;
+  max-height: auto;
+}
+
+.header {
+  width: 100%;
+  height: 300px;
+  background-color: #16b3ac;
+  background-image: linear-gradient(
+    160deg,
+    #16b3ac 0%,
+    #16b3ac 35%,
+    #d1dc03 90%
+  );
+  background-size: 1000% 1000%;
+  animation: 20s gradient infinite ease;
+}
+
+.filterGreen {
+  filter: invert(100%);
+  transition: filter 0.2s ease;
+}
+
+.filterGreen:hover {
+  filter: invert(90%) sepia(96%) saturate(421%) hue-rotate(80deg)
+    brightness(95%) contrast(86%);
+}
+
+.filterGrey {
+  filter: invert(70%);
+}
+
+@keyframes gradient {
+  32.5% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 0%;
+  }
+}
+
+@media only screen and (max-width: 1248px) {
   .wrapper {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-  }
-
-  .logo-card {
-    max-width: 100%;
-    height: 50px;
-    object-fit: cover;
-  }
-
-  .avatar {
-    max-width: 80px;
-    max-height: 40px;
-    object-fit: contain;
-    margin-right: 5px;
-  }
-
-  .card {
     overflow: hidden;
   }
 
-  .card-left {
-    width: 50%;
-  }
-
-  a {
-    text-decoration: none;
+  .logo {
+    height: 30px;
+    max-width: 90px;
+    margin-top: -15px;
   }
 
   .gap {
-    gap: 20px;
-  }
-
-  .gapatas {
-    gap: 20px;
-  }
-
-  .v-card__text,
-  .v-card__title {
-    word-break: normal !important;
-  }
-
-  .card {
-    min-height: 10rem;
-    max-height: auto;
+    gap: 10px;
   }
 
   .header {
-    width: 100%;
-    height: 300px;
-    background-color: #16b3ac;
-    background-image: linear-gradient(160deg, #16b3ac 0%, #16b3ac 35%, #d1dc03 90%);
-    background-size: 1000% 1000%;
-    animation: 20s gradient infinite ease;
+    height: 200px;
   }
-
-  .filterGreen {
-    filter: invert(100%);
-    transition: filter 0.2s ease;
-  }
-
-  .filterGreen:hover {
-    filter: invert(90%) sepia(96%) saturate(421%) hue-rotate(80deg) brightness(95%) contrast(86%);
-  }
-
-  .filterGrey {
-    filter: invert(70%);
-  }
-
-  @keyframes gradient {
-    32.5% {
-      background-position: 100% 100%;
-    }
-    75% {
-      background-position: 0% 0%;
-    }
-  }
-
-  @media only screen and (max-width: 1248px) {
-    .wrapper {
-      overflow: hidden;
-    }
-
-    .logo {
-      height: 30px;
-      max-width: 90px;
-      margin-top: -15px;
-    }
-
-    .gap {
-      gap: 10px;
-    }
-
-    .header {
-      height: 200px;
-    }
-  }
+}
 </style>

@@ -57,13 +57,22 @@ export default {
   // },
   async filter(name, obat, provinsi, kabkota, brand, start, limit) {
     var query;
+    var kabkot_upper;
+    var kabkot_concat;
+    console.log(kabkota)
+    if (kabkota) {
+      kabkot_upper = kabkota.map(x => x.toUpperCase())
+    } else {
+      kabkot_upper = []
+    }
+    kabkot_concat = kabkot_upper.concat(kabkota)
     query = qs.stringify({
       _where: {
         _or: [
           [
             { obat_contains: obat },
             { provinsi: provinsi },
-            { kabkota: kabkota },
+            { kabkota: kabkot_concat },
             { brand: brand },
             { nama_contains: name },
           ],
@@ -80,13 +89,22 @@ export default {
   },
   async count(name, obat, provinsi, kabkota, brand) {
     var query;
+    var kabkot_upper;
+    var kabkot_concat;
+    console.log(kabkota)
+    if (kabkota) {
+      kabkot_upper = kabkota.map(x => x.toUpperCase())
+    } else {
+      kabkot_upper = []
+    }
+    kabkot_concat = kabkot_upper.concat(kabkota)
     query = qs.stringify({
       _where: {
         _or: [
           [
             { obat_contains: obat },
             { provinsi: provinsi },
-            { kabkota: kabkota },
+            { kabkota: kabkot_concat },
             { brand: brand },
             { nama_contains: name },
           ],
