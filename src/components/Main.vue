@@ -1210,7 +1210,7 @@
             this.selected.provinsi
           )}&kabkota=${JSON.stringify(this.selected.kabkota)}&brand=${JSON.stringify(
             this.selected.brand
-          )}&limit=${this.limit}&start=${this.start}&search=${JSON.stringify(this.selected.search)}`
+          )}&limit=${this.limit}&start=${this.start}`
         );
       },
       async getKabkot() {
@@ -1285,7 +1285,7 @@
       let params = new URL(urls).searchParams;
 
       if (urls.includes("?")) {
-        this.selected.search = await JSON.parse(params.get("search"));
+        // this.selected.search = await JSON.parse(params.get("search"));
         this.selected.obat = await JSON.parse(params.get("obat"));
         this.selected.provinsi = await JSON.parse(params.get("provinsi"));
         this.selected.kabkota = await JSON.parse(params.get("kabkota"));
