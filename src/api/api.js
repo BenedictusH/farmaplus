@@ -8,13 +8,13 @@ export default {
     var query;
     var kabkot_upper;
     var kabkot_concat;
-    console.log(kabkota)
+
     if (kabkota) {
-      kabkot_upper = kabkota.map(x => x.toUpperCase())
+      kabkot_upper = kabkota.map((x) => x.toUpperCase());
     } else {
-      kabkot_upper = []
+      kabkot_upper = [];
     }
-    kabkot_concat = kabkot_upper.concat(kabkota)
+    kabkot_concat = kabkot_upper.concat(kabkota);
     query = qs.stringify({
       _where: {
         _or: [
@@ -31,16 +31,15 @@ export default {
     //
     var path = "mastermasters";
     var newStart = start * limit;
-    var response
-    if  (localStorage.getItem("sortItems") ==  "ascending") {
-       response = axios.get(
+    var response;
+    if (localStorage.getItem("sortItems") == "ascending") {
+      response = axios.get(
         `${STRAPI_URL}/${path}?${query}&_q=${search}&_start=${newStart}&_limit=${limit}&_sort=jumlah:ASC`
       );
-    }
-    else if  (localStorage.getItem("sortItems") ==  "descending") {
+    } else if (localStorage.getItem("sortItems") == "descending") {
       response = axios.get(
-       `${STRAPI_URL}/${path}?${query}&_q=${search}&_start=${newStart}&_limit=${limit}&_sort=jumlah:DESC`
-     );
+        `${STRAPI_URL}/${path}?${query}&_q=${search}&_start=${newStart}&_limit=${limit}&_sort=jumlah:DESC`
+      );
     }
 
     return response;
@@ -49,13 +48,13 @@ export default {
     var query;
     var kabkot_upper;
     var kabkot_concat;
-    console.log(kabkota)
+
     if (kabkota) {
-      kabkot_upper = kabkota.map(x => x.toUpperCase())
+      kabkot_upper = kabkota.map((x) => x.toUpperCase());
     } else {
-      kabkot_upper = []
+      kabkot_upper = [];
     }
-    kabkot_concat = kabkot_upper.concat(kabkota)
+    kabkot_concat = kabkot_upper.concat(kabkota);
     query = qs.stringify({
       _where: {
         _or: [
