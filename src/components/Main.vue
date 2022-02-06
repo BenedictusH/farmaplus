@@ -780,6 +780,12 @@
         </div>
       </v-col>
     </v-row>
+    <div>
+      <div class="d-flex justify-center">Powered by BiznetGio</div>
+      <p class="text-center">
+        <img src="../assets/biznet.png" class="logoBawah" />
+      </p>
+    </div>
     <v-footer dark padless>
       <v-col cols="12 pa-0">
         <v-card
@@ -864,11 +870,11 @@ export default {
         name: "Watsons",
         img: require("../assets/logos/WATSONS.png"),
       },
-      // {
-      //   id: "K24",
-      //   name: "K24",
-      //   img: require("../assets/logos/K24.png"),
-      // },
+      {
+        id: "K24",
+        name: "K24",
+        img: require("../assets/logos/K24.png"),
+      },
       {
         id: "CENTURY",
         name: "Century",
@@ -1487,7 +1493,11 @@ export default {
   object-fit: contain;
   max-width: 150px;
 }
-
+.logoBawah {
+  height: 100px;
+  object-fit: contain;
+  max-width: 200px;
+}
 .logoatas {
   height: 50px;
   object-fit: contain;

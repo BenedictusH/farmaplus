@@ -5,6 +5,7 @@ import axios from "axios";
 
 const activeBrand = [
   "KIMIA FARMA",
+  "K24",
   "watsons",
   "CENTURY",
   "GENERIK",
