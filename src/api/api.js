@@ -3,18 +3,40 @@ export const STRAPI_URL = "https://farmaplus-api.kemkes.go.id";
 var qs = require("qs");
 import axios from "axios";
 
+const activeBrand = [
+  "KIMIA FARMA",
+  "watsons",
+  "CENTURY",
+  "GENERIK",
+  "AJIWARAS",
+  "GUARDIAN",
+  "LIFEPACK",
+  "FARMAKU",
+  "MITRASANA",
+  "VIVA",
+  "HALODOC",
+  "PHARMA",
+];
 export default {
   async filter(name, obat, provinsi, kabkota, brand, start, limit, search) {
     var query;
     var kabkot_upper;
     var kabkot_concat;
-    console.log(kabkota)
+    var queryBrand;
+
     if (kabkota) {
-      kabkot_upper = kabkota.map(x => x.toUpperCase())
+      kabkot_upper = kabkota.map((x) => x.toUpperCase());
     } else {
-      kabkot_upper = []
+      kabkot_upper = [];
     }
-    kabkot_concat = kabkot_upper.concat(kabkota)
+    kabkot_concat = kabkot_upper.concat(kabkota);
+
+    if (brand.length == 0) {
+      queryBrand = activeBrand;
+    } else {
+      queryBrand = brand;
+    }
+
     query = qs.stringify({
       _where: {
         _or: [
@@ -22,7 +44,7 @@ export default {
             { obat_contains: obat },
             { provinsi: provinsi },
             { kabkota: kabkot_concat },
-            { brand: brand },
+            { brand: queryBrand },
             { nama_contains: name },
           ],
         ],
@@ -31,16 +53,16 @@ export default {
     //
     var path = "mastermasters";
     var newStart = start * limit;
-    var response
-    if  (localStorage.getItem("sortItems") ==  "ascending") {
-       response = axios.get(
+    var response;
+
+    if (localStorage.getItem("sortItems") == "ascending") {
+      response = axios.get(
         `${STRAPI_URL}/${path}?${query}&_q=${search}&_start=${newStart}&_limit=${limit}&_sort=jumlah:ASC`
       );
-    }
-    else if  (localStorage.getItem("sortItems") ==  "descending") {
+    } else if (localStorage.getItem("sortItems") == "descending") {
       response = axios.get(
-       `${STRAPI_URL}/${path}?${query}&_q=${search}&_start=${newStart}&_limit=${limit}&_sort=jumlah:DESC`
-     );
+        `${STRAPI_URL}/${path}?${query}&_q=${search}&_start=${newStart}&_limit=${limit}&_sort=jumlah:DESC`
+      );
     }
 
     return response;
@@ -49,13 +71,19 @@ export default {
     var query;
     var kabkot_upper;
     var kabkot_concat;
-    console.log(kabkota)
+    var queryBrand;
+    console.log(kabkota);
     if (kabkota) {
-      kabkot_upper = kabkota.map(x => x.toUpperCase())
+      kabkot_upper = kabkota.map((x) => x.toUpperCase());
     } else {
-      kabkot_upper = []
+      kabkot_upper = [];
     }
-    kabkot_concat = kabkot_upper.concat(kabkota)
+    kabkot_concat = kabkot_upper.concat(kabkota);
+    if (brand.length == 0) {
+      queryBrand = activeBrand;
+    } else {
+      queryBrand = brand;
+    }
     query = qs.stringify({
       _where: {
         _or: [
@@ -63,7 +91,7 @@ export default {
             { obat_contains: obat },
             { provinsi: provinsi },
             { kabkota: kabkot_concat },
-            { brand: brand },
+            { brand: queryBrand },
             { nama_contains: name },
           ],
         ],
