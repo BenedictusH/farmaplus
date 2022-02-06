@@ -935,6 +935,14 @@ export default {
       //   img: require("../assets/logos/ROXY.png"),
       // },
     ],
+    activeObat: [
+      "AZITHROMYCIN",
+      "FAVIPIRAVIR",
+      "IMMUNOGLOBULIN",
+      "MULTIVITAMIN",
+      "REMDESIVIR",
+      "TOCILIZUMAB",
+    ],
   }),
   methods: {
     formatStatus(status) {
@@ -1257,7 +1265,11 @@ export default {
     },
     async getOptions() {
       var obat = await api.find("obats");
-      this.options["obat"] = obat.map((ob) => {
+      // this.options["obat"] = obat.map((ob) => {
+      //   return this.capitalizeFirstLetter(ob.nama);
+      // });
+      var obats = obat.filter((ob) => this.activeObat.includes(ob.nama));
+      this.options["obat"] = obats.map((ob) => {
         return this.capitalizeFirstLetter(ob.nama);
       });
 

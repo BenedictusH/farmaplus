@@ -17,31 +17,44 @@ const activeBrand = [
   "HALODOC",
   "PHARMA",
 ];
+const activeObat = [
+  "azithromycin",
+  "favipiravir",
+  "immunoglobulin",
+  "multivitamin",
+  "remdesivir",
+  "tocilizumab",
+];
 export default {
   async filter(name, obat, provinsi, kabkota, brand, start, limit, search) {
     var query;
     var kabkot_upper;
     var kabkot_concat;
     var queryBrand;
-
+    var queryObat;
     if (kabkota) {
       kabkot_upper = kabkota.map((x) => x.toUpperCase());
     } else {
       kabkot_upper = [];
     }
     kabkot_concat = kabkot_upper.concat(kabkota);
-
+    console.log(obat);
     if (brand.length == 0) {
       queryBrand = activeBrand;
     } else {
       queryBrand = brand;
+    }
+    if (obat.length == 0) {
+      queryObat = activeObat;
+    } else {
+      queryObat = obat;
     }
 
     query = qs.stringify({
       _where: {
         _or: [
           [
-            { obat_contains: obat },
+            { obat_contains: queryObat },
             { provinsi: provinsi },
             { kabkota: kabkot_concat },
             { brand: queryBrand },
@@ -72,6 +85,7 @@ export default {
     var kabkot_upper;
     var kabkot_concat;
     var queryBrand;
+    var queryObat;
     console.log(kabkota);
     if (kabkota) {
       kabkot_upper = kabkota.map((x) => x.toUpperCase());
@@ -84,11 +98,16 @@ export default {
     } else {
       queryBrand = brand;
     }
+    if (obat.length == 0) {
+      queryObat = activeObat;
+    } else {
+      queryObat = obat;
+    }
     query = qs.stringify({
       _where: {
         _or: [
           [
-            { obat_contains: obat },
+            { obat_contains: queryObat },
             { provinsi: provinsi },
             { kabkota: kabkot_concat },
             { brand: queryBrand },
