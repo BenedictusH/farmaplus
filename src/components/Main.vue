@@ -1494,7 +1494,7 @@ export default {
   max-width: 150px;
 }
 .logoBawah {
-  height: 100px;
+  height: 70px;
   object-fit: contain;
   max-width: 200px;
 }
