@@ -50,20 +50,6 @@
               <img src="../assets/BUMN.png" class="logoatas" />
             </v-col>
           </v-row>
-          <div
-            class="text-lg-subtitle-2 text-caption py-5 font-italic red--text"
-            cols="12"
-            md="6"
-            order-md="1"
-            order="3"
-            v-if="!loadingToolbar"
-          >
-            *Saat ini, data diupdate secara berkala tiap hari pkl 17.00 WIB,
-            sehingga bukan data realtime. Pembelian obat selain multivitamin
-            harus menggunakan resep dokter. Sehubungan dengan tingginya
-            kebutuhan, ketersediaan obat dapat berubah sewaktu-waktu, harap
-            konfirmasi atau hubungi masing-masing lokasi apotek.*
-          </div>
 
           <v-data-table
             mobile-breakpoint="0"
@@ -783,7 +769,9 @@
     <div>
       <div class="d-flex justify-center">Powered by BiznetGio</div>
       <p class="text-center">
-        <img src="../assets/biznet.png" class="logoBawah" />
+        <a href="https://www.biznetgio.com/">
+          <img src="../assets/biznet.png" class="logoBawah" />
+        </a>
       </p>
     </div>
     <v-footer dark padless>
