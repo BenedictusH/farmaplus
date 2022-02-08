@@ -22,6 +22,7 @@ const activeObat = [
   "azithromycin",
   "favipiravir",
   "immunoglobulin",
+  "oseltamivir",
   "multivitamin",
   "remdesivir",
   "tocilizumab",

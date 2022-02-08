@@ -933,6 +933,7 @@ export default {
       "AZITHROMYCIN",
       "FAVIPIRAVIR",
       "IMMUNOGLOBULIN",
+      "OSELTAMIVIR",
       "MULTIVITAMIN",
       "REMDESIVIR",
       "TOCILIZUMAB",
@@ -1048,8 +1049,6 @@ export default {
           this.tableItemsInt.push(itemInt);
         })
       );
-
-      //
     },
     getTotal(items) {
       var x = items.map((r) => {
