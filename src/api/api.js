@@ -18,7 +18,7 @@ const activeBrand = [
   "HALODOC",
   "PHARMA",
   "ROXY",
-  // "GOAPOTIK",
+  "GOAPOTIK",
   // "MIKA",
 ];
 const activeObat = [

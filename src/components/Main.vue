@@ -903,11 +903,11 @@ export default {
         name: "Mitrasana",
         img: require("../assets/logos/MITRASANA.png"),
       },
-      // {
-      //   id: "GOAPOTIK",
-      //   name: "Goapotik",
-      //   img: require("../assets/logos/GOAPOTIK.png"),
-      // },
+      {
+        id: "GOAPOTIK",
+        name: "Goapotik",
+        img: require("../assets/logos/GOAPOTIK.png"),
+      },
       {
         id: "VIVA",
         name: "Viva",
@@ -933,6 +933,7 @@ export default {
       "AZITHROMYCIN",
       "FAVIPIRAVIR",
       "IMMUNOGLOBULIN",
+      "OSELTAMIVIR",
       "MULTIVITAMIN",
       "REMDESIVIR",
       "TOCILIZUMAB",
