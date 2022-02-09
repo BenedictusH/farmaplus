@@ -923,17 +923,16 @@ export default {
         name: "PharmaPlus",
         img: require("../assets/logos/PHARMAPLUS.png"),
       },
-      // {
-      //   id: "ROXY",
-      //   name: "Roxy",
-      //   img: require("../assets/logos/ROXY.png"),
-      // },
+      {
+        id: "ROXY",
+        name: "Roxy",
+        img: require("../assets/logos/ROXY.png"),
+      },
     ],
     activeObat: [
       "AZITHROMYCIN",
       "FAVIPIRAVIR",
       "IMMUNOGLOBULIN",
-      "OSELTAMIVIR",
       "MULTIVITAMIN",
       "REMDESIVIR",
       "TOCILIZUMAB",
@@ -986,6 +985,7 @@ export default {
     },
     async getJumlah() {
       var total_provinsi = [];
+      console.log(this.provinsis);
       await Promise.all(
         this.selected["provinsi"].map(async (selected_provinsi) => {
           //
@@ -1313,6 +1313,7 @@ export default {
         this.selected.search
       );
       this.amount = res2.data;
+
       //
       // this.getJumlahObatProv();
 

@@ -17,6 +17,9 @@ const activeBrand = [
   "VIVA",
   "HALODOC",
   "PHARMA",
+  "ROXY",
+  // "GOAPOTIK",
+  // "MIKA",
 ];
 const activeObat = [
   "azithromycin",
