@@ -19,7 +19,7 @@ const activeBrand = [
   "PHARMA",
   "ROXY",
   "GOAPOTIK",
-  // "MIKA",
+  "MIKA",
 ];
 const activeObat = [
   "azithromycin",
@@ -82,7 +82,6 @@ export default {
         `${STRAPI_URL}/${path}?${query}&_q=${search}&_start=${newStart}&_limit=${limit}&_sort=jumlah:DESC`
       );
     }
-
     return response;
   },
   async count(name, obat, provinsi, kabkota, brand, search) {

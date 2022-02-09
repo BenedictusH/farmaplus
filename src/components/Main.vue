@@ -888,11 +888,11 @@ export default {
         name: "Lifepack",
         img: require("../assets/logos/LIFEPACK.png"),
       },
-      // {
-      //   id: "MIKA",
-      //   name: "Mitra Keluarga",
-      //   img: require("../assets/logos/MIKA.png"),
-      // },
+      {
+        id: "MIKA",
+        name: "Mitra Keluarga",
+        img: require("../assets/logos/MIKA.png"),
+      },
       {
         id: "FARMAKU",
         name: "Farmaku",
