@@ -20,6 +20,7 @@ const activeBrand = [
   "ROXY",
   "GOAPOTIK",
   "MIKA",
+  "berkat",
 ];
 const activeObat = [
   "azithromycin",
@@ -29,6 +30,10 @@ const activeObat = [
   "multivitamin",
   "remdesivir",
   "tocilizumab",
+  // "heparin",
+  // "lovenox",
+  // "vitaminc",
+  // "vitamind"
 ];
 export default {
   async filter(name, obat, provinsi, kabkota, brand, start, limit, search) {

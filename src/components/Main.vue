@@ -848,11 +848,11 @@ export default {
         name: "Kimia Farma",
         img: require("../assets/logos/KF.png"),
       },
-      // {
-      //   id: "berkat",
-      //   name: "Apotek Berkat",
-      //   img: require("../assets/logos/BERKAT.png"),
-      // },
+      {
+        id: "berkat",
+        name: "Apotek Berkat",
+        img: require("../assets/logos/BERKAT.png"),
+      },
       {
         id: "watsons",
         name: "Watsons",
@@ -937,6 +937,10 @@ export default {
       "MULTIVITAMIN",
       "REMDESIVIR",
       "TOCILIZUMAB",
+      // "HEPARIN",
+      // "LOVENOX",
+      // "VITAMINC",
+      // "VITAMIND"
     ],
   }),
   methods: {
@@ -1038,15 +1042,15 @@ export default {
             jumlah: 0,
           };
           item.obat = r;
+          // item.jumlah = this.formatAngka(jumlah);
           item.jumlah = this.formatAngka(jumlah);
-
           this.tableItems.push(item);
           // console.log("haha");
           var itemInt = {
             jumlah: 0,
           };
           itemInt.jumlah = jumlah;
-          // console.log(jumlah);
+
           this.tableItemsInt.push(itemInt);
         })
       );
