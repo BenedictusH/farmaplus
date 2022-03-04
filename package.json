@@ -12,6 +12,8 @@
     "core-js": "^3.6.5",
     "qs": "^6.10.1",
     "vue": "^2.6.11",
+    "vue-mobile-detection": "^2.0.1",
+    "vue3-mobile-detection": "^1.0.5",
     "vuetify": "^2.4.0"
   },
   "devDependencies": {

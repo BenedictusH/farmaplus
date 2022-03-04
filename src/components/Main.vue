@@ -1,6 +1,43 @@
 <template>
   <div class="wrapper">
     <div
+      class="d-flex py-5 px-lg-16 px-4"
+      style="justify-content: space-between"
+    >
+      <div class="d-flex" style="align-items: center">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/d/de/Logo_of_the_Ministry_of_Health_of_the_Republic_of_Indonesia.png"
+          class="logoatas"
+        />
+        <v-btn rounded color="#16b3ac" class="ml-15 hideHeaderMobile">
+          <strong
+            ><a href="/" class="textHeader" style="color: #ffffff"
+              >FARMA Plus
+            </a>
+          </strong>
+        </v-btn>
+
+        <strong class="pl-sm-5 hideHeaderMobile"
+          ><a href="https://obatcovid19-pbf.kemkes.go.id" class="textHeader"
+            >PBF PLUS</a
+          ></strong
+        >
+      </div>
+      <img src="../assets/BUMN.png" class="logoatas" />
+    </div>
+    <div class="navMobile justify-center pb-5" style="gap: 20px">
+      <v-btn rounded color="#16b3ac">
+        <strong
+          ><a href="/" class="textHeader" style="color: #ffffff">FARMA PLUS</a>
+        </strong>
+      </v-btn>
+      <strong class="pt-1"
+        ><a href="https://obatcovid19-pbf.kemkes.go.id" class="textHeader"
+          >PBF PLUS</a
+        ></strong
+      >
+    </div>
+    <div
       class="
         header
         d-flex
@@ -35,7 +72,7 @@
                 <strong>{{ formatDate(selected.tanggal) }} </strong>
               </div></v-col
             >
-
+            <!-- 
             <v-col
               cols="12 "
               md="4"
@@ -48,23 +85,42 @@
                 class="logoatas"
               />
               <img src="../assets/BUMN.png" class="logoatas" />
-            </v-col>
+            </v-col> -->
           </v-row>
-
-          <v-data-table
-            mobile-breakpoint="0"
-            :headers="headers"
-            :items="tableItems"
-            v-model="selectingObat"
-            item-key="obat"
-            dense
-            show-select
-            :single-select="false"
-            loading="loadingToolbar"
-            loading-text="Loading... Please wait"
-            hide-default-footer
-          >
-          </v-data-table>
+          <div class="d-flex">
+            <v-data-table
+              mobile-breakpoint="0"
+              :headers="headers"
+              :items="tableItems"
+              v-model="selectingObat"
+              item-key="obat"
+              dense
+              show-select
+              :single-select="false"
+              loading="loadingToolbar"
+              loading-text="Loading... Please wait"
+              :hide-default-footer="$vuetify.breakpoint.mobile ? true : true"
+              :items-per-page="$vuetify.breakpoint.mobile ? 9 : 10"
+              class="col"
+            >
+            </v-data-table>
+            <!-- <v-data-table
+              mobile-breakpoint="0"
+              :headers="headers"
+              :items="tableItems.slice(10, 40)"
+              v-model="selectingObat"
+              item-key="obat"
+              dense
+              show-select
+              :single-select="false"
+              loading="loadingToolbar"
+              loading-text="Loading... Please wait"
+              hide-default-footer
+              :items-per-page="10"
+              class="col hideHeaderMobile"
+            >
+            </v-data-table> -->
+          </div>
         </v-col>
         <v-col cols="12" class="px-5 pb-5 text-center">
           Menampilkan
@@ -937,10 +993,23 @@ export default {
       "MULTIVITAMIN",
       "REMDESIVIR",
       "TOCILIZUMAB",
-      // "HEPARIN",
-      // "LOVENOX",
-      // "VITAMINC",
-      // "VITAMIND"
+      // // "HEPARIN",
+      // // "LOVENOX",
+      // "VITAMIN C",
+      // "VITAMIN D",
+      // "VITAMIN D3",
+      // "MOLNUPIRAVIR",
+      // "PARASETAMOL",
+      // "VITAMIN B1",
+      // "DEKSAMETASON",
+      // "METILPREDNISOLON",
+      // "HIDROKORTISON",
+      // // "ENOKSAPARIN",
+      // // "RIVAROKSABAN",
+      // // "FONDAPARINUKS",
+      // // "REGDANVIMAB",
+      // "PAXLOVID",
+      // "ASETILSISTEIN",
     ],
   }),
   methods: {
@@ -990,7 +1059,7 @@ export default {
     },
     async getJumlah() {
       var total_provinsi = [];
-      console.log(this.provinsis);
+
       await Promise.all(
         this.selected["provinsi"].map(async (selected_provinsi) => {
           //
@@ -1015,7 +1084,6 @@ export default {
             await Promise.all(
               provinsi.jumlah.map((r) => {
                 if (this.selected.tanggal == r.tanggal) {
-                  // console.log(r)
                   total_provinsi.push(r);
                 }
               })
@@ -1027,7 +1095,8 @@ export default {
       this.tableItemsInt = [];
       await Promise.all(
         this.options.obat.map((r) => {
-          var obat = r.toLowerCase();
+          var obat = r.toLowerCase().replace(/\s/g, "");
+
           var jumlah = total_provinsi
             .map((jumlah) => {
               try {
@@ -1043,9 +1112,10 @@ export default {
           };
           item.obat = r;
           // item.jumlah = this.formatAngka(jumlah);
+
           item.jumlah = this.formatAngka(jumlah);
           this.tableItems.push(item);
-          // console.log("haha");
+
           var itemInt = {
             jumlah: 0,
           };
@@ -1109,8 +1179,15 @@ export default {
       }
     },
     capitalizeFirstLetter(str) {
-      const lower = str.toLowerCase();
-      return str.charAt(0).toUpperCase() + lower.slice(1);
+      var splitStr = str.toLowerCase().split(" ");
+      for (var i = 0; i < splitStr.length; i++) {
+        // You do not need to check if i is larger than splitStr length, as your for does that for you
+        // Assign it back to the array
+        splitStr[i] =
+          splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+      }
+      // Directly return the joined string
+      return splitStr.join(" ");
     },
     selectBrand(input) {
       this.selected.brand = input;
@@ -1267,6 +1344,7 @@ export default {
       //   return this.capitalizeFirstLetter(ob.nama);
       // });
       var obats = obat.filter((ob) => this.activeObat.includes(ob.nama));
+
       this.options["obat"] = obats.map((ob) => {
         return this.capitalizeFirstLetter(ob.nama);
       });
@@ -1455,7 +1533,7 @@ export default {
     },
     selectingObat: function (newvar) {
       var x = newvar.map((r) => {
-        return r.obat;
+        return r.obat.replace(/\s/g, "");
       });
       this.selected.obat = x;
     },
@@ -1480,7 +1558,20 @@ export default {
 * {
   font-family: "Montserrat", sans-serif;
 }
-
+.textHeader {
+  color: #000000;
+}
+a:hover {
+  color: #16b3ac;
+  text-decoration: none;
+  cursor: pointer;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+  transition-delay: 75ms;
+}
 .logo {
   height: 50px;
   object-fit: contain;
@@ -1550,14 +1641,14 @@ a {
   width: 100%;
   height: 300px;
   background-color: #16b3ac;
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
     160deg,
     #16b3ac 0%,
     #16b3ac 35%,
     #d1dc03 90%
   );
   background-size: 1000% 1000%;
-  animation: 20s gradient infinite ease;
+  animation: 20s gradient infinite ease; */
 }
 
 .filterGreen {
@@ -1573,6 +1664,9 @@ a {
 .filterGrey {
   filter: invert(70%);
 }
+.navMobile {
+  display: none;
+}
 
 @keyframes gradient {
   32.5% {
@@ -1582,7 +1676,16 @@ a {
     background-position: 0% 0%;
   }
 }
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
 
+  .navMobile {
+    display: flex;
+  }
+  .hideHeaderMobile {
+    display: none;
+  }
+}
 @media only screen and (max-width: 1248px) {
   .wrapper {
     overflow: hidden;

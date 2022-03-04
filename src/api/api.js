@@ -3,25 +3,25 @@ export const STRAPI_URL = "https://farmaplus-api.kemkes.go.id";
 var qs = require("qs");
 import axios from "axios";
 
-const activeBrand = [
-  "KIMIA FARMA",
-  "K24",
-  "watsons",
-  "CENTURY",
-  "GENERIK",
-  "AJIWARAS",
-  "GUARDIAN",
-  "LIFEPACK",
-  "FARMAKU",
-  "MITRASANA",
-  "VIVA",
-  "HALODOC",
-  "PHARMA",
-  "ROXY",
-  "GOAPOTIK",
-  "MIKA",
-  "berkat",
-];
+// const activeBrand = [
+//   "KIMIA FARMA",
+//   "K24",
+//   "watsons",
+//   "CENTURY",
+//   "GENERIK",
+//   "AJIWARAS",
+//   "GUARDIAN",
+//   "LIFEPACK",
+//   "FARMAKU",
+//   "MITRASANA",
+//   "VIVA",
+//   "HALODOC",
+//   "PHARMA",
+//   "ROXY",
+//   "GOAPOTIK",
+//   "MIKA",
+//   "berkat",
+// ];
 const activeObat = [
   "azithromycin",
   "favipiravir",
@@ -30,10 +30,23 @@ const activeObat = [
   "multivitamin",
   "remdesivir",
   "tocilizumab",
-  // "heparin",
-  // "lovenox",
+  // // "heparin",
+  // // "lovenox",
   // "vitaminc",
-  // "vitamind"
+  // "vitamind",
+  // "vitamind3",
+  // "molnupiravir",
+  // "parasetamol",
+  // "vitaminb1",
+  // "deksametason",
+  // "metilprednisolon",
+  // "hidrokortison",
+  // // "enoksaparin",
+  // // "rivaroksaban",
+  // // "fondaparinuks",
+  // // "regdanvimab",
+  // "paxlovid",
+  // "asetilsistein",
 ];
 export default {
   async filter(name, obat, provinsi, kabkota, brand, start, limit, search) {
@@ -49,11 +62,13 @@ export default {
     }
     kabkot_concat = kabkot_upper.concat(kabkota);
     console.log(obat);
-    if (brand.length == 0) {
-      queryBrand = activeBrand;
-    } else {
-      queryBrand = brand;
-    }
+    // filtering brand
+    // if (brand.length == 0) {
+    //   queryBrand = activeBrand;
+    // } else {
+    //   queryBrand = brand;
+    // }
+
     if (obat.length == 0) {
       queryObat = activeObat;
     } else {
@@ -102,11 +117,12 @@ export default {
       kabkot_upper = [];
     }
     kabkot_concat = kabkot_upper.concat(kabkota);
-    if (brand.length == 0) {
-      queryBrand = activeBrand;
-    } else {
-      queryBrand = brand;
-    }
+    // filtering brand
+    // if (brand.length == 0) {
+    //   queryBrand = activeBrand;
+    // } else {
+    //   queryBrand = brand;
+    // }
     if (obat.length == 0) {
       queryObat = activeObat;
     } else {
