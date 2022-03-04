@@ -18,7 +18,9 @@
         </v-btn>
 
         <strong class="pl-sm-5 hideHeaderMobile"
-          ><a href="https://obatcovid19-pbf.kemkes.go.id" class="textHeader"
+          ><a
+            href="https://obatcovid19-pbf.kemkes.go.id/index.php/data_stok/plus"
+            class="textHeader"
             >PBF PLUS</a
           ></strong
         >
@@ -479,7 +481,7 @@
                   <span
                     v-if="
                       apotek.status == 'habis' ||
-                      formatJumlah(apotek.jumlah) == 0
+                        formatJumlah(apotek.jumlah) == 0
                     "
                     class="red--text spaccing"
                   >
@@ -1134,7 +1136,7 @@ export default {
     logoBrand(brand) {
       var merek = brand;
       // var merek = brand.toUpperCase();
-      var a = this.brands.filter(function (el) {
+      var a = this.brands.filter(function(el) {
         return el.id == merek;
       });
       if (a[0]) {
@@ -1255,7 +1257,10 @@ export default {
       });
 
       var tanggal = input.toString().slice(input.length - 2);
-      var bulan = input.toString().slice(0, 7).slice(5);
+      var bulan = input
+        .toString()
+        .slice(0, 7)
+        .slice(5);
       var tahun = input.toString().slice(0, 4);
       return (
         getHari[date - 1] +
@@ -1531,13 +1536,13 @@ export default {
       this.update();
       this.pushURL();
     },
-    selectingObat: function (newvar) {
+    selectingObat: function(newvar) {
       var x = newvar.map((r) => {
         return r.obat.replace(/\s/g, "");
       });
       this.selected.obat = x;
     },
-    province: function (newvar) {
+    province: function(newvar) {
       if (newvar.length == 0) {
         this.options["kabkota"] = [];
         this.selected["kabkota"] = [];
