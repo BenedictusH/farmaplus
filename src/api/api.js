@@ -53,7 +53,7 @@ export default {
     var query;
     var kabkot_upper;
     var kabkot_concat;
-    var queryBrand;
+    // var queryBrand;
     var queryObat;
     if (kabkota) {
       kabkot_upper = kabkota.map((x) => x.toUpperCase());
@@ -82,7 +82,7 @@ export default {
             { obat_contains: queryObat },
             { provinsi: provinsi },
             { kabkota: kabkot_concat },
-            { brand: queryBrand },
+            { brand: brand },
             { nama_contains: name },
           ],
         ],
@@ -108,7 +108,7 @@ export default {
     var query;
     var kabkot_upper;
     var kabkot_concat;
-    var queryBrand;
+    // var queryBrand;
     var queryObat;
     console.log(kabkota);
     if (kabkota) {
@@ -135,7 +135,7 @@ export default {
             { obat_contains: queryObat },
             { provinsi: provinsi },
             { kabkota: kabkot_concat },
-            { brand: queryBrand },
+            { brand: brand },
             { nama_contains: name },
           ],
         ],

@@ -449,7 +449,9 @@
                     align-lg-end align-start
                   "
                 >
-                  <span class="text-uppercase">{{ apotek.obat }} </span>
+                  <span class="text-uppercase"
+                    >{{ formatObat(apotek.obat) }}
+                  </span>
                   <span class="font-weight-regular text-caption text-uppercase"
                     >{{ apotek.obatDetail }}
                   </span>
@@ -1214,6 +1216,18 @@ export default {
         return `Instalasi Farmasi ${object.nama}`;
       } else {
         return `Apotek ${object.nama}`;
+      }
+    },
+    formatObat(obat) {
+      if (
+        obat.toLowerCase().includes("vitaminc") ||
+        obat.toLowerCase().includes("vitamind") ||
+        obat.toLowerCase().includes("vitamind3") ||
+        obat.toLowerCase().includes("vitaminb1")
+      ) {
+        return obat.slice(0, 7) + " " + obat.slice(7);
+      } else {
+        return obat;
       }
     },
     formatDate(input) {
