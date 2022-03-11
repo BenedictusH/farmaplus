@@ -30,23 +30,23 @@ const activeObat = [
   "multivitamin",
   "remdesivir",
   "tocilizumab",
-  // // "heparin",
-  // // "lovenox",
-  // "vitaminc",
-  // "vitamind",
-  // "vitamind3",
-  // "molnupiravir",
-  // "parasetamol",
-  // "vitaminb1",
-  // "deksametason",
-  // "metilprednisolon",
-  // "hidrokortison",
-  // // "enoksaparin",
-  // // "rivaroksaban",
-  // // "fondaparinuks",
-  // // "regdanvimab",
-  // "paxlovid",
-  // "asetilsistein",
+  // "heparin",
+  // "lovenox",
+  "vitaminc",
+  "vitamind",
+  "vitamind3",
+  "molnupiravir",
+  "parasetamol",
+  "vitaminb1",
+  "deksametason",
+  "metilprednisolon",
+  "hidrokortison",
+  // "enoksaparin",
+  // "rivaroksaban",
+  // "fondaparinuks",
+  // "regdanvimab",
+  "paxlovid",
+  "asetilsistein",
 ];
 export default {
   async filter(name, obat, provinsi, kabkota, brand, start, limit, search) {
@@ -54,6 +54,7 @@ export default {
     var kabkot_upper;
     var kabkot_concat;
     // var queryBrand;
+    var obats = [];
     var queryObat;
     if (kabkota) {
       kabkot_upper = kabkota.map((x) => x.toUpperCase());
@@ -74,12 +75,15 @@ export default {
     } else {
       queryObat = obat;
     }
+    queryObat.forEach((element) => {
+      obats.push(element.toLowerCase());
+    });
 
     query = qs.stringify({
       _where: {
         _or: [
           [
-            { obat_contains: queryObat },
+            { obat: obats },
             { provinsi: provinsi },
             { kabkota: kabkot_concat },
             { brand: brand },
@@ -88,6 +92,7 @@ export default {
         ],
       },
     });
+
     //
     var path = "mastermasters";
     var newStart = start * limit;
@@ -108,6 +113,7 @@ export default {
     var query;
     var kabkot_upper;
     var kabkot_concat;
+    var obats = [];
     // var queryBrand;
     var queryObat;
     console.log(kabkota);
@@ -128,11 +134,15 @@ export default {
     } else {
       queryObat = obat;
     }
+    queryObat.forEach((element) => {
+      obats.push(element.toLowerCase());
+    });
+
     query = qs.stringify({
       _where: {
         _or: [
           [
-            { obat_contains: queryObat },
+            { obat: obats },
             { provinsi: provinsi },
             { kabkota: kabkot_concat },
             { brand: brand },

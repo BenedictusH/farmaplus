@@ -101,15 +101,15 @@
               :single-select="false"
               loading="loadingToolbar"
               loading-text="Loading... Please wait"
-              :hide-default-footer="$vuetify.breakpoint.mobile ? true : true"
-              :items-per-page="$vuetify.breakpoint.mobile ? 9 : 10"
+              :hide-default-footer="$vuetify.breakpoint.xs ? false : true"
+              :items-per-page="$vuetify.breakpoint.mobile ? 10 : 9"
               class="col"
             >
             </v-data-table>
-            <!-- <v-data-table
+            <v-data-table
               mobile-breakpoint="0"
               :headers="headers"
-              :items="tableItems.slice(10, 40)"
+              :items="tableItems.slice(9, 40)"
               v-model="selectingObat"
               item-key="obat"
               dense
@@ -121,7 +121,7 @@
               :items-per-page="10"
               class="col hideHeaderMobile"
             >
-            </v-data-table> -->
+            </v-data-table>
           </div>
         </v-col>
         <v-col cols="12" class="px-5 pb-5 text-center">
@@ -395,7 +395,9 @@
           elevation="5"
           class="card d-flex flex-column"
           height="100%"
-          style="border-radius: 15px"
+          :style="{
+            borderRadius: '15px',
+          }"
         >
           <v-row class="pa-5">
             <v-col
@@ -989,6 +991,7 @@ export default {
         img: require("../assets/logos/ROXY.png"),
       },
     ],
+
     activeObat: [
       "AZITHROMYCIN",
       "FAVIPIRAVIR",
@@ -997,23 +1000,23 @@ export default {
       "MULTIVITAMIN",
       "REMDESIVIR",
       "TOCILIZUMAB",
-      // // "HEPARIN",
-      // // "LOVENOX",
-      // "VITAMIN C",
-      // "VITAMIN D",
-      // "VITAMIN D3",
-      // "MOLNUPIRAVIR",
-      // "PARASETAMOL",
-      // "VITAMIN B1",
-      // "DEKSAMETASON",
-      // "METILPREDNISOLON",
-      // "HIDROKORTISON",
-      // // "ENOKSAPARIN",
-      // // "RIVAROKSABAN",
-      // // "FONDAPARINUKS",
-      // // "REGDANVIMAB",
-      // "PAXLOVID",
-      // "ASETILSISTEIN",
+      // "HEPARIN",
+      // "LOVENOX",
+      "VITAMIN C",
+      "VITAMIN D",
+      "VITAMIN D3",
+      "MOLNUPIRAVIR",
+      "PARASETAMOL",
+      "VITAMIN B1",
+      "DEKSAMETASON",
+      "METILPREDNISOLON",
+      "HIDROKORTISON",
+      // "ENOKSAPARIN",
+      // "RIVAROKSABAN",
+      // "FONDAPARINUKS",
+      // "REGDANVIMAB",
+      "PAXLOVID",
+      "ASETILSISTEIN",
     ],
   }),
   methods: {
@@ -1359,9 +1362,7 @@ export default {
     },
     async getOptions() {
       var obat = await api.find("obats");
-      // this.options["obat"] = obat.map((ob) => {
-      //   return this.capitalizeFirstLetter(ob.nama);
-      // });
+
       var obats = obat.filter((ob) => this.activeObat.includes(ob.nama));
 
       this.options["obat"] = obats.map((ob) => {
@@ -1398,13 +1399,8 @@ export default {
         this.limit,
         this.selected.search
       );
-      // var res3 = await api.filterAPI("lifepacks", this.start - 1, this.limit);
-      // this.body = res.data.concat(res3.data);
 
       this.body = res.data;
-      //
-
-      // this.loadingBody = true;
 
       var res2 = await api.count(
         this.selected.name,
@@ -1416,12 +1412,7 @@ export default {
       );
       this.amount = res2.data;
 
-      //
-      // this.getJumlahObatProv();
-
       this.loadingBody = false;
-
-      // await this.getKabkot()
     },
     pushURL() {
       let url = window.location.href.split("?");
